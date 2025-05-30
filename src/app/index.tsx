@@ -12,6 +12,7 @@ export default function Index() {
         {boards?.map(({ _id, title }) => <Text key={_id}>{title}</Text>)}
       </View>
       <TouchableBounce
+        sensory="light"
         onPress={() => {
           console.log("Button pressed");
         }}
