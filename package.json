@@ -1,6 +1,6 @@
 {
   "name": "jeopardytime",
-  "main": "expo-router/entry",
+  "main": "src/index.ts",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
@@ -20,6 +20,7 @@
     "convex": "^1.24.3",
     "convex-helpers": "^0.1.89",
     "expo": "~53.0.9",
+    "expo-background-task": "~0.2.7",
     "expo-blur": "~14.1.4",
     "expo-camera": "~16.1.6",
     "expo-constants": "~17.1.6",

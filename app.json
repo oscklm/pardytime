@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "jeopardytime",
+    "name": "JeopardyTime",
     "slug": "jeopardytime",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.oneguylabs.jeopardytime"
     },
     "android": {
       "adaptiveIcon": {
@@ -33,7 +34,8 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-background-task"
     ],
     "experiments": {
       "typedRoutes": true
