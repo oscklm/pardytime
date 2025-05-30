@@ -10,7 +10,10 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.oneguylabs.jeopardytime"
+      "bundleIdentifier": "com.oneguylabs.jeopardytime",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -35,7 +38,15 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-background-task"
+      "expo-background-task",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera in order to take photos and videos",
+          "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone in order to record audio",
+          "recordAudioAndroid": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
