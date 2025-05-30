@@ -1,33 +1,47 @@
-import { api } from "@/convex/_generated/api";
-import TouchableBounce from "@/shared/ui/TouchableBounce";
-import { useQuery } from "convex/react";
+import Button from "@/shared/ui/Button";
 import { Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 export default function Index() {
-  const boards = useQuery(api.boards.queries.getAll);
   return (
     <View style={styles.container}>
-      <View style={{ marginBottom: 20 }}>
-        {boards?.map(({ _id, title }) => <Text key={_id}>{title}</Text>)}
-      </View>
-      <TouchableBounce
-        sensory="light"
-        onPress={() => {
-          console.log("Button pressed");
+      <View
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: "#04F",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 16,
         }}
       >
-        <View
-          style={{
-            backgroundColor: "lightblue",
-            paddingHorizontal: 25,
-            paddingVertical: 20,
-            borderRadius: 5,
-          }}
+        <Text
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          style={{ fontSize: 48, fontWeight: "800", color: "white" }}
         >
-          <Text style={{ color: "black" }}>Press Me</Text>
-        </View>
-      </TouchableBounce>
+          Primary
+        </Text>
+      </View>
+      <View
+        style={{
+          width: 100,
+          height: 100,
+          backgroundColor: "#F64C43",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 16,
+        }}
+      >
+        <Text
+          numberOfLines={1}
+          adjustsFontSizeToFit
+          style={{ fontSize: 48, fontWeight: "800", color: "white" }}
+        >
+          Primary
+        </Text>
+      </View>
+      <Button label="Click on me" onPress={() => alert("Button Pressed!")} />
     </View>
   );
 }
@@ -38,5 +52,6 @@ const styles = StyleSheet.create(() => ({
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+    gap: 20,
   },
 }));

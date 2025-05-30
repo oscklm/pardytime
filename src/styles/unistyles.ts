@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native-unistyles'
 
 const lightTheme = {
     colors: {
-        primary: '#ff1ff4',
+        primary: '#04F',
         secondary: '#1ff4ff'
     },
     gap: (v: number) => v * 8
