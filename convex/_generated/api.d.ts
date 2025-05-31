@@ -9,9 +9,9 @@
  */
 
 import type {
-  ApiFromModules,
-  FilterApi,
-  FunctionReference,
+	ApiFromModules,
+	FilterApi,
+	FunctionReference,
 } from "convex/server";
 import type * as boards_mutations from "../boards/mutations.js";
 import type * as boards_queries from "../boards/queries.js";
@@ -27,16 +27,16 @@ import type * as users from "../users.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  "boards/mutations": typeof boards_mutations;
-  "boards/queries": typeof boards_queries;
-  http: typeof http;
-  users: typeof users;
+	"boards/mutations": typeof boards_mutations;
+	"boards/queries": typeof boards_queries;
+	http: typeof http;
+	users: typeof users;
 }>;
 export declare const api: FilterApi<
-  typeof fullApi,
-  FunctionReference<any, "public">
+	typeof fullApi,
+	FunctionReference<any, "public">
 >;
 export declare const internal: FilterApi<
-  typeof fullApi,
-  FunctionReference<any, "internal">
+	typeof fullApi,
+	FunctionReference<any, "internal">
 >;
