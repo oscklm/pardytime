@@ -1,38 +1,80 @@
-import { SafeAreaView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import ColorPreview from "@/shared/components/ColorPreview";
-import Button from "@/shared/ui/Button";
+import { Card, CardContent, CardHeader } from "@/shared/ui/Card";
+import Text from "@/shared/ui/Text";
+import YStack from "@/shared/ui/YStack";
 
 export default function Index() {
 	return (
-		<SafeAreaView style={{ flex: 1, backgroundColor: "hsl(44, 9%, 69%)" }}>
-			<View style={styles.container}>
-				<View>
-					<Text style={{ fontWeight: "600", marginBottom: 6 }}>
-						Theme colors
-					</Text>
-					<View style={styles.colorsContainer}>
-						<ColorPreview percent={60} color="hsl(252, 87.90%, 42.00%)" />
-						<ColorPreview percent={30} color="hsl(158, 74.00%, 60.80%)" />
-						<ColorPreview percent={10} color="hsl(252, 36.50%, 50.60%)" />
-					</View>
-				</View>
-				<View style={{ width: "100%" }}>
-					<Button
-						label="Click on me"
-						onPress={() => alert("Button Pressed!")}
-					/>
-				</View>
-			</View>
+		<SafeAreaView style={styles.root}>
+			<YStack pd="lg" gap="lg">
+				{/* Section A */}
+				<YStack flex={0}>
+					<Card>
+						<CardHeader>
+							<Text variant="h2">Card Header</Text>
+						</CardHeader>
+						<CardContent>
+							<Text>
+								This is a simple card component with a header and content.
+							</Text>
+						</CardContent>
+					</Card>
+				</YStack>
+
+				{/* Section B */}
+				<YStack flex={4} gap="lg">
+					<Card>
+						<CardHeader>
+							<Text variant="h2">Card Header</Text>
+						</CardHeader>
+						<CardContent>
+							<Text>
+								This is a simple card component with a header and content.
+							</Text>
+						</CardContent>
+					</Card>
+					<Card flex={1} bg="accent">
+						<CardHeader>
+							<Text color="white" variant="h2">
+								Card Header
+							</Text>
+						</CardHeader>
+						<CardContent>
+							<Text color="white">
+								Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+								Dolores debitis ipsa impedit eum ex blanditiis laborum, quasi
+								aliquid exercitationem maiores cumque quam, eligendi eaque
+								temporibus, alias nobis voluptates deleniti harum.
+							</Text>
+						</CardContent>
+					</Card>
+				</YStack>
+
+				{/* Section C */}
+				<YStack flex={1}>
+					<Card>
+						<CardHeader>
+							<Text variant="h2">Card Header</Text>
+						</CardHeader>
+						<CardContent>
+							<Text>
+								This is a simple card component with a header and content.
+							</Text>
+						</CardContent>
+					</Card>
+				</YStack>
+			</YStack>
 		</SafeAreaView>
 	);
 }
 
-const styles = StyleSheet.create(() => ({
+const styles = StyleSheet.create((_) => ({
+	root: {
+		flex: 1,
+	},
 	container: {
 		flex: 1,
-		justifyContent: "space-between",
-		alignItems: "center",
 		padding: 20,
 		gap: 20,
 	},

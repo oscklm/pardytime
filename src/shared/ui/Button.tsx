@@ -1,17 +1,24 @@
 import * as Haptics from "expo-haptics";
-import { type GestureResponderEvent, Pressable, Text } from "react-native";
+import {
+	type GestureResponderEvent,
+	Pressable,
+	type StyleProp,
+	Text,
+	type ViewStyle,
+} from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 interface Props
 	extends Omit<
 		React.ComponentPropsWithRef<typeof Pressable>,
-		"children" | "onPress"
+		"children" | "onPress" | "style"
 	> {
+	style?: StyleProp<ViewStyle> | undefined;
 	label: string | React.ReactNode;
 	onPress: (event: GestureResponderEvent) => void;
 }
 
-const Button = ({ label, onPress, ...rest }: Props) => {
+const Button = ({ label, onPress, style, ...rest }: Props) => {
 	const handlePress = (event: GestureResponderEvent) => {
 		onPress(event);
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
@@ -20,9 +27,8 @@ const Button = ({ label, onPress, ...rest }: Props) => {
 	return (
 		<Pressable
 			style={({ pressed, hovered }) => {
-				// biome-ignore lint/correctness/useHookAtTopLevel: This is not regular react hook
 				styles.useVariants({ pressed, hovered });
-				return styles.button;
+				return [styles.button, style];
 			}}
 			onPress={handlePress}
 			{...rest}
@@ -38,11 +44,11 @@ const Button = ({ label, onPress, ...rest }: Props) => {
 
 const styles = StyleSheet.create((th) => ({
 	button: {
-		backgroundColor: th.colors.primary,
+		backgroundColor: th.colors.accent,
 		minWidth: 100,
 		paddingHorizontal: th.gap(3),
 		paddingVertical: th.gap(2),
-		borderRadius: th.gap(1),
+		borderRadius: th.radius.md,
 		alignItems: "center",
 		variants: {
 			pressed: {
@@ -60,7 +66,7 @@ const styles = StyleSheet.create((th) => ({
 	},
 	buttonText: {
 		fontSize: 16,
-		fontWeight: "600",
+		fontWeight: "700",
 		lineHeight: 24,
 		color: "white",
 	},
