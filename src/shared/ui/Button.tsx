@@ -20,6 +20,7 @@ const Button = ({ label, onPress, ...rest }: Props) => {
 	return (
 		<Pressable
 			style={({ pressed, hovered }) => {
+				// biome-ignore lint/correctness/useHookAtTopLevel: This is not regular react hook
 				styles.useVariants({ pressed, hovered });
 				return styles.button;
 			}}
