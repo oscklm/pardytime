@@ -3,15 +3,17 @@ import { GestureResponderEvent, Pressable, Text } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 interface Props
-  extends Omit<React.ComponentPropsWithRef<typeof Pressable>, "children"> {
+  extends Omit<
+    React.ComponentPropsWithRef<typeof Pressable>,
+    "children" | "onPress"
+  > {
   label: string | React.ReactNode;
+  onPress: (event: GestureResponderEvent) => void;
 }
 
 const Button = ({ label, onPress, ...rest }: Props) => {
   const handlePress = (event: GestureResponderEvent) => {
-    if (onPress) {
-      onPress(event);
-    }
+    onPress(event);
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
   };
 
