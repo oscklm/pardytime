@@ -39,14 +39,16 @@ const styles = StyleSheet.create((th) => ({
 	card: {
 		flexDirection: "column",
 		borderRadius: th.radius.md,
-		padding: th.gap(2),
+		padding: th.space.lg,
 		variants: {
 			bg: th.variants.bg,
 			gap: th.variants.gap,
 		},
 	},
 	cardHeader: {},
-	cardContent: {},
+	cardContent: {
+		gap: th.space.md,
+	},
 }));
 
 export { Card, CardContent, CardHeader };

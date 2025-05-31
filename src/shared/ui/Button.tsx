@@ -53,8 +53,8 @@ const styles = StyleSheet.create((th) => ({
 		variants: {
 			pressed: {
 				true: {
-					opacity: 0.5,
-					transform: [{ scale: 0.93 }],
+					opacity: 0.8,
+					transform: [{ scale: 0.98 }],
 				},
 			},
 			hovered: {

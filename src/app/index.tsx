@@ -1,5 +1,6 @@
 import { SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import Button from "@/shared/ui/Button";
 import { Card, CardContent, CardHeader } from "@/shared/ui/Card";
 import Text from "@/shared/ui/Text";
 import YStack from "@/shared/ui/YStack";
@@ -12,7 +13,7 @@ export default function Index() {
 				<YStack flex={0}>
 					<Card>
 						<CardHeader>
-							<Text variant="h2">Card Header</Text>
+							<Text variant="h2">Section A</Text>
 						</CardHeader>
 						<CardContent>
 							<Text>
@@ -26,18 +27,24 @@ export default function Index() {
 				<YStack flex={4} gap="lg">
 					<Card>
 						<CardHeader>
-							<Text variant="h2">Card Header</Text>
+							<Text variant="h2">Section B - Button</Text>
 						</CardHeader>
 						<CardContent>
 							<Text>
 								This is a simple card component with a header and content.
 							</Text>
+							<Button
+								label="Press Me"
+								onPress={() => {
+									alert("Button Pressed!");
+								}}
+							/>
 						</CardContent>
 					</Card>
-					<Card flex={1} bg="accent">
+					<Card flex={1} bg="dark">
 						<CardHeader>
 							<Text color="white" variant="h2">
-								Card Header
+								Section B - Dark Card
 							</Text>
 						</CardHeader>
 						<CardContent>
@@ -55,7 +62,7 @@ export default function Index() {
 				<YStack flex={1}>
 					<Card>
 						<CardHeader>
-							<Text variant="h2">Card Header</Text>
+							<Text variant="h2">Section C </Text>
 						</CardHeader>
 						<CardContent>
 							<Text>

@@ -75,6 +75,7 @@ const variants = {
 const shared = {
 	gap: (v: number) => v * BASE_UNIT,
 	radius,
+	space,
 };
 
 const lightColors = {
@@ -110,6 +111,9 @@ const lightTheme = {
 			},
 			accent: {
 				backgroundColor: lightColors.accent,
+			},
+			dark: {
+				backgroundColor: colors.darkGrey,
 			},
 			blue: {
 				backgroundColor: "blue",
@@ -147,6 +151,9 @@ const darkTheme = {
 			},
 			accent: {
 				backgroundColor: darkColors.accent,
+			},
+			dark: {
+				backgroundColor: colors.darkGrey,
 			},
 			blue: {
 				backgroundColor: "blue",
