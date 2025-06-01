@@ -1,6 +1,12 @@
 import * as Haptics from "expo-haptics";
 import React from "react";
-import { Pressable, type StyleProp, Text, type ViewStyle } from "react-native";
+import {
+	ActivityIndicator,
+	Pressable,
+	type StyleProp,
+	Text,
+	type ViewStyle,
+} from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 interface Props
@@ -18,11 +24,13 @@ interface Props
 		| "medium"
 		| "heavy";
 	style?: StyleProp<ViewStyle> | undefined;
+	isLoading?: boolean;
 	label: string | React.ReactNode;
 }
 
 const Button = ({
 	label,
+	isLoading,
 	sensory = "light",
 	onPressIn,
 	style,
@@ -59,7 +67,16 @@ const Button = ({
 			{...rest}
 		>
 			{typeof label === "string" ? (
-				<Text style={styles.buttonText}>{label}</Text>
+				<>
+					<Text style={styles.buttonText}>{label}</Text>
+					{isLoading && (
+						<ActivityIndicator
+							size="small"
+							color="white"
+							style={{ marginLeft: 8 }}
+						/>
+					)}
+				</>
 			) : (
 				label
 			)}

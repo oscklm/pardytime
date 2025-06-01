@@ -1,22 +1,18 @@
-import { Hono } from "hono";
-import {
-	type HonoWithConvex,
-	HttpRouterWithHono,
-} from "convex-helpers/server/hono";
-import type { ActionCtx } from "./_generated/server";
-import type { Id } from "./_generated/dataModel";
+import { httpRouter } from "convex/server";
+import { betterAuthComponent, createAuth } from "./auth";
 
-const app: HonoWithConvex<ActionCtx> = new Hono();
+const http = httpRouter();
 
-app.get("/images/:storageId", async (c) => {
-	const storageId = c.req.param("storageId") as Id<"_storage">;
+betterAuthComponent.registerRoutes(http, createAuth);
 
-	const blob = await c.env.storage.get(storageId);
-	if (blob === null) {
-		return c.json({ error: "Image not found" }, 404);
-	}
+export default http;
+// app.get("/images/:storageId", async (c) => {
+// 	const storageId = c.req.param("storageId") as Id<"_storage">;
 
-	return new Response(blob);
-});
+// 	const blob = await c.env.storage.get(storageId);
+// 	if (blob === null) {
+// 		return c.json({ error: "Image not found" }, 404);
+// 	}
 
-export default new HttpRouterWithHono(app);
+// 	return new Response(blob);
+// });

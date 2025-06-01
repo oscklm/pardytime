@@ -1,23 +1,21 @@
-import { useState } from "react";
+import { Authenticated, Unauthenticated } from "convex/react";
+import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import SignInScreen from "@/features/sign-in/sign-in-screen";
-import { Modal } from "@/shared/components/Modal";
+import { authClient } from "@/lib/auth/auth-client";
 import Button from "@/shared/ui/Button";
 import { Card, CardContent, CardHeader } from "@/shared/ui/Card";
 import Text from "@/shared/ui/Text";
 import YStack from "@/shared/ui/YStack";
 
 export default function Index() {
-	const [showSignIn, setShowSignIn] = useState(false);
-
 	return (
-		<>
-			<SafeAreaView style={styles.root}>
-				<YStack pd="lg" gap="lg">
-					{/* Section A */}
-					<Text variant="h1">Welcome to the App</Text>
-					<YStack flex={0}>
+		<SafeAreaView style={styles.root}>
+			<YStack pd="lg" gap="lg">
+				{/* Section A */}
+				<Text variant="h1">JeopardyTime</Text>
+				<YStack flex={0}>
+					<Unauthenticated>
 						<Card>
 							<CardHeader>
 								<Text variant="h2">Section A</Text>
@@ -26,78 +24,36 @@ export default function Index() {
 								<Text>
 									This is a simple card component with a header and content.
 								</Text>
+								<Button
+									label="Sign In"
+									onPress={() => router.push("/sign-in")}
+								/>
+								<Button
+									label="Sign Up"
+									onPress={() => router.push("/sign-up")}
+								/>
 							</CardContent>
 						</Card>
-					</YStack>
-
-					{/* Section B */}
-					<YStack flex={4} gap="lg">
+					</Unauthenticated>
+					<Authenticated>
 						<Card>
 							<CardHeader>
-								<Text variant="h2">Section B - Button</Text>
+								<Text variant="h2">Section A</Text>
 							</CardHeader>
 							<CardContent>
-								<Text>
-									This is a simple card component with a header and content.
-								</Text>
+								<Text>Welcome back! You are authenticated.</Text>
 								<Button
-									label="Press Me"
+									label="Sign Out"
 									onPress={() => {
-										alert("Button Pressed!");
+										authClient.signOut();
 									}}
 								/>
 							</CardContent>
 						</Card>
-						<Card flex={1}>
-							<CardHeader>
-								<Text variant="h2">Section B - Dark Card</Text>
-							</CardHeader>
-							<CardContent>
-								<Text>
-									Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-									Dolores debitis ipsa impedit eum ex blanditiis laborum, quasi
-									aliquid exercitationem maiores cumque quam, eligendi eaque
-									temporibus, alias nobis voluptates deleniti harum.
-								</Text>
-							</CardContent>
-						</Card>
-					</YStack>
-
-					{/* Section C */}
-					<YStack flex={1}>
-						<Card>
-							<CardHeader>
-								<Text variant="h2">Section C </Text>
-							</CardHeader>
-							<CardContent>
-								<Text>
-									This is a simple card component with a header and content.
-								</Text>
-							</CardContent>
-							<Button
-								label="Sign In"
-								onPress={() => {
-									setShowSignIn((prev) => !prev);
-								}}
-							/>
-						</Card>
-					</YStack>
+					</Authenticated>
 				</YStack>
-			</SafeAreaView>
-			<Modal
-				visible={showSignIn}
-				onDismiss={() => setShowSignIn(false)}
-				onRequestClose={() => setShowSignIn(false)}
-			>
-				<SignInScreen />
-				<Button
-					label="Close"
-					onPress={() => {
-						setShowSignIn(false);
-					}}
-				/>
-			</Modal>
-		</>
+			</YStack>
+		</SafeAreaView>
 	);
 }
 
