@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { TextInput } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { authClient } from "@/lib/auth/auth-client";
 import Button from "@/shared/ui/Button";
 import Text from "@/shared/ui/Text";
+import TextInput from "@/shared/ui/TextInput";
 import YStack from "@/shared/ui/YStack";
 
 const SignUpScreen = () => {
@@ -37,14 +37,16 @@ const SignUpScreen = () => {
 	return (
 		<YStack flex={1} pd="lg" gap="md" style={styles.container}>
 			<Text variant="h1">Sign Up</Text>
-			<TextInput placeholder="Name" value={name} onChangeText={setName} />
-			<TextInput placeholder="Email" value={email} onChangeText={setEmail} />
-			<TextInput
-				placeholder="Password"
-				value={password}
-				onChangeText={setPassword}
-			/>
-			<Button label="Signup" isLoading={loading} onPress={handleSignUp} />
+			<YStack gap="lg">
+				<TextInput placeholder="Name" value={name} onChangeText={setName} />
+				<TextInput placeholder="Email" value={email} onChangeText={setEmail} />
+				<TextInput
+					placeholder="Password"
+					value={password}
+					onChangeText={setPassword}
+				/>
+				<Button label="Signup" isLoading={loading} onPress={handleSignUp} />
+			</YStack>
 		</YStack>
 	);
 };

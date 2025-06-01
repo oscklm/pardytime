@@ -11,7 +11,7 @@ import YStack from "@/shared/ui/YStack";
 export default function Index() {
 	return (
 		<SafeAreaView style={styles.root}>
-			<YStack pd="lg" gap="lg">
+			<YStack flex={1} pd="lg" gap="lg">
 				{/* Section A */}
 				<Text variant="h1">JeopardyTime</Text>
 				<YStack flex={0}>

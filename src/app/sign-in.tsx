@@ -1,10 +1,10 @@
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { useState } from "react";
-import { TextInput } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { authClient } from "@/lib/auth/auth-client";
 import Button from "@/shared/ui/Button";
 import Text from "@/shared/ui/Text";
+import TextInput from "@/shared/ui/TextInput";
 import YStack from "@/shared/ui/YStack";
 
 const SignInScreen = () => {
@@ -23,7 +23,6 @@ const SignInScreen = () => {
 					setLoading(true);
 				},
 				onSuccess: () => {
-					console.log("request onSuccess");
 					setLoading(false);
 					router.back();
 				},
@@ -39,18 +38,23 @@ const SignInScreen = () => {
 	return (
 		<YStack flex={1} pd="lg" gap="md" style={styles.container}>
 			<Text variant="h1">Sign In</Text>
-			<Text>
-				{loading
-					? "Logging in, please wait..."
-					: "Please enter your email and password to log in."}
-			</Text>
-			<TextInput placeholder="Email" value={email} onChangeText={setEmail} />
-			<TextInput
-				placeholder="Password"
-				value={password}
-				onChangeText={setPassword}
-			/>
-			<Button label="Login" onPress={handleLogin} />
+
+			<YStack gap="lg">
+				<TextInput placeholder="Email" value={email} onChangeText={setEmail} />
+				<TextInput
+					placeholder="Password"
+					value={password}
+					onChangeText={setPassword}
+				/>
+				<Button label="Login" isLoading={loading} onPress={handleLogin} />
+			</YStack>
+
+			<YStack ai="center" pd="xl">
+				<Text>Don't have an account?</Text>
+				<Link href={"/sign-up"} asChild>
+					<Button variant="link" label="Sign up now" />
+				</Link>
+			</YStack>
 		</YStack>
 	);
 };

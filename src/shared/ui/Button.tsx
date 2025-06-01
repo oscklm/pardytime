@@ -5,35 +5,42 @@ import {
 	Pressable,
 	type StyleProp,
 	Text,
+	View,
 	type ViewStyle,
 } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
 
-interface Props
-	extends Omit<
-		React.ComponentPropsWithRef<typeof Pressable>,
-		"children" | "style"
-	> {
-	/** Enables haptic feedback on press down. */
-	sensory?:
-		| boolean
-		| "success"
-		| "error"
-		| "warning"
-		| "light"
-		| "medium"
-		| "heavy";
-	style?: StyleProp<ViewStyle> | undefined;
-	isLoading?: boolean;
-	label: string | React.ReactNode;
-}
+type Variants = UnistylesVariants<typeof styles>;
+
+// NOTE: Using type instead of interface to avoid issues with intersecting types from UnistylesVariants
+type Props = Omit<
+	React.ComponentPropsWithRef<typeof Pressable>,
+	"children" | "style"
+> &
+	Variants & {
+		/** Enables haptic feedback on press down. */
+		sensory?:
+			| boolean
+			| "success"
+			| "error"
+			| "warning"
+			| "light"
+			| "medium"
+			| "heavy";
+		style?: StyleProp<ViewStyle> | undefined;
+		isLoading?: boolean;
+		label: string | React.ReactNode;
+	};
 
 const Button = ({
-	label,
-	isLoading,
-	sensory = "light",
-	onPressIn,
+	// Unistyles Props
+	variant,
+	// Normal props
 	style,
+	sensory = "light",
+	isLoading,
+	label,
+	onPressIn,
 	...rest
 }: Props) => {
 	const onSensory = React.useCallback(() => {
@@ -54,10 +61,12 @@ const Button = ({
 			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
 		}
 	}, [sensory]);
+	styles.useVariants({ variant });
+
 	return (
 		<Pressable
 			style={({ pressed, hovered }) => {
-				styles.useVariants({ pressed, hovered });
+				styles.useVariants({ pressed, hovered, variant });
 				return [styles.button, style];
 			}}
 			onPressIn={(ev) => {
@@ -69,6 +78,7 @@ const Button = ({
 			{typeof label === "string" ? (
 				<>
 					<Text style={styles.buttonText}>{label}</Text>
+					{variant === "link" && <View style={styles.underline} />}
 					{isLoading && (
 						<ActivityIndicator
 							size="small"
@@ -93,16 +103,24 @@ const styles = StyleSheet.create((th) => ({
 		borderRadius: th.radius.md,
 		alignItems: "center",
 		variants: {
+			variant: {
+				link: {
+					backgroundColor: undefined,
+					alignSelf: "center",
+				},
+			},
 			pressed: {
 				true: {
 					opacity: 0.8,
 					transform: [{ scale: 0.98 }],
 				},
+				false: {},
 			},
 			hovered: {
 				true: {
 					backgroundColor: th.baseColors.accentMuted,
 				},
+				false: {},
 			},
 		},
 	},
@@ -111,6 +129,25 @@ const styles = StyleSheet.create((th) => ({
 		fontWeight: "700",
 		lineHeight: 24,
 		color: "white",
+		variants: {
+			variant: {
+				link: {
+					color: th.colors.accent,
+					fontWeight: "500",
+				},
+			},
+			pressed: {},
+			hovered: {},
+		},
+	},
+	underline: {
+		position: "absolute",
+		bottom: 0,
+		left: 0,
+		right: 0,
+		height: 2,
+		borderRadius: th.radius.sm,
+		backgroundColor: th.colors.accent,
 	},
 }));
 
