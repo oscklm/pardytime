@@ -17,7 +17,6 @@ const Text = ({
 	...props
 }: Props) => {
 	styles.useVariants({ variant, color, invert });
-	console.log(styles.text.color);
 	return <RNText style={[styles.text, style]} {...props} />;
 };
 
