@@ -1,13 +1,11 @@
-// @ts-expect-error: untyped helper
-import RNTouchableBounce from "react-native/Libraries/Components/Touchable/TouchableBounce";
-
-import {
-	TouchableOpacityProps as RNTouchableOpacityProps,
-	View,
-} from "react-native";
-
 import * as Haptics from "expo-haptics";
 import * as React from "react";
+import {
+	type TouchableOpacityProps as RNTouchableOpacityProps,
+	View,
+} from "react-native";
+// @ts-expect-error: untyped helper
+import RNTouchableBounce from "react-native/Libraries/Components/Touchable/TouchableBounce";
 
 export type TouchableScaleProps = Omit<
 	RNTouchableOpacityProps,
