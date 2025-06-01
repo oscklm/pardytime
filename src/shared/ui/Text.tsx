@@ -17,6 +17,7 @@ const Text = ({
 	...props
 }: Props) => {
 	styles.useVariants({ variant, color, invert });
+	console.log(styles.text.color);
 	return <RNText style={[styles.text, style]} {...props} />;
 };
 
@@ -25,12 +26,9 @@ const styles = StyleSheet.create((th) => ({
 		fontWeight: "400",
 		fontSize: 16,
 		lineHeight: 16 * 1.5,
-		color: th.colors.foreground,
+		color: th.colors.text,
 		variants: {
 			color: {
-				white: {
-					color: th.colors.white,
-				},
 				accent: {
 					color: th.colors.accent,
 				},
@@ -57,7 +55,7 @@ const styles = StyleSheet.create((th) => ({
 					color: th.colors.background,
 				},
 				false: {
-					color: th.colors.foreground,
+					color: th.colors.text,
 				},
 			},
 		},

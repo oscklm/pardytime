@@ -1,26 +1,18 @@
 import * as Haptics from "expo-haptics";
-import {
-	type GestureResponderEvent,
-	Pressable,
-	type StyleProp,
-	Text,
-	type ViewStyle,
-} from "react-native";
+import { Pressable, type StyleProp, Text, type ViewStyle } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 interface Props
 	extends Omit<
 		React.ComponentPropsWithRef<typeof Pressable>,
-		"children" | "onPress" | "style"
+		"children" | "style"
 	> {
 	style?: StyleProp<ViewStyle> | undefined;
 	label: string | React.ReactNode;
-	onPress: (event: GestureResponderEvent) => void;
 }
 
-const Button = ({ label, onPress, style, ...rest }: Props) => {
-	const handlePress = (event: GestureResponderEvent) => {
-		onPress(event);
+const Button = ({ label, style, ...rest }: Props) => {
+	const handlePressIn = () => {
 		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 	};
 
@@ -30,7 +22,7 @@ const Button = ({ label, onPress, style, ...rest }: Props) => {
 				styles.useVariants({ pressed, hovered });
 				return [styles.button, style];
 			}}
-			onPress={handlePress}
+			onPressIn={handlePressIn}
 			{...rest}
 		>
 			{typeof label === "string" ? (

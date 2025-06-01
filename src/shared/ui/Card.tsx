@@ -1,23 +1,17 @@
 import { View } from "react-native";
-import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
+import { StyleSheet } from "react-native-unistyles";
 
-type Variants = UnistylesVariants<typeof styles>;
-
-interface Props extends React.ComponentPropsWithoutRef<typeof View>, Variants {
+interface Props extends React.ComponentPropsWithoutRef<typeof View> {
 	flex?: number;
 }
 
 const Card = ({
 	// Normal props
 	flex,
-	// Unistyles variants
-	bg = "card",
-	gap = "md",
 	// Additional props
 	style,
 	...props
 }: Props) => {
-	styles.useVariants({ bg, gap });
 	return <View style={[styles.card, { flex }, style]} {...props} />;
 };
 
@@ -38,12 +32,9 @@ const CardContent = ({
 const styles = StyleSheet.create((th) => ({
 	card: {
 		flexDirection: "column",
+		backgroundColor: th.colors.card,
 		borderRadius: th.radius.md,
 		padding: th.space.lg,
-		variants: {
-			bg: th.variants.bg,
-			gap: th.variants.gap,
-		},
 	},
 	cardHeader: {},
 	cardContent: {

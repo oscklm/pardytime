@@ -10,6 +10,7 @@ export default function Index() {
 		<SafeAreaView style={styles.root}>
 			<YStack pd="lg" gap="lg">
 				{/* Section A */}
+				<Text variant="h1">Welcome to the App</Text>
 				<YStack flex={0}>
 					<Card>
 						<CardHeader>
@@ -41,14 +42,12 @@ export default function Index() {
 							/>
 						</CardContent>
 					</Card>
-					<Card flex={1} bg="dark">
+					<Card flex={1}>
 						<CardHeader>
-							<Text color="white" variant="h2">
-								Section B - Dark Card
-							</Text>
+							<Text variant="h2">Section B - Dark Card</Text>
 						</CardHeader>
 						<CardContent>
-							<Text color="white">
+							<Text>
 								Lorem, ipsum dolor sit amet consectetur adipisicing elit.
 								Dolores debitis ipsa impedit eum ex blanditiis laborum, quasi
 								aliquid exercitationem maiores cumque quam, eligendi eaque
