@@ -51,7 +51,7 @@ const styles = StyleSheet.create((th) => ({
 			},
 			hovered: {
 				true: {
-					backgroundColor: "red",
+					backgroundColor: th.baseColors.accentMuted,
 				},
 			},
 		},
