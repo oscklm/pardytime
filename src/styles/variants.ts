@@ -21,6 +21,43 @@ const variants = {
 			padding: space.xl,
 		},
 	},
+	alignItems: {
+		start: {
+			alignItems: "flex-start",
+		},
+		center: {
+			alignItems: "center",
+		},
+		end: {
+			alignItems: "flex-end",
+		},
+		stretch: {
+			alignItems: "stretch",
+		},
+		baseline: {
+			alignItems: "baseline",
+		},
+	},
+	justifyContent: {
+		start: {
+			justifyContent: "flex-start",
+		},
+		center: {
+			justifyContent: "center",
+		},
+		end: {
+			justifyContent: "flex-end",
+		},
+		between: {
+			justifyContent: "space-between",
+		},
+		around: {
+			justifyContent: "space-around",
+		},
+		evenly: {
+			justifyContent: "space-evenly",
+		},
+	},
 	gap: {
 		none: {
 			gap: 0,

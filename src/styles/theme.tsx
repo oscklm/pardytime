@@ -6,7 +6,7 @@ import type { UnistylesTheme } from "./types";
 
 const lightTheme: UnistylesTheme = {
 	colors: {
-		primary: colors.primary,
+		primary: colors.accent,
 		secondary: colors.secondary,
 		accent: colors.accent,
 		card: colors.white,
@@ -20,7 +20,7 @@ const lightTheme: UnistylesTheme = {
 
 const darkTheme: UnistylesTheme = {
 	colors: {
-		primary: colors.primary,
+		primary: colors.accent,
 		secondary: colors.secondary,
 		accent: colors.accent,
 		background: colors.black,

@@ -9,15 +9,17 @@ interface Props extends React.ComponentPropsWithoutRef<typeof View>, Variants {
 
 const YStack = ({
 	// Normal props
-	flex = 1,
+	flex,
 	// Unistyles variants
 	pd,
+	ai,
+	jc,
 	gap,
 	// Additional props
 	style,
 	...props
 }: Props) => {
-	styles.useVariants({ pd, gap });
+	styles.useVariants({ pd, ai, jc, gap });
 	return <View style={[styles.stack, { flex }, style]} {...props} />;
 };
 
@@ -25,6 +27,8 @@ const styles = StyleSheet.create((th) => ({
 	stack: {
 		variants: {
 			pd: th.variants.padding,
+			ai: th.variants.alignItems,
+			jc: th.variants.justifyContent,
 			gap: th.variants.gap,
 		},
 	},
