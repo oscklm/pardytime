@@ -13,14 +13,16 @@
       "distribution": "internal",
       "channel": "preview",
       "env": {
-        "EXPO_PUBLIC_CONVEX_URL": "https://rightful-cat-296.convex.cloud"
+        "EXPO_PUBLIC_CONVEX_URL": "https://rightful-cat-296.convex.cloud",
+        "EXPO_PUBLIC_CONVEX_SITE_URL": "https://rightful-cat-296.convex.site"
       }
     },
     "production": {
       "autoIncrement": true,
       "channel": "production",
       "env": {
-        "EXPO_PUBLIC_CONVEX_URL": "https://wooden-leopard-680.convex.cloud"
+        "EXPO_PUBLIC_CONVEX_URL": "https://wooden-leopard-680.convex.cloud",
+        "EXPO_PUBLIC_CONVEX_SITE_URL": "https://wooden-leopard-680.convex.site"
       }
     }
   },
