@@ -5,7 +5,7 @@
       "name": "jeopardytime",
       "dependencies": {
         "@better-auth/expo": "^1.2.8",
-        "@erquhart/convex-better-auth": "^0.5.0",
+        "@erquhart/convex-better-auth": "^0.5.1",
         "@expo/vector-icons": "^14.1.0",
         "@react-navigation/bottom-tabs": "^7.3.10",
         "@react-navigation/elements": "^2.3.8",
@@ -268,7 +268,7 @@
 
     "@egjs/hammerjs": ["@egjs/hammerjs@2.0.17", "", { "dependencies": { "@types/hammerjs": "^2.0.36" } }, "sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A=="],
 
-    "@erquhart/convex-better-auth": ["@erquhart/convex-better-auth@0.5.0", "", { "dependencies": { "@better-auth/utils": "^0.2.5", "better-call": "^1.0.9", "convex-helpers": "^0.1.76", "is-network-error": "^1.1.0", "remeda": "^2.21.6", "type-fest": "^4.39.1", "zod": "^3.24.4" }, "peerDependencies": { "better-auth": "1.2.7", "convex": "~1.16.5 || >=1.17.0 <1.25.0" } }, "sha512-Pqu1UH7HQQFc6tiCMttpS/DYjYh9+paZtWBR1LzA9/QBNp34OKW1Kjl1Tk/GJTpaupsHVLaFamjJQjmdTbPFeQ=="],
+    "@erquhart/convex-better-auth": ["@erquhart/convex-better-auth@0.5.1", "", { "dependencies": { "@better-auth/utils": "^0.2.5", "better-call": "^1.0.9", "convex-helpers": "^0.1.76", "is-network-error": "^1.1.0", "remeda": "^2.21.6", "type-fest": "^4.39.1", "zod": "^3.24.4" }, "peerDependencies": { "better-auth": "1.2.7", "convex": "~1.16.5 || >=1.17.0 <1.25.0" } }, "sha512-j0w4txAE669YN55jXctbq5yz8bdb+EBxi3ia98mx1O986qlTYw044jCgqhuF88bJDJAdrRML72YhvLCzWvjhKg=="],
 
     "@esbuild/aix-ppc64": ["@esbuild/aix-ppc64@0.25.2", "", { "os": "aix", "cpu": "ppc64" }, "sha512-wCIboOL2yXZym2cgm6mlA742s9QeJ8DjGVaL39dLN4rRwrOgOyYSnOaFPhKZGLb2ngj4EyfAFjsNJwPXZvseag=="],
 

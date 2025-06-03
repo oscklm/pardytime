@@ -98,6 +98,8 @@ const styles = StyleSheet.create((th) => ({
 	button: {
 		backgroundColor: th.colors.accent,
 		minWidth: 100,
+		flexDirection: "row",
+		justifyContent: "center",
 		paddingHorizontal: th.space.md,
 		paddingVertical: th.space.md,
 		borderRadius: th.radius.md,
@@ -123,6 +125,17 @@ const styles = StyleSheet.create((th) => ({
 				false: {},
 			},
 		},
+		compoundVariants: [
+			{
+				variant: "link",
+				hovered: true, // and color is link
+				// apply following styles
+				styles: {
+					backgroundColor: undefined,
+					// and more styles
+				},
+			},
+		],
 	},
 	buttonText: {
 		fontSize: 16,
@@ -137,7 +150,11 @@ const styles = StyleSheet.create((th) => ({
 				},
 			},
 			pressed: {},
-			hovered: {},
+			hovered: {
+				true: {
+					color: th.baseColors.accentMuted,
+				},
+			},
 		},
 	},
 	underline: {

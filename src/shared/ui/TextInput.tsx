@@ -27,7 +27,6 @@ const styles = StyleSheet.create((th) => ({
 		backgroundColor: th.colors.card,
 		padding: th.space.lg,
 		borderRadius: th.radius.md,
-		lineHeight: 16 * 1.5,
 		color: th.colors.text,
 		variants: {
 			color: {

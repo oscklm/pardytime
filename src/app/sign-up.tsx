@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics";
 import { useState } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import { authClient } from "@/lib/auth/auth-client";
@@ -25,6 +26,7 @@ const SignUpScreen = () => {
 				},
 				onSuccess: () => {
 					setLoading(false);
+					Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 				},
 				onError: (ctx) => {
 					setLoading(false);
@@ -43,6 +45,7 @@ const SignUpScreen = () => {
 				<TextInput
 					placeholder="Password"
 					value={password}
+					secureTextEntry
 					onChangeText={setPassword}
 				/>
 				<Button label="Signup" isLoading={loading} onPress={handleSignUp} />

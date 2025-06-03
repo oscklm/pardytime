@@ -28,7 +28,7 @@ export const createAuth = (ctx: GenericCtx) =>
 		},
 		database: convexAdapter(ctx, betterAuthComponent),
 		// Replace with your site url
-		trustedOrigins: ["http://localhost:56139", "jeopardytime://"],
+		trustedOrigins: ["null", "http://localhost:8081", "jeopardytime://"],
 		plugins: [
 			// Expo
 			expo(),

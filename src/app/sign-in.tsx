@@ -1,4 +1,4 @@
-import { Link, router } from "expo-router";
+import { Link } from "expo-router";
 import { useState } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import { authClient } from "@/lib/auth/auth-client";
@@ -24,7 +24,6 @@ const SignInScreen = () => {
 				},
 				onSuccess: () => {
 					setLoading(false);
-					router.back();
 				},
 				onError: (ctx) => {
 					setLoading(false);
@@ -44,6 +43,7 @@ const SignInScreen = () => {
 				<TextInput
 					placeholder="Password"
 					value={password}
+					secureTextEntry
 					onChangeText={setPassword}
 				/>
 				<Button label="Login" isLoading={loading} onPress={handleLogin} />
