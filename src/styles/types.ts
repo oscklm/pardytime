@@ -6,6 +6,10 @@ export interface UnistylesTheme extends Omit<Theme, "dark"> {
 		primary: string;
 		secondary: string;
 		accent: string;
+		success: string;
+		error: string;
+		warning: string;
+		info: string;
 		background: string;
 		card: string;
 		text: string;

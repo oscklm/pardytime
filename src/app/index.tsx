@@ -14,6 +14,23 @@ export default function Index() {
 		<SafeAreaView style={styles.root}>
 			<YStack flex={1} pd="lg" gap="lg">
 				<Text variant="h1">JeopardyTime</Text>
+				{session && (
+					<Card>
+						<CardHeader>
+							<Text variant="h2">Welcome Back!</Text>
+						</CardHeader>
+						<CardContent>
+							<Text>You're logged in as {session.user.email}</Text>
+							<Button
+								label="Sign Out"
+								variant="error"
+								onPress={() => {
+									supabase.auth.signOut();
+								}}
+							/>
+						</CardContent>
+					</Card>
+				)}
 				<YStack flex={0}>
 					<Card>
 						<CardHeader>
@@ -28,22 +45,6 @@ export default function Index() {
 						</CardContent>
 					</Card>
 				</YStack>
-				{session && (
-					<Card>
-						<CardHeader>
-							<Text variant="h2">Welcome Back!</Text>
-						</CardHeader>
-						<CardContent>
-							<Text>You're logged in as {session.user.email}</Text>
-							<Button
-								label="Sign Out"
-								onPress={() => {
-									supabase.auth.signOut();
-								}}
-							/>
-						</CardContent>
-					</Card>
-				)}
 			</YStack>
 		</SafeAreaView>
 	);

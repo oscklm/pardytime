@@ -31,18 +31,20 @@ function RootNavigator() {
 					}}
 				/>
 			</Stack.Protected>
-			<Stack.Screen
-				name="sign-in"
-				options={{
-					title: "Sign In",
-				}}
-			/>
-			<Stack.Screen
-				name="sign-up"
-				options={{
-					title: "Create account",
-				}}
-			/>
+			<Stack.Protected guard={!session}>
+				<Stack.Screen
+					name="sign-in"
+					options={{
+						title: "Sign In",
+					}}
+				/>
+				<Stack.Screen
+					name="sign-up"
+					options={{
+						title: "Create account",
+					}}
+				/>
+			</Stack.Protected>
 		</Stack>
 	);
 }

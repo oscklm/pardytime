@@ -112,6 +112,9 @@ const styles = StyleSheet.create((th) => ({
 					backgroundColor: undefined,
 					alignSelf: "center",
 				},
+				error: {
+					backgroundColor: th.colors.error,
+				},
 			},
 			pressed: {
 				true: {
