@@ -1,10 +1,12 @@
 import { Link } from "expo-router";
 import { useState } from "react";
+import { Alert } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import TextInput from "@/components/ui/TextInput";
 import YStack from "@/components/ui/YStack";
+import { supabase } from "@/lib/supabase";
 
 const SignInScreen = () => {
 	const [email, setEmail] = useState("");
@@ -12,7 +14,13 @@ const SignInScreen = () => {
 	const [loading, setLoading] = useState(false);
 
 	const handleLogin = async () => {
-		// TODO: Implement login logic
+		const { error } = await supabase.auth.signInWithPassword({
+			email: email,
+			password: password,
+		});
+
+		if (error) Alert.alert(error.message);
+		setLoading(false);
 	};
 
 	return (

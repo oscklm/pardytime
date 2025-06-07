@@ -14,18 +14,13 @@ const SignUpScreen = () => {
 	const [loading, setLoading] = useState(false);
 
 	const handleSignUp = async () => {
-		// TODO: Implement sign-up logic here
+		const { error } = await supabase.auth.signUp({
+			email: email,
+			password: password,
+		});
 
-		async function signUpWithEmail() {
-			setLoading(true);
-			const { error } = await supabase.auth.signUp({
-				email: email,
-				password: password,
-			});
-
-			if (error) Alert.alert(error.message);
-			setLoading(false);
-		}
+		if (error) Alert.alert(error.message);
+		setLoading(false);
 	};
 	return (
 		<YStack flex={1} pd="lg" gap="md" style={styles.container}>

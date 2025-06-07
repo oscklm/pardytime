@@ -5,8 +5,11 @@ import Button from "@/components/ui/Button";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/providers/auth-provider";
 
 export default function Index() {
+	const { session } = useAuth();
 	return (
 		<SafeAreaView style={styles.root}>
 			<YStack flex={1} pd="lg" gap="lg">
@@ -25,6 +28,22 @@ export default function Index() {
 						</CardContent>
 					</Card>
 				</YStack>
+				{session && (
+					<Card>
+						<CardHeader>
+							<Text variant="h2">Welcome Back!</Text>
+						</CardHeader>
+						<CardContent>
+							<Text>You're logged in as {session.user.email}</Text>
+							<Button
+								label="Sign Out"
+								onPress={() => {
+									supabase.auth.signOut();
+								}}
+							/>
+						</CardContent>
+					</Card>
+				)}
 			</YStack>
 		</SafeAreaView>
 	);
