@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useHookAtTopLevel: this is ok here */
 import * as Haptics from "expo-haptics";
 import React from "react";
 import {
@@ -61,6 +62,7 @@ const Button = ({
 			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
 		}
 	}, [sensory]);
+
 	styles.useVariants({ variant });
 
 	return (

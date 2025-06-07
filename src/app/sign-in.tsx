@@ -1,11 +1,10 @@
 import { Link } from "expo-router";
 import { useState } from "react";
 import { StyleSheet } from "react-native-unistyles";
-import { authClient } from "@/lib/auth/auth-client";
-import Button from "@/shared/ui/Button";
-import Text from "@/shared/ui/Text";
-import TextInput from "@/shared/ui/TextInput";
-import YStack from "@/shared/ui/YStack";
+import Button from "@/components/ui/Button";
+import Text from "@/components/ui/Text";
+import TextInput from "@/components/ui/TextInput";
+import YStack from "@/components/ui/YStack";
 
 const SignInScreen = () => {
 	const [email, setEmail] = useState("");
@@ -13,25 +12,7 @@ const SignInScreen = () => {
 	const [loading, setLoading] = useState(false);
 
 	const handleLogin = async () => {
-		const { data, error } = await authClient.signIn.email(
-			{
-				email,
-				password,
-			},
-			{
-				onRequest: () => {
-					setLoading(true);
-				},
-				onSuccess: () => {
-					setLoading(false);
-				},
-				onError: (ctx) => {
-					setLoading(false);
-					alert(ctx.error.message);
-				},
-			},
-		);
-		console.log({ data, error });
+		// TODO: Implement login logic
 	};
 
 	return (

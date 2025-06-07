@@ -1,11 +1,11 @@
-import * as Haptics from "expo-haptics";
 import { useState } from "react";
+import { Alert } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import { authClient } from "@/lib/auth/auth-client";
-import Button from "@/shared/ui/Button";
-import Text from "@/shared/ui/Text";
-import TextInput from "@/shared/ui/TextInput";
-import YStack from "@/shared/ui/YStack";
+import Button from "@/components/ui/Button";
+import Text from "@/components/ui/Text";
+import TextInput from "@/components/ui/TextInput";
+import YStack from "@/components/ui/YStack";
+import { supabase } from "@/lib/supabase";
 
 const SignUpScreen = () => {
 	const [email, setEmail] = useState("");
@@ -14,27 +14,18 @@ const SignUpScreen = () => {
 	const [loading, setLoading] = useState(false);
 
 	const handleSignUp = async () => {
-		const { data, error } = await authClient.signUp.email(
-			{
-				name,
-				email,
-				password,
-			},
-			{
-				onRequest: () => {
-					setLoading(true);
-				},
-				onSuccess: () => {
-					setLoading(false);
-					Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-				},
-				onError: (ctx) => {
-					setLoading(false);
-					alert(ctx.error.message);
-				},
-			},
-		);
-		console.log({ data, error });
+		// TODO: Implement sign-up logic here
+
+		async function signUpWithEmail() {
+			setLoading(true);
+			const { error } = await supabase.auth.signUp({
+				email: email,
+				password: password,
+			});
+
+			if (error) Alert.alert(error.message);
+			setLoading(false);
+		}
 	};
 	return (
 		<YStack flex={1} pd="lg" gap="md" style={styles.container}>

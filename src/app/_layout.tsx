@@ -1,57 +1,37 @@
-import { ConvexBetterAuthProvider } from "@erquhart/convex-better-auth/react";
-import { ConvexReactClient, useConvexAuth } from "convex/react";
 import { Stack } from "expo-router";
-import { authClient } from "@/lib/auth/auth-client";
-import LoadingView from "@/shared/components/LoadingView";
 import { UniThemeProvider } from "@/styles/theme";
 import "react-native-reanimated";
 
-// biome-ignore lint/style/noNonNullAssertion: // TODO: Setup better env handling
-const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
-	unsavedChangesWarning: false,
-});
-
 export default function RootLayout() {
 	return (
-		<ConvexBetterAuthProvider client={convex} authClient={authClient}>
-			<UniThemeProvider>
-				<RootNavigator />
-			</UniThemeProvider>
-		</ConvexBetterAuthProvider>
+		<UniThemeProvider>
+			<RootNavigator />
+		</UniThemeProvider>
 	);
 }
 
 function RootNavigator() {
-	const { isLoading, isAuthenticated } = useConvexAuth();
-
-	if (isLoading) return <LoadingView />;
-
 	return (
 		<Stack>
-			<Stack.Protected guard={!isAuthenticated}>
-				<Stack.Screen
-					name="sign-in"
-					options={{
-						title: "Sign In",
-						headerShown: !isAuthenticated,
-					}}
-				/>
-				<Stack.Screen
-					name="sign-up"
-					options={{
-						title: "Create account",
-						headerShown: !isAuthenticated,
-					}}
-				/>
-			</Stack.Protected>
-			<Stack.Protected guard={isAuthenticated}>
-				<Stack.Screen
-					name="index"
-					options={{
-						headerShown: false,
-					}}
-				/>
-			</Stack.Protected>
+			<Stack.Screen
+				name="sign-in"
+				options={{
+					title: "Sign In",
+				}}
+			/>
+			<Stack.Screen
+				name="sign-up"
+				options={{
+					title: "Create account",
+				}}
+			/>
+
+			<Stack.Screen
+				name="index"
+				options={{
+					headerShown: false,
+				}}
+			/>
 		</Stack>
 	);
 }
