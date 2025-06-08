@@ -58,7 +58,8 @@
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone in order to record audio",
           "recordAudioAndroid": true
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "experiments": {
       "typedRoutes": true

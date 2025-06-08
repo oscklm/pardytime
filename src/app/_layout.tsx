@@ -1,50 +1,51 @@
-import { Stack } from "expo-router";
-import { UniThemeProvider } from "@/styles/theme";
-import "react-native-reanimated";
 import LoadingView from "@/components/LoadingView";
-import AuthProvider, { useAuth } from "@/providers/auth-provider";
+import { UniThemeProvider } from "@/styles/theme";
+import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import { tokenCache } from "@clerk/clerk-expo/token-cache";
+import { Stack } from "expo-router";
+import "react-native-reanimated";
 
 export default function RootLayout() {
-	return (
-		<UniThemeProvider>
-			<AuthProvider>
-				<RootNavigator />
-			</AuthProvider>
-		</UniThemeProvider>
-	);
+  return (
+    <UniThemeProvider>
+      <ClerkProvider tokenCache={tokenCache}>
+        <RootNavigator />
+      </ClerkProvider>
+    </UniThemeProvider>
+  );
 }
 
 function RootNavigator() {
-	const { loading, session } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
 
-	if (loading) {
-		return <LoadingView />;
-	}
+  if (!isLoaded) {
+    return <LoadingView />;
+  }
 
-	return (
-		<Stack>
-			<Stack.Protected guard={!!session}>
-				<Stack.Screen
-					name="index"
-					options={{
-						headerShown: false,
-					}}
-				/>
-			</Stack.Protected>
-			<Stack.Protected guard={!session}>
-				<Stack.Screen
-					name="sign-in"
-					options={{
-						title: "Sign In",
-					}}
-				/>
-				<Stack.Screen
-					name="sign-up"
-					options={{
-						title: "Create account",
-					}}
-				/>
-			</Stack.Protected>
-		</Stack>
-	);
+  return (
+    <Stack>
+      <Stack.Protected guard={isSignedIn}>
+        <Stack.Screen
+          name="(user)"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Protected>
+      <Stack.Protected guard={!isSignedIn}>
+        <Stack.Screen
+          name="sign-in"
+          options={{
+            title: "Sign In",
+          }}
+        />
+        <Stack.Screen
+          name="sign-up"
+          options={{
+            title: "Create account",
+          }}
+        />
+      </Stack.Protected>
+    </Stack>
+  );
 }

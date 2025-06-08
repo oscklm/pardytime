@@ -1,9 +1,8 @@
-## JeopardyTime
+# Development
 
-##### Todos
+### Current tasks
+- [ ] Setup convex and auth
 
-- [ ] Replace backend with supabase
-
-##### Inbox
-
--
+### Inbox
+- [ ] Image uploads
+- [ ] Bunny CDN
