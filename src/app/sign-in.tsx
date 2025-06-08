@@ -1,6 +1,6 @@
-import { useSignIn } from "@clerk/clerk-expo";
+import { useSignIn, isClerkAPIResponseError } from "@clerk/clerk-expo";
 import type { SignInResource } from "@clerk/types";
-import { useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { errAsync, ResultAsync } from "neverthrow";
 import React from "react";
 import { StyleSheet } from "react-native-unistyles";
@@ -23,16 +23,20 @@ function signInToClerk(
   // The seconds argument catches the error from the promise
   return ResultAsync.fromPromise(
     signIn.create({
-      identifier: emailAddress,
+      identifier: email,
       password,
     }),
-    () => new Error("Database error"),
+    (error: unknown) => {
+      if (isClerkAPIResponseError(error)) {
+        return new Error(error.message);
+      }
+      return new Error("Unknown error");
+    },
   );
 }
 
 const SignInScreen = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
-  const router = useRouter();
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [emailAddress, setEmailAddress] = React.useState("");
@@ -41,14 +45,13 @@ const SignInScreen = () => {
   const handleLogin = async () => {
     if (!isLoaded) return;
 
-    // Start the sign-in process using the email and password provided
     setIsLoading(true);
 
-    const signInAttempt = await signInToClerk(signIn, emailAddress, password); // asyncRes is a `ResultAsync<User, Error>`
+    const signInAttempt = await signInToClerk(signIn, emailAddress, password);
 
-    // res is a Result<string, Error>
     if (signInAttempt.isErr()) {
-      console.log(`Oops fail: ${signInAttempt.error.message}`);
+      alert(signInAttempt.error.message);
+      setIsLoading(false);
       return;
     }
 
@@ -56,7 +59,7 @@ const SignInScreen = () => {
 
     if (status === "complete") {
       await setActive({ session: createdSessionId });
-      router.replace("/");
+      setIsLoading(false);
     } else {
       alert(`${status}`);
     }
@@ -77,6 +80,7 @@ const SignInScreen = () => {
           placeholder="Enter password"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}
+          onSubmitEditing={handleLogin}
         />
         <Button label="Login" isLoading={isLoading} onPress={handleLogin} />
       </YStack>
