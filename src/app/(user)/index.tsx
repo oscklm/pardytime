@@ -1,3 +1,4 @@
+import { useAuth } from "@clerk/clerk-expo";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
@@ -5,7 +6,6 @@ import Button from "@/components/ui/Button";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
-import { useAuth } from "@clerk/clerk-expo";
 
 export default function Index() {
   const { userId, signOut } = useAuth();
