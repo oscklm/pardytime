@@ -1,39 +1,12 @@
-import { useSignIn, isClerkAPIResponseError } from "@clerk/clerk-expo";
-import type { SignInResource } from "@clerk/types";
+import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
-import { errAsync, ResultAsync } from "neverthrow";
+import { ResultAsync } from "neverthrow";
 import React from "react";
 import { StyleSheet } from "react-native-unistyles";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import TextInput from "@/components/ui/TextInput";
 import YStack from "@/components/ui/YStack";
-
-function signInToClerk(
-  signIn: SignInResource,
-  email: string,
-  password: string,
-): ResultAsync<SignInResource, Error> {
-  if (email.length < 3) {
-    // Throw a async result from a synchronous block thanks to the errAsync helper
-    return errAsync(new Error("Username is too short"));
-  }
-
-  // Wrap the async method into a ResultAsync thanks to fromPromise
-  // The seconds argument catches the error from the promise
-  return ResultAsync.fromPromise(
-    signIn.create({
-      identifier: email,
-      password,
-    }),
-    (error: unknown) => {
-      if (isClerkAPIResponseError(error)) {
-        return new Error(error.message);
-      }
-      return new Error("Unknown error");
-    },
-  );
-}
 
 const SignInScreen = () => {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -47,7 +20,18 @@ const SignInScreen = () => {
 
     setIsLoading(true);
 
-    const signInAttempt = await signInToClerk(signIn, emailAddress, password);
+    const signInAttempt = await ResultAsync.fromPromise(
+      signIn.create({
+        identifier: emailAddress,
+        password,
+      }),
+      (error: unknown) => {
+        if (isClerkAPIResponseError(error)) {
+          return new Error(error.message);
+        }
+        return new Error("Unknown error");
+      },
+    );
 
     if (signInAttempt.isErr()) {
       alert(signInAttempt.error.message);
