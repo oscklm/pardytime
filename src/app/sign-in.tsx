@@ -1,7 +1,9 @@
 import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
 import { Link } from "expo-router";
+import * as Updates from "expo-updates";
 import { ResultAsync } from "neverthrow";
 import React from "react";
+import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
@@ -74,13 +76,24 @@ const SignInScreen = () => {
 					<Button variant="link" label="Sign up now" />
 				</Link>
 			</YStack>
+			<View style={{ flex: 1 }} />
+			<YStack ai="center" jc="center" pd="md">
+				<Text>{Updates.runtimeVersion}</Text>
+				<Text color="primaryMuted">
+					{process.env.EXPO_PUBLIC_CONVEX_URL?.split("://")[1].slice(
+						-process.env.EXPO_PUBLIC_CONVEX_URL.length,
+						-13,
+					)}
+				</Text>
+			</YStack>
 		</YStack>
 	);
 };
 
-const styles = StyleSheet.create((th) => ({
+const styles = StyleSheet.create((th, rt) => ({
 	container: {
 		flex: 1,
+		paddingBottom: rt.insets.bottom,
 		backgroundColor: th.colors.background,
 	},
 }));
