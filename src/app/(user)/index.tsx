@@ -1,3 +1,5 @@
+import { useAuth } from "@clerk/clerk-expo";
+import { useConvexAuth } from "convex/react";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
@@ -7,11 +9,13 @@ import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
 
 export default function Index() {
+  const { isAuthenticated } = useConvexAuth();
+  const { userId, signOut } = useAuth();
   return (
     <SafeAreaView style={styles.root}>
       <YStack flex={1} pd="lg" gap="lg">
         <Text variant="h1">JeopardyTime</Text>
-        <YStack flex={0}>
+        <YStack flex={0} gap="lg">
           <Card>
             <CardHeader>
               <Text variant="h2">Section A</Text>
@@ -21,9 +25,23 @@ export default function Index() {
                 This is a simple card component with a header and content.
               </Text>
               <Button label="Sign In" onPress={() => router.push("/sign-in")} />
-              <Button label="Sign Up" onPress={() => router.push("/sign-up")} />
             </CardContent>
           </Card>
+          {isAuthenticated ? (
+            <Card>
+              <CardHeader>
+                <Text variant="h2">Welcome back!</Text>
+              </CardHeader>
+              <CardContent>
+                <Text> {userId}!</Text>
+                <Button
+                  variant="error"
+                  label="Sign Out"
+                  onPress={() => signOut()}
+                />
+              </CardContent>
+            </Card>
+          ) : null}
         </YStack>
       </YStack>
     </SafeAreaView>

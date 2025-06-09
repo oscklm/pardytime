@@ -1,10 +1,11 @@
-import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
-import { ConvexReactClient } from "convex/react";
+import { ConvexReactClient, useConvexAuth } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { Stack } from "expo-router";
 import { UniThemeProvider } from "@/styles/theme";
 import "react-native-reanimated";
+import { AuthLoaded } from "@/components/AuthLoaded";
 
 const convex = new ConvexReactClient(
   process.env.EXPO_PUBLIC_CONVEX_URL as string,
@@ -31,25 +32,42 @@ export default function RootLayout() {
   return (
     <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-        <ClerkLoaded>
+        <AuthLoaded>
           <UniThemeProvider>
             <RootNavigator />
           </UniThemeProvider>
-        </ClerkLoaded>
+        </AuthLoaded>
       </ConvexProviderWithClerk>
     </ClerkProvider>
   );
 }
 
 function RootNavigator() {
+  const { isAuthenticated } = useConvexAuth();
   return (
     <Stack>
-      <Stack.Screen
-        name="(user)"
-        options={{
-          headerShown: false,
-        }}
-      />
+      <Stack.Protected guard={isAuthenticated}>
+        <Stack.Screen
+          name="(user)"
+          options={{
+            headerShown: false,
+          }}
+        />
+      </Stack.Protected>
+      <Stack.Protected guard={!isAuthenticated}>
+        <Stack.Screen
+          name="sign-in"
+          options={{
+            title: "Sign In",
+          }}
+        />
+        <Stack.Screen
+          name="sign-up"
+          options={{
+            title: "Sign Up",
+          }}
+        />
+      </Stack.Protected>
     </Stack>
   );
 }
