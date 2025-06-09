@@ -7,7 +7,7 @@ import { UniThemeProvider } from "@/styles/theme";
 import "react-native-reanimated";
 import * as SplashScreen from "expo-splash-screen";
 import { LogBox } from "react-native";
-import { AuthLoaded } from "@/components/auth-loaded";
+import { AuthLoaded } from "@/components/AuthLoaded";
 
 LogBox.ignoreLogs(["Clerk: Clerk has been loaded with development keys."]);
 
