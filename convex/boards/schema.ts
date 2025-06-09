@@ -4,14 +4,14 @@ import { v } from "convex/values";
 const boardSchema = v.object({
 	title: v.string(),
 	description: v.optional(v.string()),
-	imageId: v.optional(v.id("_storage")),
-	ownerId: v.id("users"),
-	categoryOrder: v.optional(v.array(v.id("categories"))),
+	image_id: v.optional(v.id("_storage")),
+	owner_id: v.id("users"),
+	category_order: v.optional(v.array(v.id("categories"))),
 });
 
 const questionSchema = v.object({
-	boardId: v.id("boards"),
-	categoryId: v.id("categories"),
+	board_id: v.id("boards"),
+	category_id: v.id("categories"),
 	text: v.string(),
 	answer: v.string(),
 	order: v.optional(v.number()),
@@ -19,10 +19,10 @@ const questionSchema = v.object({
 });
 
 const categorySchema = v.object({
-	boardId: v.id("boards"),
+	board_id: v.id("boards"),
 	title: v.string(),
 	description: v.optional(v.string()),
-	questionOrder: v.optional(v.array(v.id("questions"))),
+	question_order: v.optional(v.array(v.id("questions"))),
 });
 
 const tagSchema = v.object({
@@ -32,8 +32,8 @@ const tagSchema = v.object({
 });
 
 const boardTagSchema = v.object({
-	boardId: v.id("boards"),
-	tagId: v.id("tags"),
+	board_id: v.id("boards"),
+	tag_id: v.id("tags"),
 });
 
 const boardTables = {
@@ -42,8 +42,8 @@ const boardTables = {
 	questions: defineTable(questionSchema),
 	tags: defineTable(tagSchema).index("by_name", ["name"]),
 	boardTags: defineTable(boardTagSchema)
-		.index("by_board", ["boardId"])
-		.index("by_tag", ["tagId"]),
+		.index("by_board", ["board_id"])
+		.index("by_tag", ["tag_id"]),
 };
 
 export { boardSchema, questionSchema, categorySchema, tagSchema, boardTables };
