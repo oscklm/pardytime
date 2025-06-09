@@ -85,6 +85,9 @@ const SignInScreen = () => {
 						-13,
 					)}
 				</Text>
+				<Text color="primaryMuted" variant="h3">
+					{process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY?.split("_")[1]}
+				</Text>
 			</YStack>
 		</YStack>
 	);
