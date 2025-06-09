@@ -1,43 +1,144 @@
+import { useSignUp } from "@clerk/clerk-expo";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Button from "@/components/ui/Button";
-import Text from "@/components/ui/Text";
 import TextInput from "@/components/ui/TextInput";
 import YStack from "@/components/ui/YStack";
 
 const SignUpScreen = () => {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+	const { isLoaded, signUp, setActive } = useSignUp();
+	const router = useRouter();
 
-  const handleSignUp = async () => {
-    // Implement
-  };
-  return (
-    <YStack flex={1} pd="lg" gap="md" style={styles.container}>
-      <Text variant="h1">Sign Up</Text>
-      <YStack gap="lg">
-        <TextInput placeholder="Name" value={name} onChangeText={setName} />
-        <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
-        <TextInput
-          placeholder="Password"
-          value={password}
-          secureTextEntry
-          onChangeText={setPassword}
-        />
-        <Button label="Signup" isLoading={loading} onPress={handleSignUp} />
-      </YStack>
-    </YStack>
-  );
+	const [email, setEmail] = useState("");
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [pendingVerification, setPendingVerification] = useState(false);
+	const [verificationCode, setVerificationCode] = useState("");
+
+	const handleSignUp = async () => {
+		if (!isLoaded) return;
+
+		setLoading(true);
+		try {
+			// Create the sign-up with email, password, and optional first name
+			await signUp.create({
+				emailAddress: email,
+				password,
+				username,
+			});
+
+			// Send verification email
+			await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+
+			// Show verification form
+			setPendingVerification(true);
+		} catch (err) {
+			console.error("Sign up error:", JSON.stringify(err, null, 2));
+			// Handle error (you might want to show an error message to the user)
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleVerification = async () => {
+		if (!isLoaded) return;
+
+		setLoading(true);
+		try {
+			// Attempt verification with the code
+			const signUpAttempt = await signUp.attemptEmailAddressVerification({
+				code: verificationCode,
+			});
+
+			// If verification successful, set session and redirect
+			if (signUpAttempt.status === "complete") {
+				await setActive({ session: signUpAttempt.createdSessionId });
+				router.replace("/"); // Or wherever you want to redirect after sign up
+			} else {
+				console.error(
+					"Verification incomplete:",
+					JSON.stringify(signUpAttempt, null, 2),
+				);
+				// Handle incomplete verification
+			}
+		} catch (err) {
+			console.error("Verification error:", JSON.stringify(err, null, 2));
+			// Handle verification error
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	// Show verification form if pending verification
+	if (pendingVerification) {
+		return (
+			<YStack flex={1} pd="lg" gap="md" style={styles.container}>
+				<YStack gap="lg">
+					<TextInput
+						placeholder="Enter verification code"
+						autoComplete="one-time-code"
+						value={verificationCode}
+						onChangeText={setVerificationCode}
+						keyboardType="numeric"
+					/>
+					<Button
+						label="Verify Email"
+						isLoading={loading}
+						onPress={handleVerification}
+					/>
+					<Button
+						label="Back"
+						variant="outline" // Assuming you have a variant prop
+						onPress={() => setPendingVerification(false)}
+					/>
+				</YStack>
+			</YStack>
+		);
+	}
+
+	// Main sign up form
+	return (
+		<YStack flex={1} pd="lg" gap="md" style={styles.container}>
+			<YStack gap="lg">
+				<TextInput
+					autoCapitalize="none"
+					autoCorrect={false}
+					placeholder="Username"
+					value={username}
+					onChangeText={setUsername}
+				/>
+				<TextInput
+					placeholder="Email"
+					autoComplete="email"
+					value={email}
+					onChangeText={setEmail}
+					autoCapitalize="none"
+					keyboardType="email-address"
+				/>
+				<TextInput
+					autoComplete="password"
+					placeholder="Password"
+					value={password}
+					secureTextEntry
+					onChangeText={setPassword}
+				/>
+				<Button
+					label="Create account"
+					isLoading={loading}
+					onPress={handleSignUp}
+				/>
+			</YStack>
+		</YStack>
+	);
 };
 
 const styles = StyleSheet.create((th) => ({
-  container: {
-    flex: 1,
-    backgroundColor: th.colors.background,
-  },
+	container: {
+		flex: 1,
+		backgroundColor: th.colors.background,
+	},
 }));
 
 export default SignUpScreen;

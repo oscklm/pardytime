@@ -36,7 +36,9 @@ const styles = StyleSheet.create((th) => ({
 		borderRadius: th.radius.md,
 		padding: th.space.lg,
 	},
-	cardHeader: {},
+	cardHeader: {
+		marginBottom: th.space.md,
+	},
 	cardContent: {
 		gap: th.space.md,
 	},

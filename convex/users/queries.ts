@@ -10,7 +10,7 @@ export const getByClerkId = query({
 			.unique();
 
 		if (!userDoc) {
-			throw new Error(`User with clerkId ${clerkId} not found`);
+			return undefined;
 		}
 
 		return userDoc;

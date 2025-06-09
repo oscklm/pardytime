@@ -7,7 +7,7 @@ interface Props extends React.ComponentPropsWithoutRef<typeof View>, Variants {
 	flex?: number;
 }
 
-const YStack = ({
+const XStack = ({
 	// Normal props
 	flex,
 	// Unistyles variants
@@ -25,7 +25,7 @@ const YStack = ({
 
 const styles = StyleSheet.create((th) => ({
 	stack: {
-		flexDirection: "column",
+		flexDirection: "row",
 		variants: {
 			pd: th.variants.padding,
 			ai: th.variants.alignItems,
@@ -35,4 +35,4 @@ const styles = StyleSheet.create((th) => ({
 	},
 }));
 
-export default YStack;
+export default XStack;

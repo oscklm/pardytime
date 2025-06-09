@@ -21,6 +21,7 @@ const styles = StyleSheet.create((th, rt) => ({
 		alignItems: "center",
 		justifyContent: "center",
 		gap: th.space.md,
+		backgroundColor: th.colors.background,
 	},
 	indicator: {
 		color: th.colors.accent,

@@ -23,13 +23,22 @@ const Text = ({
 const styles = StyleSheet.create((th) => ({
 	text: {
 		fontWeight: "400",
-		fontSize: 16,
-		lineHeight: 16 * 1.5,
+		fontSize: th.space.lg,
+		lineHeight: th.space.lg * 1.5,
 		color: th.colors.text,
 		variants: {
 			color: {
 				accent: {
 					color: th.colors.accent,
+				},
+				primary: {
+					color: th.colors.primary,
+				},
+				primaryMuted: {
+					color: th.baseColors.primaryMuted,
+				},
+				secondary: {
+					color: th.colors.secondary,
 				},
 			},
 			variant: {
@@ -47,6 +56,24 @@ const styles = StyleSheet.create((th) => ({
 					fontWeight: "700",
 					fontSize: 20,
 					lineHeight: 28,
+				},
+			},
+			size: {
+				sm: {
+					fontSize: th.space.sm,
+					lineHeight: th.space.sm * 1.5,
+				},
+				md: {
+					fontSize: th.space.md,
+					lineHeight: th.space.md * 1.5,
+				},
+				lg: {
+					fontSize: th.space.lg,
+					lineHeight: th.space.lg * 1.5,
+				},
+				xl: {
+					fontSize: th.space.xl,
+					lineHeight: th.space.xl * 1.5,
 				},
 			},
 			invert: {
