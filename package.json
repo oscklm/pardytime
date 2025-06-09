@@ -21,7 +21,7 @@
     "@react-navigation/native": "^7.1.6",
     "convex": "^1.24.8",
     "convex-helpers": "^0.1.92",
-    "expo": "53.0.11",
+    "expo": "53.0.10",
     "expo-background-task": "~0.2.7",
     "expo-blur": "~14.1.5",
     "expo-camera": "~16.1.7",
