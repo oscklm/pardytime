@@ -1,7 +1,7 @@
 import { useAuth } from "@clerk/clerk-expo";
 import { useQuery } from "convex/react";
 import { createContext, type PropsWithChildren, useContext } from "react";
-import LoadingView from "@/components/loading-view";
+import LoadingView from "@/components/LoadingView";
 import { api } from "@/convex/_generated/api";
 import type { Doc } from "@/convex/_generated/dataModel";
 

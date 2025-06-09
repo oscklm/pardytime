@@ -1,5 +1,5 @@
 import { useConvexAuth } from "convex/react";
-import LoadingView from "./loading-view";
+import LoadingView from "./LoadingView";
 
 export const AuthLoaded = ({ children }: React.PropsWithChildren<unknown>) => {
 	const { isLoading } = useConvexAuth();
