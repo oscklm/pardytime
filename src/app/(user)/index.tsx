@@ -1,4 +1,3 @@
-import { useAuth } from "@clerk/clerk-expo";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
@@ -8,27 +7,10 @@ import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
 
 export default function Index() {
-  const { userId, signOut } = useAuth();
-
   return (
     <SafeAreaView style={styles.root}>
       <YStack flex={1} pd="lg" gap="lg">
         <Text variant="h1">JeopardyTime</Text>
-        {userId && (
-          <Card>
-            <CardHeader>
-              <Text variant="h2">Welcome Back!</Text>
-            </CardHeader>
-            <CardContent>
-              <Text>You're logged in as {userId}</Text>
-              <Button
-                label="Sign Out"
-                variant="error"
-                onPress={() => signOut()}
-              />
-            </CardContent>
-          </Card>
-        )}
         <YStack flex={0}>
           <Card>
             <CardHeader>
