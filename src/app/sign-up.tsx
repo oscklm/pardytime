@@ -34,9 +34,10 @@ const SignUpScreen = () => {
 
 			// Show verification form
 			setPendingVerification(true);
-		} catch (err) {
-			console.error("Sign up error:", JSON.stringify(err, null, 2));
-			// Handle error (you might want to show an error message to the user)
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				alert(err.message);
+			}
 		} finally {
 			setLoading(false);
 		}
@@ -63,9 +64,10 @@ const SignUpScreen = () => {
 				);
 				// Handle incomplete verification
 			}
-		} catch (err) {
-			console.error("Verification error:", JSON.stringify(err, null, 2));
-			// Handle verification error
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				alert(err.message);
+			}
 		} finally {
 			setLoading(false);
 		}
