@@ -2,9 +2,7 @@
 
 ### Current tasks
 
-- [x] Setup auth backend logic
-- [x] Add auth provider
-- [x] Add signup logic
+- [x] Bump unistyles
 
 ### Backlog
 
@@ -15,3 +13,6 @@
 ### Archived
 
 - [x] Setup convex and auth
+- [x] Setup auth backend logic
+- [x] Add auth provider
+- [x] Add signup logic
