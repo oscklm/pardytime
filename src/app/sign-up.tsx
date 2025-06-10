@@ -1,5 +1,5 @@
 import { useSignUp } from "@clerk/clerk-expo";
-import { useRouter } from "expo-router";
+import { router } from "expo-router";
 import { useState } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import Button from "@/components/ui/Button";
@@ -8,7 +8,6 @@ import YStack from "@/components/ui/YStack";
 
 const SignUpScreen = () => {
 	const { isLoaded, signUp, setActive } = useSignUp();
-	const router = useRouter();
 
 	const [email, setEmail] = useState("");
 	const [username, setUsername] = useState("");
@@ -56,13 +55,12 @@ const SignUpScreen = () => {
 			// If verification successful, set session and redirect
 			if (signUpAttempt.status === "complete") {
 				await setActive({ session: signUpAttempt.createdSessionId });
-				router.replace("/"); // Or wherever you want to redirect after sign up
+				router.replace("/");
 			} else {
-				console.error(
-					"Verification incomplete:",
-					JSON.stringify(signUpAttempt, null, 2),
-				);
-				// Handle incomplete verification
+				if (signUpAttempt.status === "missing_requirements") {
+					alert("Please complete all required fields.");
+				}
+				alert(`Verification status: ${signUpAttempt.status}`);
 			}
 		} catch (err: unknown) {
 			if (err instanceof Error) {

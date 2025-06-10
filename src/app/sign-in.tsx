@@ -1,5 +1,5 @@
 import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import * as Updates from "expo-updates";
 import { ResultAsync } from "neverthrow";
 import React from "react";
@@ -9,6 +9,9 @@ import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import TextInput from "@/components/ui/TextInput";
 import YStack from "@/components/ui/YStack";
+
+console.log(process.env.EXPO_PUBLIC_CONVEX_URL);
+console.log(process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
 const SignInScreen = () => {
 	const { signIn, setActive, isLoaded } = useSignIn();
@@ -45,6 +48,7 @@ const SignInScreen = () => {
 
 		if (status === "complete") {
 			await setActive({ session: createdSessionId });
+			router.replace("/");
 			setIsLoading(false);
 		} else {
 			alert(`${status}`);
