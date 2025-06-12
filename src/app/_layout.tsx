@@ -63,6 +63,7 @@ function RootNavigator() {
 				<Stack.Screen
 					name="(user)"
 					options={{
+						title: "Back",
 						headerShown: false,
 					}}
 				/>
@@ -81,6 +82,13 @@ function RootNavigator() {
 					}}
 				/>
 			</Stack.Protected>
+			<Stack.Screen
+				name="changelogs"
+				options={{
+					title: "See what's new",
+					presentation: "modal",
+				}}
+			/>
 		</Stack>
 	);
 }
