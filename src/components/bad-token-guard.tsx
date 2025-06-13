@@ -1,6 +1,7 @@
 import { useAuth } from "@clerk/clerk-expo";
 import { useConvex, useConvexAuth } from "convex/react";
 import { useEffect } from "react";
+import { Alert } from "react-native";
 
 export default function BadTokenGuard() {
 	const { isAuthenticated } = useConvexAuth();
@@ -14,9 +15,12 @@ export default function BadTokenGuard() {
 				try {
 					await signOut();
 					convex.clearAuth();
-					alert("Bad token...");
-				} catch (e) {
-					alert("Something went wrong");
+				} catch (e: unknown) {
+					__DEV__ && console.error(e);
+					Alert.alert(
+						"Auth failed",
+						"Please restart the app, if this issue persist. You need to reinstall.",
+					);
 				}
 			}
 		}, 5000);

@@ -1,14 +1,19 @@
+import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { ConvexReactClient, useConvexAuth } from "convex/react";
-import { Stack } from "expo-router";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
+import { SplashScreen, Stack } from "expo-router";
+import * as TaskManager from "expo-task-manager";
+import { useEffect } from "react";
+import { LogBox } from "react-native";
+import BadTokenGuard from "@/components/bad-token-guard";
+import SplashScreenController from "@/components/splash-screen-controller";
+import {
+	registerUpdateCheckTask,
+	UPDATE_CHECK_TASK_IDENTIFIER,
+} from "@/lib/tasks/updateChecker";
 import { UniThemeProvider } from "@/styles/theme";
 import "react-native-reanimated";
-import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import { tokenCache } from "@clerk/clerk-expo/token-cache";
-import { ConvexProviderWithClerk } from "convex/react-clerk";
-import * as SplashScreen from "expo-splash-screen";
-import { LogBox } from "react-native";
-import { AuthLoaded } from "@/components/AuthLoaded";
-import BadTokenGuard from "@/components/bad-token-guard";
 
 LogBox.ignoreLogs(["Clerk: Clerk has been loaded with development keys."]);
 
@@ -37,16 +42,31 @@ if (!publishableKey) {
 }
 
 export default function RootLayout() {
+	// Register the update check task if it is not already registered
+	useEffect(() => {
+		async function initUpdateTask() {
+			const isRegistered = await TaskManager.isTaskRegisteredAsync(
+				UPDATE_CHECK_TASK_IDENTIFIER,
+			);
+			if (!isRegistered) {
+				await registerUpdateCheckTask();
+			}
+		}
+		initUpdateTask();
+	}, []);
+
 	return (
 		<ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-			<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-				<AuthLoaded>
-					<BadTokenGuard />
-					<UniThemeProvider>
-						<RootNavigator />
-					</UniThemeProvider>
-				</AuthLoaded>
-			</ConvexProviderWithClerk>
+			<ClerkLoaded>
+				<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+					<SplashScreenController>
+						<BadTokenGuard />
+						<UniThemeProvider>
+							<RootNavigator />
+						</UniThemeProvider>
+					</SplashScreenController>
+				</ConvexProviderWithClerk>
+			</ClerkLoaded>
 		</ClerkProvider>
 	);
 }
