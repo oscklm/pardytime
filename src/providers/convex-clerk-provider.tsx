@@ -1,4 +1,4 @@
-import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import { ClerkProvider, useAuth } from "@clerk/clerk-expo";
 import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
@@ -30,12 +30,10 @@ export default function ConvexClerkProvider({ children }: PropsWithChildren) {
 	return (
 		<React.Fragment>
 			<ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-				<ClerkLoaded>
-					<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-						<BadTokenGuard />
-						{children}
-					</ConvexProviderWithClerk>
-				</ClerkLoaded>
+				<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+					<BadTokenGuard />
+					{children}
+				</ConvexProviderWithClerk>
 			</ClerkProvider>
 		</React.Fragment>
 	);
