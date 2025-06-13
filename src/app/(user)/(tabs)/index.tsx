@@ -44,32 +44,32 @@ export default function IndexScreen() {
 							>
 								<View
 									style={{
-										height: 180,
-										width: 180,
+										height: 200,
+										width: 200,
 										borderRadius: 8,
 										backgroundColor: "yellow",
 									}}
 								/>
 								<View
 									style={{
-										height: 180,
-										width: 180,
+										height: 200,
+										width: 200,
 										borderRadius: 8,
 										backgroundColor: "green",
 									}}
 								/>
 								<View
 									style={{
-										height: 180,
-										width: 180,
+										height: 200,
+										width: 200,
 										borderRadius: 8,
 										backgroundColor: "blue",
 									}}
 								/>
 								<View
 									style={{
-										height: 180,
-										width: 180,
+										height: 200,
+										width: 200,
 										borderRadius: 8,
 										backgroundColor: "pink",
 									}}
@@ -95,32 +95,32 @@ export default function IndexScreen() {
 							>
 								<View
 									style={{
-										height: 180,
-										width: 180,
+										height: 200,
+										width: 200,
 										borderRadius: 8,
 										backgroundColor: "brown",
 									}}
 								/>
 								<View
 									style={{
-										height: 180,
-										width: 180,
+										height: 200,
+										width: 200,
 										borderRadius: 8,
 										backgroundColor: "yellow",
 									}}
 								/>
 								<View
 									style={{
-										height: 180,
-										width: 180,
+										height: 200,
+										width: 200,
 										borderRadius: 8,
 										backgroundColor: "teal",
 									}}
 								/>
 								<View
 									style={{
-										height: 180,
-										width: 180,
+										height: 200,
+										width: 200,
 										borderRadius: 8,
 										backgroundColor: "orange",
 									}}
