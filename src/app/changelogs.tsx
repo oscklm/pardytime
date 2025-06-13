@@ -3,6 +3,7 @@ import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Text from "@/components/ui/Text";
 import { api } from "@/convex/_generated/api";
+import { formatUnixTimestamp } from "@/lib/utils/time";
 
 const ChangelogScreen = () => {
 	const changelogs = useQuery(api.changelogs.queries.getAll, {});
@@ -20,10 +21,13 @@ const ChangelogScreen = () => {
 			{changelogs.map((log) => (
 				<View style={styles.log} key={log._id}>
 					<Text variant="h2">{log.version}</Text>
+					<Text style={{ marginBottom: 8 }}>
+						{formatUnixTimestamp(log._creationTime)}
+					</Text>
 					<View style={styles.entry}>
 						{log.entries.map((entry) => (
 							<View key={entry.title} style={styles.entryList}>
-								<Text style={{ marginBottom: 4 }}>- {entry.title}</Text>
+								<Text style={{ marginBottom: 4 }}> - {entry.title}</Text>
 							</View>
 						))}
 					</View>

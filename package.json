@@ -3,7 +3,7 @@
   "main": "src/index.ts",
   "version": "1.0.0",
   "scripts": {
-    "dev": "expo start --dev-client",
+    "dev": "APP_VARIANT=development expo start --dev-client",
     "android": "expo run:android",
     "prebuild": "expo prebuild -p ios",
     "db:dev": "convex dev",
@@ -22,6 +22,7 @@
     "@react-navigation/native": "^7.1.6",
     "convex": "^1.24.8",
     "convex-helpers": "^0.1.92",
+    "date-fns": "^4.1.0",
     "expo": "53.0.11",
     "expo-auth-session": "~6.2.0",
     "expo-background-task": "~0.2.7",

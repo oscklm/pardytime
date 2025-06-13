@@ -10,9 +10,6 @@ import Text from "@/components/ui/Text";
 import TextInput from "@/components/ui/TextInput";
 import YStack from "@/components/ui/YStack";
 
-console.log(process.env.EXPO_PUBLIC_CONVEX_URL);
-console.log(process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY);
-
 const SignInScreen = () => {
 	const { signIn, setActive, isLoaded } = useSignIn();
 

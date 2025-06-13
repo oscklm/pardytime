@@ -12,6 +12,13 @@ export default function RootLayout() {
 						title: "Back",
 					}}
 				/>
+				<Stack.Screen
+					name="settings"
+					options={{
+						title: "Settings",
+						presentation: "modal",
+					}}
+				/>
 			</Stack>
 		</UserProvider>
 	);

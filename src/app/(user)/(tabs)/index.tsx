@@ -1,32 +1,95 @@
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { router } from "expo-router";
+import { ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import Button from "@/components/ui/Button";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
+import TouchableBounce from "@/components/ui/TouchableBounce";
+import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
-import { useUser } from "@/providers/user-provider";
 
 export default function IndexScreen() {
-	const { user } = useUser();
-
 	return (
 		<YStack flex={1} pd="lg" gap="lg" style={styles.container}>
-			<YStack>
-				<Text variant="h2">Hey, {user.username}!</Text>
-			</YStack>
-			<YStack flex={0} gap="lg">
-				<Card>
-					<CardHeader>
-						<Text variant="h2">Boards</Text>
-					</CardHeader>
-					<CardContent>
-						<Button
-							label="Go to Dashboard"
-							onPress={() => router.push("/dashboard")}
-						/>
-					</CardContent>
-				</Card>
-			</YStack>
+			<XStack ai="center" jc="between">
+				<YStack>
+					<Text variant="h1">JeopardyTime</Text>
+				</YStack>
+				<YStack>
+					<TouchableBounce onPress={() => router.push("/changelogs")}>
+						<FontAwesome size={28} name="newspaper-o" color="black" />
+					</TouchableBounce>
+				</YStack>
+			</XStack>
+			<ScrollView
+				showsVerticalScrollIndicator={false}
+				contentContainerStyle={{ gap: 24 }}
+			>
+				<YStack flex={0} gap="lg">
+					<Card>
+						<CardHeader>
+							<XStack ai="center" gap="sm">
+								<FontAwesome size={24} name="star" color="black" />
+								<Text variant="h2">Your Boards</Text>
+							</XStack>
+						</CardHeader>
+						<CardContent>
+							<ScrollView
+								horizontal
+								showsHorizontalScrollIndicator={false}
+								contentContainerStyle={{
+									gap: 20,
+									padding: 10,
+								}}
+							>
+								<View
+									style={{ height: 200, width: 200, backgroundColor: "yellow" }}
+								/>
+								<View
+									style={{ height: 200, width: 200, backgroundColor: "green" }}
+								/>
+								<View
+									style={{ height: 200, width: 200, backgroundColor: "blue" }}
+								/>
+								<View
+									style={{ height: 200, width: 200, backgroundColor: "pink" }}
+								/>
+							</ScrollView>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardHeader>
+							<XStack ai="center" gap="sm">
+								<FontAwesome size={24} name="trophy" color="black" />
+								<Text variant="h2">Top Boards</Text>
+							</XStack>
+						</CardHeader>
+						<CardContent>
+							<ScrollView
+								horizontal
+								showsHorizontalScrollIndicator={false}
+								contentContainerStyle={{
+									gap: 20,
+									padding: 10,
+								}}
+							>
+								<View
+									style={{ height: 200, width: 200, backgroundColor: "brown" }}
+								/>
+								<View
+									style={{ height: 200, width: 200, backgroundColor: "yellow" }}
+								/>
+								<View
+									style={{ height: 200, width: 200, backgroundColor: "teal" }}
+								/>
+								<View
+									style={{ height: 200, width: 200, backgroundColor: "orange" }}
+								/>
+							</ScrollView>
+						</CardContent>
+					</Card>
+				</YStack>
+			</ScrollView>
 		</YStack>
 	);
 }

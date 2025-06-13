@@ -57,6 +57,11 @@ const styles = StyleSheet.create((th) => ({
 					fontSize: 20,
 					lineHeight: 28,
 				},
+				subtitle: {
+					fontWeight: "500",
+					fontSize: 16,
+					lineHeight: 24,
+				},
 			},
 			size: {
 				sm: {

@@ -10,10 +10,11 @@ const Image = ({
 	// Normal props
 	storageId,
 	style,
+	source,
 	...props
 }: Props) => {
 	const href = `https://https://${BUNNY_CDN_PULLZONE}.b-cdn.net/${storageId}`;
-	return <ExpoImage source={{ uri: href }} {...props} />;
+	return <ExpoImage source={storageId ? { uri: href } : source} {...props} />;
 };
 
 export { Image };
