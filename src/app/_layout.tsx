@@ -84,6 +84,7 @@ function RootNavigator() {
 					}}
 				/>
 			</Stack.Protected>
+
 			<Stack.Screen
 				name="changelogs"
 				options={{

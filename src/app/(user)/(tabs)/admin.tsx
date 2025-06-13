@@ -1,4 +1,6 @@
+import { router } from "expo-router";
 import { StyleSheet } from "react-native-unistyles";
+import Button from "@/components/ui/Button";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
@@ -26,6 +28,10 @@ export default function AdminScreen() {
 						<Text>Something...</Text>
 					</CardContent>
 				</Card>
+				<Button
+					label="Background Task"
+					onPress={() => router.push("/background-task")}
+				/>
 			</YStack>
 		</YStack>
 	);

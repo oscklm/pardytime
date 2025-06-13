@@ -19,6 +19,13 @@ export default function RootLayout() {
 						presentation: "modal",
 					}}
 				/>
+				<Stack.Screen
+					name="background-task"
+					options={{
+						title: "Background Task",
+						presentation: "modal",
+					}}
+				/>
 			</Stack>
 		</UserProvider>
 	);
