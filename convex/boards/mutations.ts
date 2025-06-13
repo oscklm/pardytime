@@ -1,5 +1,4 @@
 import { v } from "convex/values";
-import type { Id } from "../_generated/dataModel";
 import { mutation } from "../_generated/server";
 import { boardSchema } from "./schema";
 
@@ -28,7 +27,15 @@ export const updateBoard = mutation({
 export const seedDummyBoards = mutation({
 	args: {},
 	handler: async (ctx) => {
-		const ownerId = "jx74p6afsrzetd5j3ny2bmg5an7hqjsc" as Id<"users">;
+		const ownerId = await ctx.db
+			.query("users")
+			.first()
+			.then((user) => user?._id);
+
+		if (!ownerId) {
+			throw new Error("No owner found");
+		}
+
 		const boards = [
 			{
 				title: "Classic Jeopardy",

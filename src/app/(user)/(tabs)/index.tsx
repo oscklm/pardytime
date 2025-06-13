@@ -43,16 +43,36 @@ export default function IndexScreen() {
 								}}
 							>
 								<View
-									style={{ height: 200, width: 200, backgroundColor: "yellow" }}
+									style={{
+										height: 200,
+										width: 200,
+										borderRadius: 8,
+										backgroundColor: "yellow",
+									}}
 								/>
 								<View
-									style={{ height: 200, width: 200, backgroundColor: "green" }}
+									style={{
+										height: 200,
+										width: 200,
+										borderRadius: 8,
+										backgroundColor: "green",
+									}}
 								/>
 								<View
-									style={{ height: 200, width: 200, backgroundColor: "blue" }}
+									style={{
+										height: 200,
+										width: 200,
+										borderRadius: 8,
+										backgroundColor: "blue",
+									}}
 								/>
 								<View
-									style={{ height: 200, width: 200, backgroundColor: "pink" }}
+									style={{
+										height: 200,
+										width: 200,
+										borderRadius: 8,
+										backgroundColor: "pink",
+									}}
 								/>
 							</ScrollView>
 						</CardContent>
@@ -74,16 +94,36 @@ export default function IndexScreen() {
 								}}
 							>
 								<View
-									style={{ height: 200, width: 200, backgroundColor: "brown" }}
+									style={{
+										height: 200,
+										width: 200,
+										borderRadius: 8,
+										backgroundColor: "brown",
+									}}
 								/>
 								<View
-									style={{ height: 200, width: 200, backgroundColor: "yellow" }}
+									style={{
+										height: 200,
+										width: 200,
+										borderRadius: 8,
+										backgroundColor: "yellow",
+									}}
 								/>
 								<View
-									style={{ height: 200, width: 200, backgroundColor: "teal" }}
+									style={{
+										height: 200,
+										width: 200,
+										borderRadius: 8,
+										backgroundColor: "teal",
+									}}
 								/>
 								<View
-									style={{ height: 200, width: 200, backgroundColor: "orange" }}
+									style={{
+										height: 200,
+										width: 200,
+										borderRadius: 8,
+										backgroundColor: "orange",
+									}}
 								/>
 							</ScrollView>
 						</CardContent>
