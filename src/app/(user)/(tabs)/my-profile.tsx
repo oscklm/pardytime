@@ -17,7 +17,10 @@ export default function MyProfileScreen() {
 					<Text variant="h1">@{user.username}</Text>
 				</YStack>
 				<YStack>
-					<TouchableBounce onPress={() => router.push("/settings")}>
+					<TouchableBounce
+						sensory="light"
+						onPress={() => router.push("/settings")}
+					>
 						<FontAwesome size={28} name="cog" color="black" />
 					</TouchableBounce>
 				</YStack>

@@ -16,7 +16,10 @@ export default function IndexScreen() {
 					<Text variant="h1">JeopardyTime</Text>
 				</YStack>
 				<YStack>
-					<TouchableBounce onPress={() => router.push("/changelogs")}>
+					<TouchableBounce
+						sensory="light"
+						onPress={() => router.push("/changelogs")}
+					>
 						<FontAwesome size={28} name="newspaper-o" color="black" />
 					</TouchableBounce>
 				</YStack>
