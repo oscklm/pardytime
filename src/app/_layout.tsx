@@ -72,12 +72,7 @@ export default function RootLayout() {
 }
 
 function RootNavigator() {
-	const { isLoading, isAuthenticated } = useConvexAuth();
-
-	if (!isLoading) {
-		// Hide the splash screen if the user is not authenticated
-		SplashScreen.hideAsync();
-	}
+	const { isAuthenticated } = useConvexAuth();
 
 	return (
 		<Stack>

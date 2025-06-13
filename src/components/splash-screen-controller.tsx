@@ -33,5 +33,9 @@ export default function SplashScreenController({
 		};
 	}, [isAuthLoading]);
 
+	if (isAuthLoading) {
+		return null;
+	}
+
 	return children;
 }
