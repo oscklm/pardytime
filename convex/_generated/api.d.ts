@@ -13,10 +13,11 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as boards_mutations from "../boards/mutations.js";
-import type * as boards_queries from "../boards/queries.js";
+import type * as boards from "../boards.js";
 import type * as changelogs_queries from "../changelogs/queries.js";
+import type * as controllers from "../controllers.js";
 import type * as http from "../http.js";
+import type * as model_boards_controllers from "../model/boards/controllers.js";
 import type * as users_actions from "../users/actions.js";
 import type * as users_mutations from "../users/mutations.js";
 import type * as users_queries from "../users/queries.js";
@@ -32,10 +33,11 @@ import type * as validators from "../validators.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  "boards/mutations": typeof boards_mutations;
-  "boards/queries": typeof boards_queries;
+  boards: typeof boards;
   "changelogs/queries": typeof changelogs_queries;
+  controllers: typeof controllers;
   http: typeof http;
+  "model/boards/controllers": typeof model_boards_controllers;
   "users/actions": typeof users_actions;
   "users/mutations": typeof users_mutations;
   "users/queries": typeof users_queries;

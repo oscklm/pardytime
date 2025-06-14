@@ -1,6 +1,56 @@
 import { v } from "convex/values";
-import { mutation } from "../_generated/server";
-import { boardSchema } from "./schema";
+import { mutation, query } from "./_generated/server";
+import {
+	BoardReaderController,
+	BoardWriterController,
+} from "./model/boards/controllers";
+import { boardSchema } from "./model/boards/schema";
+
+export const getAll = query({
+	args: {},
+	handler: async (ctx) => {
+		const boardController = new BoardReaderController(ctx.db);
+		const boards = await boardController.query().collect();
+		return boards;
+	},
+});
+
+export const getAllEnriched = query({
+	args: {},
+	handler: async (ctx) => {
+		const boardController = new BoardReaderController(ctx.db);
+		const boards = await boardController.query().collect();
+		return Promise.all(
+			boards.map((board) => boardController.getEnriched(board._id)),
+		);
+	},
+});
+
+export const getById = query({
+	args: { id: v.string() },
+	handler: async (ctx, { id }) => {
+		const boardController = new BoardReaderController(ctx.db);
+
+		const normalizedId = ctx.db.normalizeId("boards", id);
+		if (!normalizedId) {
+			throw new Error(`Invalid board ID: ${id}`);
+		}
+
+		return boardController.get(normalizedId);
+	},
+});
+
+export const getEnrichedById = query({
+	args: { id: v.string() },
+	handler: async (ctx, { id }) => {
+		const boardController = new BoardReaderController(ctx.db);
+		const normalizedId = ctx.db.normalizeId("boards", id);
+		if (!normalizedId) {
+			throw new Error(`Invalid board ID: ${id}`);
+		}
+		return boardController.getEnriched(normalizedId);
+	},
+});
 
 export const createBoard = mutation({
 	args: {
@@ -8,7 +58,8 @@ export const createBoard = mutation({
 	},
 	returns: v.id("boards"),
 	handler: async (ctx, { board }) => {
-		const newBoardId = await ctx.db.insert("boards", board);
+		const boardController = new BoardWriterController(ctx.db);
+		const newBoardId = await boardController.insert(board);
 		return newBoardId;
 	},
 });
@@ -27,6 +78,7 @@ export const updateBoard = mutation({
 export const seedDummyBoards = mutation({
 	args: {},
 	handler: async (ctx) => {
+		ctx.db;
 		const ownerId = await ctx.db
 			.query("users")
 			.first()

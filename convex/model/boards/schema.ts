@@ -1,6 +1,6 @@
 import { defineTable } from "convex/server";
 import { v } from "convex/values";
-import { imageIdValidator } from "../validators";
+import { imageIdValidator } from "@/convex/validators";
 
 const boardSchema = v.object({
 	title: v.string(),
