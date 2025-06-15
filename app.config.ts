@@ -63,7 +63,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     favicon: "./src/assets/images/favicon.png",
   },
   plugins: [
-    "expo-router",
+    "expo-asset",
     [
       "expo-splash-screen",
       {
@@ -82,8 +82,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         recordAudioAndroid: true,
       },
     ],
-    "expo-secure-store",
     "expo-web-browser",
+    "react-native-edge-to-edge"
   ],
   experiments: {
     typedRoutes: true,
