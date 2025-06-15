@@ -1,108 +1,87 @@
-/** biome-ignore-all lint/correctness/useHookAtTopLevel: this is ok here */
-import * as Haptics from "expo-haptics";
-import React from "react";
 import {
-	ActivityIndicator,
-	Pressable,
-	type StyleProp,
-	Text,
-	View,
-	type ViewStyle,
-} from "react-native";
-import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
+	type LinkProps,
+	useLinkProps,
+  } from '@react-navigation/native';
+  import Color from 'color';
+  import * as React from 'react';
+  import { Platform } from 'react-native';
+  
+  import {
+	PlatformPressable,
+  } from '@react-navigation/elements';
+  import { Text } from '@react-navigation/elements';
+import { StyleSheet, UnistylesVariants } from 'react-native-unistyles';
 
-type Variants = UnistylesVariants<typeof styles>;
-
-// NOTE: Using type instead of interface to avoid issues with intersecting types from UnistylesVariants
-type Props = Omit<
-	React.ComponentPropsWithRef<typeof Pressable>,
-	"children" | "style"
-> &
-	Variants & {
-		/** Enables haptic feedback on press down. */
-		sensory?:
-			| boolean
-			| "success"
-			| "error"
-			| "warning"
-			| "light"
-			| "medium"
-			| "heavy";
-		style?: StyleProp<ViewStyle> | undefined;
-		label: string | React.ReactNode;
-	};
-
-const Button = ({
-	// Unistyles Props
-	variant,
-	isLoading,
-	// Normal props
-	style,
-	sensory = "light",
-	label,
-	onPressIn,
+  type Variants = UnistylesVariants<typeof styles>;
+  
+  type ButtonBaseProps = Omit<React.ComponentProps<typeof PlatformPressable>, 'children'> &Variants &{
+	children: string | string[];
+  };
+  
+  type ButtonLinkProps<ParamList extends ReactNavigation.RootParamList> =
+	LinkProps<ParamList> & Omit<ButtonBaseProps, 'onPress'>;
+  
+  
+  export function Button<ParamList extends ReactNavigation.RootParamList>(
+	props: ButtonLinkProps<ParamList>
+  ): React.JSX.Element;
+  
+  export function Button(props: ButtonBaseProps): React.JSX.Element;
+  
+  export function Button<ParamList extends ReactNavigation.RootParamList>(
+	props: ButtonBaseProps | ButtonLinkProps<ParamList>
+  ) {
+	if ('screen' in props || 'action' in props) {
+	  return <ButtonLink {...props} />;
+	} else {
+	  return <ButtonBase {...props} />;
+	}
+  }
+  
+  function ButtonLink<ParamList extends ReactNavigation.RootParamList>({
+	screen,
+	params,
+	action,
+	href,
 	...rest
-}: Props) => {
-	const onSensory = React.useCallback(() => {
-		if (!sensory) return;
-		if (sensory === true) {
-			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-		} else if (sensory === "success") {
-			Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-		} else if (sensory === "error") {
-			Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-		} else if (sensory === "warning") {
-			Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
-		} else if (sensory === "light") {
-			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-		} else if (sensory === "medium") {
-			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-		} else if (sensory === "heavy") {
-			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-		}
-	}, [sensory]);
-
-	styles.useVariants({ variant, isLoading });
-
+  }: ButtonLinkProps<ParamList>) {
+	// @ts-expect-error: This is already type-checked by the prop types
+	const props = useLinkProps({ screen, params, action, href });
+  
+	return <ButtonBase {...rest} {...props} />;
+  }
+  
+  function ButtonBase({
+	android_ripple,
+	style,
+	children,
+	...rest
+  }: ButtonBaseProps) {
+  
 	return (
-		<Pressable
-			style={({ pressed, hovered }) => {
-				styles.useVariants({ pressed, hovered, variant, isLoading });
-				return [styles.button, style];
-			}}
-			onPressIn={(ev) => {
-				onSensory();
-				onPressIn?.(ev);
-			}}
-			{...rest}
-		>
-			{typeof label === "string" ? (
-				<>
-					<Text style={styles.buttonText}>{label}</Text>
-					{variant === "link" && <View style={styles.underline} />}
-					{isLoading && (
-						<ActivityIndicator
-							size="small"
-							color="white"
-							style={{ marginLeft: 8 }}
-						/>
-					)}
-				</>
-			) : (
-				label
-			)}
-		</Pressable>
+	  <PlatformPressable
+		{...rest}
+		android_ripple={{
+		  ...android_ripple,
+		}}
+		pressOpacity={Platform.OS === 'ios' ? undefined : 1}
+		hoverEffect={{ ...styles.hoverEffect }}
+		style={[styles.button, style]}
+	  >
+		<Text style={styles.buttonText}>
+		  {children}
+		</Text>
+	  </PlatformPressable>
 	);
-};
+  }
+  
 
 const styles = StyleSheet.create((th) => ({
 	button: {
 		backgroundColor: th.colors.accent,
-		minWidth: 100,
-		flexGrow: 1,
 		flexDirection: "row",
 		justifyContent: "center",
-		paddingHorizontal: th.space.md,
+		paddingHorizontal: th.space.lg,
 		paddingVertical: th.space.md,
 		borderRadius: th.radius.md,
 		alignItems: "center",
@@ -120,19 +99,6 @@ const styles = StyleSheet.create((th) => ({
 				error: {
 					backgroundColor: th.colors.error,
 				},
-			},
-			pressed: {
-				true: {
-					opacity: 0.8,
-					transform: [{ scale: 0.98 }],
-				},
-				false: {},
-			},
-			hovered: {
-				true: {
-					backgroundColor: th.baseColors.accentMuted,
-				},
-				false: {},
 			},
 			isLoading: {
 				true: {
@@ -153,6 +119,9 @@ const styles = StyleSheet.create((th) => ({
 			},
 		],
 	},
+	hoverEffect: {
+		color: th.colors.accent,
+	},
 	buttonText: {
 		fontSize: 16,
 		fontWeight: "700",
@@ -161,20 +130,11 @@ const styles = StyleSheet.create((th) => ({
 		variants: {
 			variant: {
 				link: {
-					color: th.colors.accent,
 					fontWeight: "500",
 				},
 				outline: {
-					color: th.baseColors.primaryMuted,
 				},
 				error: {
-					color: "white",
-				},
-			},
-			pressed: {},
-			hovered: {
-				true: {
-					color: th.baseColors.accentMuted,
 				},
 			},
 			isLoading: {
