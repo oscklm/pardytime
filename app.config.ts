@@ -59,11 +59,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   web: {
     bundler: "metro",
-    output: "static",
+    output: "single",
     favicon: "./src/assets/images/favicon.png",
   },
   plugins: [
     "expo-asset",
+    "expo-secure-store",
     [
       "expo-splash-screen",
       {
