@@ -5,8 +5,10 @@ import { Navigation } from "./navigation";
 
 Asset.loadAsync([
 	...NavigationAssets,
-	require("@/assets/images/newspaper.png"),
-	require("@/assets/images/bell.png"),
+	require("@/assets/icons/hamburger-menu.png"),
+	require("@/assets/icons/house.png"),
+	require("@/assets/icons/colored-spinner.png"),
+	require("@/assets/icons/dotted-spinner.png"),
 ]);
 
 SplashScreen.preventAutoHideAsync();
@@ -20,9 +22,6 @@ export function App() {
 					// Change the scheme to match your app's scheme defined in app.json
 					"jeopardytime://",
 				],
-			}}
-			onReady={() => {
-				SplashScreen.hideAsync();
 			}}
 		/>
 	);

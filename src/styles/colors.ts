@@ -8,8 +8,10 @@ const colors = {
 	accent: "hsl(246, 69.948%, 62.157%)",
 	accentMuted: "hsl(246, 60.70%, 56.10%)",
 	gray: "hsl(240, 19.481%, 15.098%)",
+	grayMuted: "hsl(240, 19.481%, 18.098%)",
 	black: "hsl(240, 30%, 3.9216%)",
 	white: "hsl(0, 0%, 100%)",
+	whiteMuted: "hsl(0, 0.00%, 96.0%)",
 } as const;
 
 export default colors;

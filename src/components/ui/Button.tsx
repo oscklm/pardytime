@@ -1,80 +1,139 @@
-import {
-	type LinkProps,
-	useLinkProps,
-  } from '@react-navigation/native';
-  import Color from 'color';
-  import * as React from 'react';
-  import { Platform } from 'react-native';
-  
-  import {
-	PlatformPressable,
-  } from '@react-navigation/elements';
-  import { Text } from '@react-navigation/elements';
-import { StyleSheet, UnistylesVariants } from 'react-native-unistyles';
+import { PlatformPressable, Text } from "@react-navigation/elements";
+import { type LinkProps, useLinkProps } from "@react-navigation/native";
+import * as Haptics from "expo-haptics";
+import type * as React from "react";
+import { useCallback } from "react";
+import { Platform, View } from "react-native";
+import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
+import arrowRightImage from "@/assets/icons/arrow-right.png";
+import { AnimatedSpinner } from "../AnimatedSpinner";
+import { Image } from "./Image";
+import YStack from "./YStack";
 
-  type Variants = UnistylesVariants<typeof styles>;
-  
-  type ButtonBaseProps = Omit<React.ComponentProps<typeof PlatformPressable>, 'children'> &Variants &{
-	children: string | string[];
-  };
-  
-  type ButtonLinkProps<ParamList extends ReactNavigation.RootParamList> =
-	LinkProps<ParamList> & Omit<ButtonBaseProps, 'onPress'>;
-  
-  
-  export function Button<ParamList extends ReactNavigation.RootParamList>(
-	props: ButtonLinkProps<ParamList>
-  ): React.JSX.Element;
-  
-  export function Button(props: ButtonBaseProps): React.JSX.Element;
-  
-  export function Button<ParamList extends ReactNavigation.RootParamList>(
-	props: ButtonBaseProps | ButtonLinkProps<ParamList>
-  ) {
-	if ('screen' in props || 'action' in props) {
-	  return <ButtonLink {...props} />;
+type Variants = UnistylesVariants<typeof styles>;
+
+type ButtonBaseProps = Omit<
+	React.ComponentProps<typeof PlatformPressable>,
+	"children"
+> &
+	Variants & {
+		/** Enables haptic feedback on press down. */
+		sensory?:
+			| boolean
+			| "success"
+			| "error"
+			| "warning"
+			| "light"
+			| "medium"
+			| "heavy";
+		children: string | string[];
+	};
+
+type ButtonLinkProps<ParamList extends ReactNavigation.RootParamList> =
+	LinkProps<ParamList> & Omit<ButtonBaseProps, "onPress">;
+
+export function Button<ParamList extends ReactNavigation.RootParamList>(
+	props: ButtonLinkProps<ParamList>,
+): React.JSX.Element;
+
+export function Button(props: ButtonBaseProps): React.JSX.Element;
+
+export function Button<ParamList extends ReactNavigation.RootParamList>(
+	props: ButtonBaseProps | ButtonLinkProps<ParamList>,
+) {
+	if ("screen" in props || "action" in props) {
+		return <ButtonLink {...props} />;
 	} else {
-	  return <ButtonBase {...props} />;
+		return <ButtonBase {...props} />;
 	}
-  }
-  
-  function ButtonLink<ParamList extends ReactNavigation.RootParamList>({
+}
+
+function ButtonLink<ParamList extends ReactNavigation.RootParamList>({
 	screen,
 	params,
 	action,
 	href,
 	...rest
-  }: ButtonLinkProps<ParamList>) {
+}: ButtonLinkProps<ParamList>) {
 	// @ts-expect-error: This is already type-checked by the prop types
+
 	const props = useLinkProps({ screen, params, action, href });
-  
+
 	return <ButtonBase {...rest} {...props} />;
-  }
-  
-  function ButtonBase({
+}
+
+function ButtonBase({
+	// Unistyles variants
+	variant,
+	isLoading,
+	// Other props
 	android_ripple,
+	sensory,
+	onPressIn,
 	style,
 	children,
 	...rest
-  }: ButtonBaseProps) {
-  
+}: ButtonBaseProps) {
+	const onSensory = useCallback(() => {
+		if (!sensory) return;
+		if (sensory === true) {
+			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+		} else if (sensory === "success") {
+			Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+		} else if (sensory === "error") {
+			Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+		} else if (sensory === "warning") {
+			Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+		} else if (sensory === "light") {
+			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+		} else if (sensory === "medium") {
+			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+		} else if (sensory === "heavy") {
+			Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
+		}
+	}, [sensory]);
+
+	styles.useVariants({ variant, isLoading });
+
 	return (
-	  <PlatformPressable
-		{...rest}
-		android_ripple={{
-		  ...android_ripple,
-		}}
-		pressOpacity={Platform.OS === 'ios' ? undefined : 1}
-		hoverEffect={{ ...styles.hoverEffect }}
-		style={[styles.button, style]}
-	  >
-		<Text style={styles.buttonText}>
-		  {children}
-		</Text>
-	  </PlatformPressable>
+		<PlatformPressable
+			{...rest}
+			android_ripple={{
+				...android_ripple,
+			}}
+			onPressIn={(ev) => {
+				onSensory();
+				onPressIn?.(ev);
+			}}
+			pressOpacity={Platform.OS === "ios" ? undefined : 1}
+			hoverEffect={{ ...styles.hoverEffect }}
+			style={[styles.button, style]}
+		>
+			{variant === "link" ? (
+				<YStack>
+					<Text style={styles.buttonText}>{children}</Text>
+					<View style={{ height: 1, backgroundColor: "black" }} />
+				</YStack>
+			) : (
+				<Text style={styles.buttonText}>{children}</Text>
+			)}
+			{isLoading && (
+				<AnimatedSpinner
+					variant="flat"
+					tintColor={styles.buttonText.color}
+					style={{ marginLeft: 8, width: 16, height: 16 }}
+				/>
+			)}
+			{variant === "menu" && (
+				<Image
+					source={arrowRightImage}
+					tintColor={styles.buttonText.color}
+					style={{ width: 16, height: 16 }}
+				/>
+			)}
+		</PlatformPressable>
 	);
-  }
-  
+}
 
 const styles = StyleSheet.create((th) => ({
 	button: {
@@ -95,6 +154,15 @@ const styles = StyleSheet.create((th) => ({
 					backgroundColor: "transparent",
 					borderWidth: 2,
 					borderColor: th.baseColors.primaryMuted,
+				},
+				menu: {
+					paddingHorizontal: th.space.xl,
+					paddingVertical: th.space.lg,
+					flexDirection: "row",
+					justifyContent: "space-between",
+					backgroundColor: th.colors.cardMuted,
+					alignItems: "center",
+					gap: th.space.sm,
 				},
 				error: {
 					backgroundColor: th.colors.error,
@@ -131,10 +199,12 @@ const styles = StyleSheet.create((th) => ({
 			variant: {
 				link: {
 					fontWeight: "500",
+					color: th.colors.text,
 				},
-				outline: {
-				},
-				error: {
+				outline: {},
+				error: {},
+				menu: {
+					color: th.colors.text,
 				},
 			},
 			isLoading: {

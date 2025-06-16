@@ -11,6 +11,7 @@ export interface UnistylesTheme extends Omit<Theme, "dark"> {
 		warning: string;
 		info: string;
 		background: string;
+		cardMuted: string;
 		card: string;
 		text: string;
 		border: string;

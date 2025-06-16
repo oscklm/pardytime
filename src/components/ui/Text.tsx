@@ -40,6 +40,9 @@ const styles = StyleSheet.create((th) => ({
 				secondary: {
 					color: th.colors.secondary,
 				},
+				white: {
+					color: th.baseColors.white,
+				},
 			},
 			variant: {
 				h1: {

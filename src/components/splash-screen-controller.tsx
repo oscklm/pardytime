@@ -1,5 +1,5 @@
 import { useConvexAuth } from "convex/react";
-import { SplashScreen } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
 import type { PropsWithChildren } from "react";
 import { useEffect, useRef } from "react";
 

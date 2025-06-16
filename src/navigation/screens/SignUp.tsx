@@ -1,8 +1,9 @@
 import { useSignUp } from "@clerk/clerk-expo";
-import { router } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import Button from "@/components/ui/Button";
+import Text from "@/components/ui/Text";
 import TextInput from "@/components/ui/TextInput";
 import YStack from "@/components/ui/YStack";
 
@@ -15,6 +16,8 @@ const SignUpScreen = () => {
 	const [loading, setLoading] = useState(false);
 	const [pendingVerification, setPendingVerification] = useState(false);
 	const [verificationCode, setVerificationCode] = useState("");
+
+	const navigation = useNavigation();
 
 	const handleSignUp = async () => {
 		if (!isLoaded) return;
@@ -55,7 +58,7 @@ const SignUpScreen = () => {
 			// If verification successful, set session and redirect
 			if (signUpAttempt.status === "complete") {
 				await setActive({ session: signUpAttempt.createdSessionId });
-				router.replace("/");
+				navigation.navigate("HomeTabs", { screen: "Home" });
 			} else {
 				if (signUpAttempt.status === "missing_requirements") {
 					alert("Please complete all required fields.");
@@ -83,16 +86,15 @@ const SignUpScreen = () => {
 						onChangeText={setVerificationCode}
 						keyboardType="numeric"
 					/>
+					<Button isLoading={loading} onPress={handleVerification}>
+						Verify Email
+					</Button>
 					<Button
-						label="Verify Email"
-						isLoading={loading}
-						onPress={handleVerification}
-					/>
-					<Button
-						label="Back"
-						variant="outline" // Assuming you have a variant prop
+						variant="outline"
 						onPress={() => setPendingVerification(false)}
-					/>
+					>
+						Back
+					</Button>
 				</YStack>
 			</YStack>
 		);
@@ -101,9 +103,13 @@ const SignUpScreen = () => {
 	// Main sign up form
 	return (
 		<YStack flex={1} pd="lg" gap="md" style={styles.container}>
+			<YStack style={{ marginTop: 32, marginBottom: 16 }}>
+				<Text variant="h1">Sign up</Text>
+			</YStack>
 			<YStack gap="lg">
 				<TextInput
 					autoCapitalize="none"
+					autoFocus
 					autoCorrect={false}
 					placeholder="Username"
 					value={username}
@@ -124,11 +130,9 @@ const SignUpScreen = () => {
 					secureTextEntry
 					onChangeText={setPassword}
 				/>
-				<Button
-					label="Create account"
-					isLoading={loading}
-					onPress={handleSignUp}
-				/>
+				<Button isLoading={loading} onPress={handleSignUp}>
+					Create account
+				</Button>
 			</YStack>
 		</YStack>
 	);

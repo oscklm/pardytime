@@ -1,6 +1,5 @@
 import { isClerkAPIResponseError, useSignIn } from "@clerk/clerk-expo";
-import { Link, router, Stack } from "expo-router";
-import * as Updates from "expo-updates";
+import { useNavigation } from "@react-navigation/native";
 import { ResultAsync } from "neverthrow";
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
@@ -17,6 +16,8 @@ const SignInScreen = () => {
 	const [isSigningIn, setIsSigningIn] = React.useState(false);
 	const [emailAddress, setEmailAddress] = React.useState("");
 	const [password, setPassword] = React.useState("");
+
+	const navigation = useNavigation();
 
 	const handleLogin = async () => {
 		if (!isLoaded) return;
@@ -49,16 +50,22 @@ const SignInScreen = () => {
 
 		if (status === "complete") {
 			await setActive({ session: createdSessionId });
-			router.replace("/");
+			navigation.canGoBack() && navigation.goBack();
 		} else {
 			alert(`${status}`);
 		}
 	};
 
+	const handlePressSignUp = () => {
+		navigation.canGoBack() && navigation.goBack();
+		setTimeout(() => {
+			navigation.navigate("SignUp");
+		}, 50);
+	};
+
 	if (isSigningIn) {
 		return (
 			<>
-				<Stack.Screen options={{ headerShown: false }} />
 				<YStack
 					flex={1}
 					ai="center"
@@ -78,11 +85,14 @@ const SignInScreen = () => {
 
 	return (
 		<>
-			<Stack.Screen options={{ headerShown: true }} />
 			<YStack flex={1} pd="lg" gap="md" style={styles.container}>
+				<YStack style={{ marginTop: 32, marginBottom: 16 }}>
+					<Text variant="h1">Sign in</Text>
+				</YStack>
 				<YStack gap="lg">
 					<TextInput
 						autoCapitalize="none"
+						autoFocus
 						value={emailAddress}
 						placeholder="Enter email"
 						onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
@@ -94,28 +104,18 @@ const SignInScreen = () => {
 						onChangeText={(password) => setPassword(password)}
 						onSubmitEditing={handleLogin}
 					/>
-					<Button label="Sign in" isLoading={isLoading} onPress={handleLogin} />
+					<Button isLoading={isLoading} onPress={handleLogin}>
+						Sign in
+					</Button>
 				</YStack>
 
 				<YStack ai="center" pd="xl">
 					<Text>Don't have an account?</Text>
-					<Link href={"/sign-up"} asChild>
-						<Button variant="link" label="Sign up now" />
-					</Link>
+					<Button variant="link" onPress={handlePressSignUp}>
+						Sign up now
+					</Button>
 				</YStack>
 				<View style={{ flex: 1 }} />
-				<YStack ai="center" jc="center" pd="md">
-					<Text>{Updates.runtimeVersion}</Text>
-					<Text color="primaryMuted">
-						{process.env.EXPO_PUBLIC_CONVEX_URL?.split("://")[1].slice(
-							-process.env.EXPO_PUBLIC_CONVEX_URL.length,
-							-13,
-						)}
-					</Text>
-					<Text color="primaryMuted" variant="h3">
-						{process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY?.split("_")[1]}
-					</Text>
-				</YStack>
 			</YStack>
 		</>
 	);
