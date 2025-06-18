@@ -13,6 +13,7 @@ import { Image, LogBox } from "react-native";
 import menu from "@/assets/icons/hamburger-menu.png";
 import home from "@/assets/icons/house.png";
 import SplashScreenController from "@/components/splash-screen-controller";
+import AuthProvider from "@/providers/user-provider";
 import { UniThemeProvider } from "@/styles/theme";
 import { Board } from "./screens/Board";
 import { Home } from "./screens/Home";
@@ -90,7 +91,9 @@ const RootStack = createNativeStackNavigator({
 			<ClerkLoaded>
 				<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
 					<SplashScreenController>
-						<UniThemeProvider>{children}</UniThemeProvider>
+						<AuthProvider>
+							<UniThemeProvider>{children}</UniThemeProvider>
+						</AuthProvider>
 					</SplashScreenController>
 				</ConvexProviderWithClerk>
 			</ClerkLoaded>

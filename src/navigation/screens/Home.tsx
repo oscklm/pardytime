@@ -1,17 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
-import { Unauthenticated, useQuery } from "convex/react";
+import { Authenticated, Unauthenticated, useQuery } from "convex/react";
 import { ScrollView } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import { Card, CardContent, CardHeader } from "@/components/ui/Card";
+import Badge from "@/components/Badge";
+import { Card, CardContent } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
 import TouchableBounce from "@/components/ui/TouchableBounce";
+import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
+import { useUser } from "@/providers/user-provider";
 import colors from "@/styles/colors";
 
 export function Home() {
-	const boards = useQuery(api.boards.getAll);
+	const boards = useQuery(api.boards.getAllEnriched);
 	const navigation = useNavigation();
+	const { user } = useUser();
 
 	return (
 		<YStack flex={1} pd="lg" gap="lg" insetTop>
@@ -33,43 +37,69 @@ export function Home() {
 					</Card>
 				</TouchableBounce>
 			</Unauthenticated>
-			<Card>
-				<CardHeader>
-					<Text variant="h2">Latest boards</Text>
-				</CardHeader>
-				<CardContent>
-					<ScrollView
-						horizontal
-						contentContainerStyle={{ gap: 16 }}
-						showsHorizontalScrollIndicator={false}
-					>
-						{boards?.map((board) => (
+			<Authenticated>
+				<YStack gap="md">
+					<Text>Welcome back, @{user?.username}!</Text>
+				</YStack>
+			</Authenticated>
+			<YStack gap="md">
+				<Text variant="h2">Latest boards</Text>
+				<ScrollView
+					horizontal
+					contentContainerStyle={{ gap: 16 }}
+					showsHorizontalScrollIndicator={false}
+				>
+					{boards?.map((board) => {
+						const totalQuestions = board.enriched.categories.reduce(
+							(acc, category) => acc + category.questions.length,
+							0,
+						);
+						return (
 							<TouchableBounce
 								key={board._id}
-								sensory="light"
 								onPress={() =>
 									navigation.navigate("Board", { boardId: board._id })
 								}
 							>
 								<Card key={board._id} style={styles.card}>
 									<CardContent>
-										<Text variant="h3">{board.title}</Text>
-										<Text>{board.description}</Text>
+										<YStack gap="lg">
+											<YStack>
+												<Text variant="h3">{board.title}</Text>
+												<Text>{board.description}</Text>
+											</YStack>
+											<XStack gap="sm">
+												<Badge>
+													<Text invert>
+														<Text invert style={{ fontWeight: "bold" }}>
+															{board.enriched.categories.length}
+														</Text>{" "}
+														categories
+													</Text>
+												</Badge>
+												<Badge>
+													<Text invert>
+														<Text invert style={{ fontWeight: "bold" }}>
+															{totalQuestions}
+														</Text>{" "}
+														questions
+													</Text>
+												</Badge>
+											</XStack>
+										</YStack>
 									</CardContent>
 								</Card>
 							</TouchableBounce>
-						))}
-					</ScrollView>
-				</CardContent>
-			</Card>
+						);
+					})}
+				</ScrollView>
+			</YStack>
 		</YStack>
 	);
 }
 
 const styles = StyleSheet.create((th) => ({
 	card: {
-		height: 100,
-		backgroundColor: th.colors.cardMuted,
 		borderRadius: th.radius.md,
 		padding: th.space.lg,
 	},

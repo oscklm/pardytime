@@ -55,17 +55,13 @@ const styles = StyleSheet.create((th, rt) => ({
 				true: {
 					paddingTop: rt.insets.top,
 				},
-				false: {
-					paddingTop: 0,
-				},
+				false: {},
 			},
 			insetBottom: {
 				true: {
 					paddingBottom: rt.insets.bottom,
 				},
-				false: {
-					paddingBottom: 0,
-				},
+				false: {},
 			},
 		},
 	},

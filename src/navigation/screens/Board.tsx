@@ -7,9 +7,11 @@ import { useEffect, useMemo } from "react";
 import { FlatList } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { AnimatedSpinner } from "@/components/AnimatedSpinner";
+import Badge from "@/components/Badge";
 import { QuestionPreviewCard } from "@/components/questions/QuestionPreviewCard";
-import { Card, CardContent } from "@/components/ui/Card";
+import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
+import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 
@@ -49,42 +51,68 @@ export function Board({ route }: Props) {
 	const { enriched } = board;
 
 	return (
-		<FlatList
-			data={enriched.categories}
-			contentContainerStyle={styles.contentContainer}
-			showsVerticalScrollIndicator={false}
-			ListHeaderComponent={
-				<>
-					<Text variant="h1">{board?.title}</Text>
-					<Text>{board?.description}</Text>
-					<YStack gap="md">
-						<Text variant="h3">Categories</Text>
-						<Text>Hold down on a card to reveal the answer.</Text>
-					</YStack>
-				</>
-			}
-			renderItem={({ item }) => (
-				<Card key={item._id}>
+		<YStack flex={1} gap="xl" pd="lg">
+			<YStack gap="md">
+				<Text variant="h1">{board?.title}</Text>
+				<Card>
+					<CardHeader>
+						<Text variant="h3">Details</Text>
+					</CardHeader>
 					<CardContent>
-						<Text>{item.title}</Text>
-						{item.questions.map((question) => (
-							<QuestionPreviewCard key={question._id} question={question} />
-						))}
+						<Text>{board?.description}</Text>
+						<XStack gap="sm">
+							<Badge>
+								<Text invert>
+									<Text invert style={{ fontWeight: "bold" }}>
+										{enriched.categories.length}
+									</Text>{" "}
+									categories
+								</Text>
+							</Badge>
+							<Badge>
+								<Text invert>
+									<Text invert style={{ fontWeight: "bold" }}>
+										{totalQuestions}
+									</Text>{" "}
+									questions
+								</Text>
+							</Badge>
+						</XStack>
 					</CardContent>
 				</Card>
-			)}
-			style={styles.container}
-		/>
+			</YStack>
+			<YStack gap="lg">
+				<FlatList
+					data={enriched.categories}
+					contentContainerStyle={styles.contentContainer}
+					showsVerticalScrollIndicator={false}
+					ListHeaderComponent={() => (
+						<YStack gap="xs">
+							<Text variant="h2">Categories</Text>
+							<Text style={{ fontSize: 14, lineHeight: 17 }}>
+								Hold down on a card to reveal the answer.
+							</Text>
+						</YStack>
+					)}
+					renderItem={({ item }) => (
+						<Card key={item._id}>
+							<CardContent>
+								<Text>{item.title}</Text>
+								{item.questions.map((question) => (
+									<QuestionPreviewCard key={question._id} question={question} />
+								))}
+							</CardContent>
+						</Card>
+					)}
+				/>
+			</YStack>
+		</YStack>
 	);
 }
 
-const styles = StyleSheet.create((th) => ({
-	container: {
-		flex: 1,
-		gap: th.space.md,
-		padding: th.space.lg,
-	},
+const styles = StyleSheet.create((th, rt) => ({
 	contentContainer: {
 		gap: th.space.lg,
+		paddingBottom: 225,
 	},
 }));

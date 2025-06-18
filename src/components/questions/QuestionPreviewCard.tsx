@@ -79,7 +79,7 @@ const styles = StyleSheet.create((th) => ({
 		right: 10,
 	},
 	face: {
-		backgroundColor: "hsl(0, 0.00%, 92.90%)",
+		backgroundColor: th.colors.cardMuted,
 		borderRadius: th.radius.md,
 		width: "100%",
 		height: "100%",

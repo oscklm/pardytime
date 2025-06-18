@@ -20,9 +20,11 @@ export const getAllEnriched = query({
 	handler: async (ctx) => {
 		const boardController = new BoardReaderController(ctx.db);
 		const boards = await boardController.query().collect();
-		return Promise.all(
-			boards.map((board) => boardController.getEnriched(board._id)),
-		);
+		return (
+			await Promise.all(
+				boards.map((board) => boardController.getEnriched(board._id)),
+			)
+		).filter((board): board is NonNullable<typeof board> => board !== null);
 	},
 });
 

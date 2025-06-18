@@ -6,31 +6,33 @@ import { api } from "@/convex/_generated/api";
 import type { Doc } from "@/convex/_generated/dataModel";
 
 type AuthData = {
-	user: Doc<"users">;
+	user: Doc<"users"> | null;
 };
 
 const AuthContext = createContext<AuthData>({} as AuthData);
 
 export default function AuthProvider({ children }: PropsWithChildren) {
-	const { userId } = useAuth();
+	const { isSignedIn, userId } = useAuth();
 
 	const user = useQuery(
 		api.users.queries.getByClerkId,
 		userId ? { clerkId: userId } : "skip",
 	);
 
-	if (!user) {
+	if (isSignedIn && !user) {
 		return <LoadingView />;
 	}
 
 	return (
-		<AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+		<AuthContext.Provider value={{ user: user ?? null }}>
+			{children}
+		</AuthContext.Provider>
 	);
 }
 
 export const useUser = () => {
 	const context = useContext(AuthContext);
-	if (!context.user) {
+	if (!context) {
 		throw new Error("useUser must be used within an AuthProvider");
 	}
 	return context;
