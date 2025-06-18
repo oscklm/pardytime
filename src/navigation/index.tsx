@@ -10,7 +10,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { Image, LogBox } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
 import menu from "@/assets/icons/hamburger-menu.png";
 import home from "@/assets/icons/house.png";
 import SplashScreenController from "@/components/splash-screen-controller";
@@ -163,13 +162,6 @@ const RootStack = createNativeStackNavigator({
 				path: "*",
 			},
 		},
-	},
-});
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: "red",
 	},
 });
 

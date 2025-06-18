@@ -1,13 +1,15 @@
-import { Text } from "@react-navigation/elements";
 import {
 	type StaticScreenProps,
 	useNavigation,
 } from "@react-navigation/native";
 import { useQuery } from "convex/react";
 import { useEffect, useMemo } from "react";
-import { StyleSheet, View } from "react-native";
+import { FlatList } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 import { AnimatedSpinner } from "@/components/AnimatedSpinner";
+import { QuestionPreviewCard } from "@/components/questions/QuestionPreviewCard";
 import { Card, CardContent } from "@/components/ui/Card";
+import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 
@@ -47,30 +49,42 @@ export function Board({ route }: Props) {
 	const { enriched } = board;
 
 	return (
-		<View style={styles.container}>
-			<Text>{board?.title}</Text>
-			<Text>{board?.description}</Text>
-			<YStack gap="md">
-				<Card>
+		<FlatList
+			data={enriched.categories}
+			contentContainerStyle={styles.contentContainer}
+			showsVerticalScrollIndicator={false}
+			ListHeaderComponent={
+				<>
+					<Text variant="h1">{board?.title}</Text>
+					<Text>{board?.description}</Text>
+					<YStack gap="md">
+						<Text variant="h3">Categories</Text>
+						<Text>Hold down on a card to reveal the answer.</Text>
+					</YStack>
+				</>
+			}
+			renderItem={({ item }) => (
+				<Card key={item._id}>
 					<CardContent>
-						<Text>{enriched.categories.length} categories</Text>
+						<Text>{item.title}</Text>
+						{item.questions.map((question) => (
+							<QuestionPreviewCard key={question._id} question={question} />
+						))}
 					</CardContent>
 				</Card>
-				<Card>
-					<CardContent>
-						<Text>{totalQuestions} questions</Text>
-					</CardContent>
-				</Card>
-			</YStack>
-		</View>
+			)}
+			style={styles.container}
+		/>
 	);
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create((th) => ({
 	container: {
 		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		gap: 10,
+		gap: th.space.md,
+		padding: th.space.lg,
 	},
-});
+	contentContainer: {
+		gap: th.space.lg,
+	},
+}));
