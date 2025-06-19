@@ -16,7 +16,7 @@ export function QuestionPreviewCard({
 	question: Doc<"questions">;
 }) {
 	const { text, answer } = question;
-	const fade = useSharedValue(0); // 0 = question, 1 = answer
+	const fade = useSharedValue(0);
 
 	const frontStyle = useAnimatedStyle(() => ({
 		opacity: interpolate(fade.value, [0, 1], [1, 0], Extrapolate.CLAMP),
@@ -31,10 +31,10 @@ export function QuestionPreviewCard({
 	}));
 
 	const handleLongPress = () => {
-		fade.value = withTiming(1, { duration: 300 });
+		fade.value = withTiming(1, { duration: 200 });
 	};
 	const handlePressOut = () => {
-		fade.value = withTiming(0, { duration: 300 });
+		fade.value = withTiming(0, { duration: 200 });
 	};
 
 	return (
@@ -75,7 +75,7 @@ const styles = StyleSheet.create((th) => ({
 	},
 	answerTitle: {
 		position: "absolute",
-		top: 5,
+		left: 5,
 		right: 10,
 	},
 	face: {

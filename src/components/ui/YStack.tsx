@@ -13,6 +13,8 @@ const YStack = ({
 	// Unistyles variants
 	bg,
 	pd,
+	py,
+	px,
 	ai,
 	jc,
 	gap,
@@ -22,7 +24,7 @@ const YStack = ({
 	style,
 	...props
 }: Props) => {
-	styles.useVariants({ pd, ai, jc, gap, insetTop, insetBottom, bg });
+	styles.useVariants({ pd, py, px, ai, jc, gap, insetTop, insetBottom, bg });
 	return <View style={[styles.stack, { flex }, style]} {...props} />;
 };
 
@@ -31,6 +33,8 @@ const styles = StyleSheet.create((th, rt) => ({
 		flexDirection: "column",
 		variants: {
 			pd: th.variants.padding,
+			py: th.variants.paddingVertical,
+			px: th.variants.paddingHorizontal,
 			ai: th.variants.alignItems,
 			jc: th.variants.justifyContent,
 			gap: th.variants.gap,

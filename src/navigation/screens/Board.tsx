@@ -20,7 +20,7 @@ type Props = StaticScreenProps<{
 }>;
 
 export function Board({ route }: Props) {
-	const board = useQuery(api.boards.getEnrichedById, {
+	const board = useQuery(api.boards.getByIdEnriched, {
 		id: route.params.boardId,
 	});
 

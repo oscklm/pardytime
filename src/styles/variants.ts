@@ -21,6 +21,46 @@ const variants = {
 			padding: space.xl,
 		},
 	},
+	paddingHorizontal: {
+		none: {
+			paddingHorizontal: 0,
+		},
+		xs: {
+			paddingHorizontal: space.xs,
+		},
+		sm: {
+			paddingHorizontal: space.sm,
+		},
+		md: {
+			paddingHorizontal: space.md,
+		},
+		lg: {
+			paddingHorizontal: space.lg,
+		},
+		xl: {
+			paddingHorizontal: space.xl,
+		},
+	},
+	paddingVertical: {
+		none: {
+			paddingVertical: 0,
+		},
+		xs: {
+			paddingVertical: space.xs,
+		},
+		sm: {
+			paddingVertical: space.sm,
+		},
+		md: {
+			paddingVertical: space.md,
+		},
+		lg: {
+			paddingVertical: space.lg,
+		},
+		xl: {
+			paddingVertical: space.xl,
+		},
+	},
 	alignItems: {
 		start: {
 			alignItems: "flex-start",

@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { Authenticated, Unauthenticated, useQuery } from "convex/react";
-import { ScrollView } from "react-native";
+import { FlatList, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Badge from "@/components/Badge";
 import { Card, CardContent } from "@/components/ui/Card";
@@ -18,38 +18,29 @@ export function Home() {
 	const { user } = useUser();
 
 	return (
-		<YStack flex={1} pd="lg" gap="lg" insetTop>
-			<Text variant="h1">Home</Text>
-			<Unauthenticated>
-				<TouchableBounce
-					sensory="light"
-					onPress={() => navigation.navigate("SignIn")}
-				>
-					<Card style={{ backgroundColor: colors.accent }}>
-						<YStack pd="md" gap="sm">
-							<Text variant="h2" color="white">
-								More fun with an account
-							</Text>
-							<Text color="white">
-								Sign in or create your account to get access to more features.
-							</Text>
-						</YStack>
-					</Card>
-				</TouchableBounce>
-			</Unauthenticated>
-			<Authenticated>
-				<YStack gap="md">
-					<Text>Welcome back, @{user?.username}!</Text>
+		<YStack flex={1} gap="lg">
+			<View style={styles.heroSection}>
+				<Text variant="h1" color="white">
+					Home
+				</Text>
+				<Authenticated>
+					<YStack gap="md">
+						<Text variant="subtitle" color="white">
+							Welcome back, @{user?.username}!
+						</Text>
+					</YStack>
+				</Authenticated>
+			</View>
+			<View style={styles.listSection}>
+				<YStack px="lg">
+					<Text variant="h2">Boards for you</Text>
 				</YStack>
-			</Authenticated>
-			<YStack gap="md">
-				<Text variant="h2">Latest boards</Text>
-				<ScrollView
+				<FlatList
 					horizontal
-					contentContainerStyle={{ gap: 16 }}
+					contentContainerStyle={styles.contentContainer}
 					showsHorizontalScrollIndicator={false}
-				>
-					{boards?.map((board) => {
+					data={boards}
+					renderItem={({ item: board }) => {
 						const totalQuestions = board.enriched.categories.reduce(
 							(acc, category) => acc + category.questions.length,
 							0,
@@ -61,7 +52,7 @@ export function Home() {
 									navigation.navigate("Board", { boardId: board._id })
 								}
 							>
-								<Card key={board._id} style={styles.card}>
+								<Card key={board._id}>
 									<CardContent>
 										<YStack gap="lg">
 											<YStack>
@@ -91,16 +82,44 @@ export function Home() {
 								</Card>
 							</TouchableBounce>
 						);
-					})}
-				</ScrollView>
+					}}
+				/>
+			</View>
+			<YStack px="lg">
+				<Unauthenticated>
+					<TouchableBounce
+						sensory="light"
+						onPress={() => navigation.navigate("SignIn")}
+					>
+						<Card style={{ backgroundColor: colors.accent }}>
+							<YStack pd="md" gap="sm">
+								<Text variant="h2" color="white">
+									Sign in to get started
+								</Text>
+								<Text color="white">
+									Sign in or create your account to get access to more features.
+								</Text>
+							</YStack>
+						</Card>
+					</TouchableBounce>
+				</Unauthenticated>
 			</YStack>
 		</YStack>
 	);
 }
 
-const styles = StyleSheet.create((th) => ({
-	card: {
-		borderRadius: th.radius.md,
+const styles = StyleSheet.create((th, rt) => ({
+	heroSection: {
+		paddingTop: rt.insets.top,
 		padding: th.space.lg,
+		gap: th.space.lg,
+		backgroundColor: th.colors.accent,
+	},
+	listSection: {
+		gap: th.space.md,
+	},
+	contentContainer: {
+		gap: th.space.lg,
+		paddingHorizontal: th.space.lg,
 	},
 }));

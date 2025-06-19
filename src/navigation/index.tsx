@@ -10,6 +10,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { Image, LogBox } from "react-native";
+import { Easing } from "react-native-reanimated";
 import menu from "@/assets/icons/hamburger-menu.png";
 import home from "@/assets/icons/house.png";
 import SplashScreenController from "@/components/splash-screen-controller";
@@ -48,6 +49,23 @@ if (!publishableKey) {
 }
 
 const HomeTabs = createBottomTabNavigator({
+	screenOptions: {
+		transitionSpec: {
+			animation: "timing",
+			config: {
+				duration: 150,
+				easing: Easing.inOut(Easing.ease),
+			},
+		},
+		sceneStyleInterpolator: ({ current }) => ({
+			sceneStyle: {
+				opacity: current.progress.interpolate({
+					inputRange: [-1, 0, 1],
+					outputRange: [0, 1, 0],
+				}),
+			},
+		}),
+	},
 	screens: {
 		Home: {
 			screen: Home,

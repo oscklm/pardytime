@@ -6,6 +6,8 @@ import {
 } from "./model/boards/controllers";
 import { boardSchema } from "./model/boards/schema";
 
+//#region Queries
+
 export const getAll = query({
 	args: {},
 	handler: async (ctx) => {
@@ -42,7 +44,7 @@ export const getById = query({
 	},
 });
 
-export const getEnrichedById = query({
+export const getByIdEnriched = query({
 	args: { id: v.string() },
 	handler: async (ctx, { id }) => {
 		const boardController = new BoardReaderController(ctx.db);
@@ -53,6 +55,10 @@ export const getEnrichedById = query({
 		return boardController.getEnriched(normalizedId);
 	},
 });
+
+//#endregion
+
+//#region Mutations
 
 export const createBoard = mutation({
 	args: {
@@ -489,3 +495,5 @@ export const seedDummyBoards = mutation({
 		return "Seeded 5 jeopardy boards!";
 	},
 });
+
+//#endregion
