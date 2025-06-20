@@ -1,16 +1,25 @@
-import { PlatformPressable, Text } from "@react-navigation/elements";
+import { FontAwesome } from "@expo/vector-icons";
+import { PlatformPressable as RNPlatformPressable } from "@react-navigation/elements";
 import { type LinkProps, useLinkProps } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 import type * as React from "react";
 import { useCallback } from "react";
-import { Platform, View } from "react-native";
-import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
-import arrowRightImage from "@/assets/icons/arrow-right.png";
+import { Platform, Text, View } from "react-native";
+import {
+	StyleSheet,
+	type UnistylesVariants,
+	withUnistyles,
+} from "react-native-unistyles";
 import { AnimatedSpinner } from "../AnimatedSpinner";
-import { Image } from "./Image";
 import YStack from "./YStack";
 
 type Variants = UnistylesVariants<typeof styles>;
+
+const PlatformPressable = withUnistyles(RNPlatformPressable);
+
+const FontAwesomeIcon = withUnistyles(FontAwesome, (th) => ({
+	color: th.colors.text,
+}));
 
 type ButtonBaseProps = Omit<
 	React.ComponentProps<typeof PlatformPressable>,
@@ -105,7 +114,7 @@ function ButtonBase({
 				onSensory();
 				onPressIn?.(ev);
 			}}
-			pressOpacity={Platform.OS === "ios" ? undefined : 1}
+			pressOpacity={Platform.OS === "ios" ? 0.5 : 1}
 			hoverEffect={{ ...styles.hoverEffect }}
 			style={[styles.button, style]}
 		>
@@ -124,13 +133,7 @@ function ButtonBase({
 					style={{ marginLeft: 8, width: 16, height: 16 }}
 				/>
 			)}
-			{variant === "menu" && (
-				<Image
-					source={arrowRightImage}
-					tintColor={styles.buttonText.color}
-					style={{ width: 16, height: 16 }}
-				/>
-			)}
+			{variant === "menu" && <FontAwesomeIcon name="chevron-right" size={16} />}
 		</PlatformPressable>
 	);
 }
@@ -194,7 +197,7 @@ const styles = StyleSheet.create((th) => ({
 		fontSize: 16,
 		fontWeight: "700",
 		lineHeight: 24,
-		color: "white",
+		color: th.colors.text,
 		variants: {
 			variant: {
 				link: {

@@ -110,7 +110,7 @@ export function Board({ route }: Props) {
 	);
 }
 
-const styles = StyleSheet.create((th, rt) => ({
+const styles = StyleSheet.create((th) => ({
 	contentContainer: {
 		gap: th.space.lg,
 		paddingBottom: 225,

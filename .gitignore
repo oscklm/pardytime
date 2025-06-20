@@ -20,6 +20,9 @@ android
 *.key
 *.mobileprovision
 
+# Cursor
+mcp.json
+
 # Metro
 .metro-health-check*
 

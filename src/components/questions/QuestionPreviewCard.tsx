@@ -1,6 +1,6 @@
 import { TouchableWithoutFeedback } from "react-native";
 import Animated, {
-	Extrapolate,
+	Extrapolation,
 	interpolate,
 	useAnimatedStyle,
 	useSharedValue,
@@ -18,16 +18,11 @@ export function QuestionPreviewCard({
 	const { text, answer } = question;
 	const fade = useSharedValue(0);
 
-	const frontStyle = useAnimatedStyle(() => ({
-		opacity: interpolate(fade.value, [0, 1], [1, 0], Extrapolate.CLAMP),
+	const frontStyleAnimated = useAnimatedStyle(() => ({
+		opacity: interpolate(fade.value, [0, 1], [1, 0], Extrapolation.CLAMP),
 	}));
-	const backStyle = useAnimatedStyle(() => ({
-		opacity: interpolate(fade.value, [0, 1], [0, 1], Extrapolate.CLAMP),
-		position: "absolute" as const,
-		top: 0,
-		left: 0,
-		width: "100%",
-		height: "100%",
+	const backStyleAnimated = useAnimatedStyle(() => ({
+		opacity: interpolate(fade.value, [0, 1], [0, 1], Extrapolation.CLAMP),
 	}));
 
 	const handleLongPress = () => {
@@ -45,16 +40,14 @@ export function QuestionPreviewCard({
 		>
 			<Animated.View style={styles.container}>
 				{/* Front: Question */}
-				<Animated.View style={[frontStyle, styles.face]}>
+				<Animated.View
+					style={[frontStyleAnimated, styles.frontStyle, styles.face]}
+				>
 					<Text>{text}</Text>
 				</Animated.View>
 				{/* Back: Answer */}
 				<Animated.View
-					style={[
-						backStyle,
-						styles.face,
-						{ backgroundColor: "hsl(0, 0.00%, 68.20%)" },
-					]}
+					style={[backStyleAnimated, styles.backStyle, styles.face]}
 				>
 					<Text variant="subtitle" style={styles.answerTitle}>
 						Answer
@@ -66,7 +59,7 @@ export function QuestionPreviewCard({
 	);
 }
 
-const styles = StyleSheet.create((th) => ({
+const styles = StyleSheet.create((th, rt) => ({
 	container: {
 		flex: 1,
 		height: 100,
@@ -75,14 +68,28 @@ const styles = StyleSheet.create((th) => ({
 	},
 	answerTitle: {
 		position: "absolute",
-		left: 5,
-		right: 10,
+		left: 10,
+		top: 10,
+	},
+	backStyle: {
+		backgroundColor:
+			rt.colorScheme === "dark"
+				? "hsl(240, 18.90%, 7.30%)"
+				: "hsl(0, 0.00%, 70.20%)",
+	},
+	frontStyle: {
+		backgroundColor:
+			rt.colorScheme === "dark"
+				? "hsl(240, 19.20%, 10.20%)"
+				: "hsl(0, 0.00%, 90.00%)",
 	},
 	face: {
-		backgroundColor: th.colors.cardMuted,
-		borderRadius: th.radius.md,
+		position: "absolute",
+		top: 0,
+		left: 0,
 		width: "100%",
 		height: "100%",
+		borderRadius: th.radius.md,
 		justifyContent: "center",
 		alignItems: "center",
 	},
