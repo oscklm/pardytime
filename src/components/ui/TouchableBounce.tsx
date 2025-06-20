@@ -54,6 +54,7 @@ export default function TouchableBounce({
 	return (
 		<RNTouchableBounce
 			{...props}
+			// biome-ignore lint/suspicious/noExplicitAny: <its ok>
 			onPressIn={(ev: any) => {
 				onSensory();
 				onPressIn?.(ev);
