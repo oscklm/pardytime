@@ -1,9 +1,9 @@
 import { View } from "react-native";
 import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
 
-type Variants = UnistylesVariants<typeof styles>;
-
-interface Props extends React.ComponentPropsWithoutRef<typeof View>, Variants {
+interface Props
+	extends React.ComponentPropsWithoutRef<typeof View>,
+		UnistylesVariants<typeof styles> {
 	flex?: number;
 }
 
@@ -69,19 +69,19 @@ const styles = StyleSheet.create((th, rt) => ({
 				purple: {
 					backgroundColor: th.colors.purple,
 				},
-			},
+			} as const,
 			insetTop: {
 				true: {
 					paddingTop: rt.insets.top,
 				},
 				false: {},
-			},
+			} as const,
 			insetBottom: {
 				true: {
 					paddingBottom: rt.insets.bottom,
 				},
 				false: {},
-			},
+			} as const,
 		},
 	},
 }));

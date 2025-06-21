@@ -13,7 +13,9 @@ export function Menu() {
 	return (
 		<YStack flex={1} gap="lg">
 			<YStack gap="md" pd="lg" bg="blue" insetTop style={{ height: 125 }}>
-				<Text variant="h1">Menu</Text>
+				<Text variant="h1" color="white">
+					Menu
+				</Text>
 			</YStack>
 			<YStack flex={1} px="lg" gap="md">
 				<YStack>
@@ -35,10 +37,10 @@ export function Menu() {
 					</Card>
 				</YStack>
 				<YStack gap="md">
-					<Button variant="menu" screen="Settings">
+					<Button variant="menu" screen="Settings" iconRight="chevron-right">
 						Settings
 					</Button>
-					<Button variant="menu" screen="Help">
+					<Button variant="menu" screen="Help" iconRight="chevron-right">
 						Help
 					</Button>
 					<SignOutButton />

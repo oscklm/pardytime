@@ -4,6 +4,7 @@ import { FlatList, TouchableWithoutFeedback } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Badge from "@/components/Badge";
 import Skeleton from "@/components/Skeleton";
+import Button from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
 import TouchableBounce from "@/components/ui/TouchableBounce";
@@ -15,10 +16,26 @@ export function Home() {
 	const boards = useQuery(api.boards.queries.getAllEnriched);
 	const navigation = useNavigation();
 
+	const handleScan = () => {
+		navigation.navigate("Scanner");
+	};
+
 	return (
 		<YStack flex={1} gap="lg">
 			<YStack gap="md" pd="lg" bg="purple" insetTop style={{ height: 125 }}>
-				<Text variant="h1">Home</Text>
+				<XStack ai="center" jc="between">
+					<Text variant="h1" color="white">
+						Home
+					</Text>
+
+					<Button
+						icon="qrcode"
+						sensory="light"
+						variant="icon"
+						inverted
+						screen="Scanner"
+					/>
+				</XStack>
 			</YStack>
 			<YStack flex={1} gap="md">
 				<YStack px="lg">

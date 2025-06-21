@@ -20,6 +20,9 @@ const variants = {
 		xl: {
 			padding: space.xl,
 		},
+		xxl: {
+			padding: space.xxl,
+		},
 	},
 	paddingHorizontal: {
 		none: {
@@ -59,6 +62,9 @@ const variants = {
 		},
 		xl: {
 			paddingVertical: space.xl,
+		},
+		xxl: {
+			paddingVertical: space.xxl,
 		},
 	},
 	alignItems: {
@@ -116,6 +122,9 @@ const variants = {
 		},
 		xl: {
 			gap: space.xl,
+		},
+		xxl: {
+			gap: space.xxl,
 		},
 	},
 } as const;

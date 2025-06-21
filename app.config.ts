@@ -32,7 +32,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: getAppName(),
   slug: "jeopardytime",
-  version: "1.0.4",
+  version: "1.0.5",
   orientation: "portrait",
   icon: "./src/assets/images/icon.png",
   scheme: "jeopardytime",
@@ -78,7 +78,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-camera",
       {
-        cameraPermission: "Allow $(PRODUCT_NAME) to access your camera in order to take photos and videos",
+        cameraPermission: "Allow $(PRODUCT_NAME) to access your camera in order to take photos, videos, and scan QR codes",
         microphonePermission: "Allow $(PRODUCT_NAME) to access your microphone in order to record audio",
         recordAudioAndroid: true,
       },

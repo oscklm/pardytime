@@ -18,6 +18,7 @@ import { Home } from "./screens/Home";
 import { Menu } from "./screens/Menu";
 import { NotFound } from "./screens/NotFound";
 import { Profile } from "./screens/Profile";
+import { Scanner } from "./screens/Scanner";
 import { Settings } from "./screens/Settings";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
@@ -151,6 +152,13 @@ const RootStack = createNativeStackNavigator({
 					</HeaderButton>
 				),
 			}),
+		},
+		Scanner: {
+			screen: Scanner,
+			options: {
+				title: "Scanner",
+				presentation: "modal",
+			},
 		},
 		Help: {
 			screen: Help,

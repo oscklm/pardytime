@@ -13,30 +13,37 @@ import {
 import { AnimatedSpinner } from "../AnimatedSpinner";
 import YStack from "./YStack";
 
-type Variants = UnistylesVariants<typeof styles>;
-
 const PlatformPressable = withUnistyles(RNPlatformPressable);
 
 const FontAwesomeIcon = withUnistyles(FontAwesome, (th) => ({
 	color: th.colors.labelPrimary,
 }));
 
-type ButtonBaseProps = Omit<
-	React.ComponentProps<typeof PlatformPressable>,
-	"children"
-> &
-	Variants & {
-		/** Enables haptic feedback on press down. */
-		sensory?:
-			| boolean
-			| "success"
-			| "error"
-			| "warning"
-			| "light"
-			| "medium"
-			| "heavy";
-		children: string | string[];
-	};
+type IconGlyphs =
+	| "qrcode"
+	| "plus"
+	| "minus"
+	| "chevron-right"
+	| "chevron-left";
+
+interface ButtonBaseProps
+	extends Omit<React.ComponentProps<typeof PlatformPressable>, "children"> {
+	/** Enables haptic feedback on press down. */
+	variant?: UnistylesVariants<typeof styles>["variant"];
+	inverted?: UnistylesVariants<typeof styles>["inverted"];
+	icon?: IconGlyphs;
+	iconSize?: number;
+	isLoading?: UnistylesVariants<typeof styles>["isLoading"];
+	sensory?:
+		| boolean
+		| "success"
+		| "error"
+		| "warning"
+		| "light"
+		| "medium"
+		| "heavy";
+	children?: React.ReactNode;
+}
 
 type ButtonLinkProps<ParamList extends ReactNavigation.RootParamList> =
 	LinkProps<ParamList> & Omit<ButtonBaseProps, "onPress">;
@@ -73,8 +80,11 @@ function ButtonLink<ParamList extends ReactNavigation.RootParamList>({
 
 function ButtonBase({
 	// Unistyles variants
+	icon,
 	variant,
 	isLoading,
+	inverted,
+	iconSize = 24,
 	// Other props
 	android_ripple,
 	sensory,
@@ -102,7 +112,11 @@ function ButtonBase({
 		}
 	}, [sensory]);
 
-	styles.useVariants({ variant, isLoading });
+	styles.useVariants({ variant, isLoading, inverted });
+
+	const Icon = icon ? (
+		<FontAwesomeIcon name={icon} size={iconSize} color={styles.label.color} />
+	) : null;
 
 	return (
 		<PlatformPressable
@@ -130,10 +144,14 @@ function ButtonBase({
 					style={{ marginLeft: 8, width: 16, height: 16 }}
 				/>
 			) : (
-				<Text style={styles.label}>{children}</Text>
+				<>
+					{Icon}
+					{children && <Text style={styles.label}>{children}</Text>}
+					{variant === "menu" && (
+						<FontAwesomeIcon name="chevron-right" size={16} />
+					)}
+				</>
 			)}
-
-			{variant === "menu" && <FontAwesomeIcon name="chevron-right" size={16} />}
 		</PlatformPressable>
 	);
 }
@@ -151,6 +169,14 @@ const styles = StyleSheet.create((th) => ({
 		backgroundColor: th.colors.gray4,
 		variants: {
 			variant: {
+				icon: {
+					flexDirection: "row",
+					justifyContent: "center",
+					alignItems: "center",
+					gap: th.space.sm,
+					borderWidth: 0,
+					backgroundColor: "transparent",
+				},
 				link: {
 					backgroundColor: "transparent",
 					alignSelf: "center",
@@ -191,6 +217,12 @@ const styles = StyleSheet.create((th) => ({
 				},
 				false: {},
 			},
+			inverted: {
+				true: {
+					backgroundColor: th.colors.white,
+				},
+				false: {},
+			},
 		},
 		compoundVariants: [
 			{
@@ -200,6 +232,13 @@ const styles = StyleSheet.create((th) => ({
 				styles: {
 					backgroundColor: undefined,
 					// and more styles
+				},
+			},
+			{
+				variant: "icon",
+				inverted: true,
+				styles: {
+					backgroundColor: "transparent",
 				},
 			},
 		],
@@ -243,6 +282,12 @@ const styles = StyleSheet.create((th) => ({
 			},
 			isLoading: {
 				true: {},
+				false: {},
+			},
+			inverted: {
+				true: {
+					color: th.colors.white,
+				},
 				false: {},
 			},
 		},

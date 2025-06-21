@@ -24,8 +24,8 @@ const styles = StyleSheet.create((th) => ({
 	text: {
 		fontWeight: "400",
 		fontSize: 16,
-		lineHeight: 24,
 		color: th.colors.labelPrimary,
+		lineHeight: 24,
 		variants: {
 			color: {
 				primary: {
@@ -40,22 +40,22 @@ const styles = StyleSheet.create((th) => ({
 				quaternary: {
 					color: th.colors.labelQuaternary,
 				},
+				white: {
+					color: th.colors.white,
+				},
 			},
 			variant: {
 				h1: {
-					color: th.colors.labelPrimary,
 					fontWeight: "800",
 					fontSize: 32,
 					lineHeight: 42,
 				},
 				h2: {
-					color: th.colors.labelPrimary,
 					fontWeight: "700",
 					fontSize: 24,
 					lineHeight: 34,
 				},
 				h3: {
-					color: th.colors.labelPrimary,
 					fontWeight: "700",
 					fontSize: 20,
 					lineHeight: 28,
