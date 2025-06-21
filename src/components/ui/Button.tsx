@@ -123,16 +123,16 @@ function ButtonBase({
 					<Text style={styles.label}>{children}</Text>
 					<View style={styles.hairline} />
 				</YStack>
-			) : (
-				<Text style={styles.label}>{children}</Text>
-			)}
-			{isLoading && (
+			) : isLoading ? (
 				<AnimatedSpinner
 					variant="flat"
 					tintColor={styles.label.color}
 					style={{ marginLeft: 8, width: 16, height: 16 }}
 				/>
+			) : (
+				<Text style={styles.label}>{children}</Text>
 			)}
+
 			{variant === "menu" && <FontAwesomeIcon name="chevron-right" size={16} />}
 		</PlatformPressable>
 	);
@@ -140,19 +140,19 @@ function ButtonBase({
 
 const styles = StyleSheet.create((th) => ({
 	button: {
-		backgroundColor: th.colors.backgroundSecondary,
 		flexDirection: "row",
+		height: 48,
 		justifyContent: "center",
-		paddingHorizontal: th.space.xl,
-		paddingVertical: th.space.lg,
+		paddingHorizontal: th.space.lg,
 		borderRadius: th.radius.md,
 		alignItems: "center",
 		borderWidth: 1,
 		borderColor: th.colors.labelQuaternary,
+		backgroundColor: th.colors.gray4,
 		variants: {
 			variant: {
 				link: {
-					backgroundColor: undefined,
+					backgroundColor: "transparent",
 					alignSelf: "center",
 					borderWidth: 0,
 				},
@@ -161,8 +161,10 @@ const styles = StyleSheet.create((th) => ({
 				},
 				menu: {
 					flexDirection: "row",
+					borderWidth: 0,
+					paddingHorizontal: th.space.xs,
 					justifyContent: "space-between",
-					backgroundColor: th.colors.backgroundSecondary,
+					backgroundColor: "transparent",
 					alignItems: "center",
 					gap: th.space.sm,
 				},

@@ -1,13 +1,22 @@
+import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
+import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { Assets as NavigationAssets } from "@react-navigation/elements";
+import { ConvexReactClient } from "convex/react";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { Asset } from "expo-asset";
 import * as SplashScreen from "expo-splash-screen";
 import * as TaskManager from "expo-task-manager";
 import { useEffect } from "react";
+import { LogBox } from "react-native";
 import {
 	registerUpdateCheckTask,
 	UPDATE_CHECK_TASK_IDENTIFIER,
 } from "@/lib/tasks/updateChecker";
+import SplashScreenController from "./components/splash-screen-controller";
 import { Navigation } from "./navigation";
+import AuthProvider from "./providers/user-provider";
+
+LogBox.ignoreLogs(["Clerk: Clerk has been loaded with development keys."]);
 
 Asset.loadAsync([
 	...NavigationAssets,
@@ -18,6 +27,27 @@ Asset.loadAsync([
 ]);
 
 SplashScreen.preventAutoHideAsync();
+
+const convex = new ConvexReactClient(
+	process.env.EXPO_PUBLIC_CONVEX_URL as string,
+	{
+		unsavedChangesWarning: false,
+	},
+);
+
+if (!process.env.EXPO_PUBLIC_CONVEX_URL) {
+	throw new Error(
+		"Missing Convex URL. Please set EXPO_PUBLIC_CONVEX_URL in your .env",
+	);
+}
+
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
+
+if (!publishableKey) {
+	throw new Error(
+		"Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env",
+	);
+}
 
 export function App() {
 	useEffect(() => {
@@ -33,14 +63,21 @@ export function App() {
 	}, []);
 
 	return (
-		<Navigation
-			linking={{
-				enabled: "auto",
-				prefixes: [
-					// Change the scheme to match your app's scheme defined in app.json
-					"jeopardytime://",
-				],
-			}}
-		/>
+		<ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+			<ClerkLoaded>
+				<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+					<SplashScreenController>
+						<AuthProvider>
+							<Navigation
+								linking={{
+									enabled: "auto",
+									prefixes: ["jeopardytime://"],
+								}}
+							/>
+						</AuthProvider>
+					</SplashScreenController>
+				</ConvexProviderWithClerk>
+			</ClerkLoaded>
+		</ClerkProvider>
 	);
 }

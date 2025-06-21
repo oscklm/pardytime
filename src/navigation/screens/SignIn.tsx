@@ -78,7 +78,7 @@ const SignInScreen = () => {
 	return (
 		<YStack flex={1} pd="lg" gap="md">
 			<YStack style={{ marginTop: 32, marginBottom: 16 }}>
-				<Text variant="h1">Sign in</Text>
+				<Text variant="h1">Sign in to your account</Text>
 			</YStack>
 			<YStack gap="lg">
 				<TextInput

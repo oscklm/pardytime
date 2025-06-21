@@ -35,5 +35,8 @@ export const useUser = () => {
 	if (!context) {
 		throw new Error("useUser must be used within an AuthProvider");
 	}
-	return context;
+	if (!context.user) {
+		throw new Error("User not found");
+	}
+	return context.user;
 };

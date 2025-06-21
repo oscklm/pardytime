@@ -1,5 +1,3 @@
-import { ClerkLoaded, ClerkProvider, useAuth } from "@clerk/clerk-expo";
-import { tokenCache } from "@clerk/clerk-expo/token-cache";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HeaderButton, Text } from "@react-navigation/elements";
 import {
@@ -7,15 +5,12 @@ import {
 	type StaticParamList,
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ConvexReactClient } from "convex/react";
-import { ConvexProviderWithClerk } from "convex/react-clerk";
-import { Image, LogBox } from "react-native";
+import { useConvexAuth } from "convex/react";
+import { Image } from "react-native";
 import { Easing } from "react-native-reanimated";
 import { StyleSheet } from "react-native-unistyles";
 import menu from "@/assets/icons/hamburger-menu.png";
 import home from "@/assets/icons/house.png";
-import SplashScreenController from "@/components/splash-screen-controller";
-import AuthProvider from "@/providers/user-provider";
 import { UniThemeProvider } from "@/styles/theme";
 import { Board } from "./screens/Board";
 import { Home } from "./screens/Home";
@@ -25,29 +20,7 @@ import { Profile } from "./screens/Profile";
 import { Settings } from "./screens/Settings";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
-
-LogBox.ignoreLogs(["Clerk: Clerk has been loaded with development keys."]);
-
-const convex = new ConvexReactClient(
-	process.env.EXPO_PUBLIC_CONVEX_URL as string,
-	{
-		unsavedChangesWarning: false,
-	},
-);
-
-if (!process.env.EXPO_PUBLIC_CONVEX_URL) {
-	throw new Error(
-		"Missing Convex URL. Please set EXPO_PUBLIC_CONVEX_URL in your .env",
-	);
-}
-
-const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
-
-if (!publishableKey) {
-	throw new Error(
-		"Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env",
-	);
-}
+import { Welcome } from "./screens/Welcome";
 
 const styles = StyleSheet.create((th) => ({
 	tabBarBadgeStyle: {
@@ -61,7 +34,7 @@ const HomeTabs = createBottomTabNavigator({
 		transitionSpec: {
 			animation: "timing",
 			config: {
-				duration: 150,
+				duration: 250,
 				easing: Easing.inOut(Easing.ease),
 			},
 		},
@@ -113,45 +86,36 @@ const HomeTabs = createBottomTabNavigator({
 });
 
 const RootStack = createNativeStackNavigator({
-	layout: ({ children }) => (
-		<ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-			<ClerkLoaded>
-				<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-					<SplashScreenController>
-						<AuthProvider>
-							<UniThemeProvider>{children}</UniThemeProvider>
-						</AuthProvider>
-					</SplashScreenController>
-				</ConvexProviderWithClerk>
-			</ClerkLoaded>
-		</ClerkProvider>
-	),
+	layout: ({ children }) => <UniThemeProvider>{children}</UniThemeProvider>,
 	screens: {
 		HomeTabs: {
+			if: () => useConvexAuth().isAuthenticated,
 			screen: HomeTabs,
 			options: {
 				title: "Home",
 				headerShown: false,
 			},
 		},
+		Welcome: {
+			if: () => !useConvexAuth().isAuthenticated,
+			screen: Welcome,
+			options: {
+				title: "Welcome",
+				headerShown: false,
+			},
+		},
 		SignIn: {
+			if: () => !useConvexAuth().isAuthenticated,
 			screen: SignIn,
 			options: {
 				title: "Sign in",
-				headerShown: false,
-				presentation: "formSheet",
-				sheetGrabberVisible: true,
-				sheetAllowedDetents: "fitToContents",
 			},
 		},
 		SignUp: {
+			if: () => !useConvexAuth().isAuthenticated,
 			screen: SignUp,
 			options: {
 				title: "Sign up",
-				headerShown: false,
-				presentation: "formSheet",
-				sheetGrabberVisible: true,
-				sheetAllowedDetents: "fitToContents",
 			},
 		},
 		Profile: {

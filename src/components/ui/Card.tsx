@@ -54,7 +54,6 @@ const styles = StyleSheet.create((th) => ({
 		marginBottom: th.space.md,
 	},
 	cardContent: {
-		flex: 1,
 		gap: th.space.md,
 	},
 }));

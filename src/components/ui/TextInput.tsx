@@ -25,7 +25,7 @@ const styles = StyleSheet.create((th) => ({
 		fontWeight: "500",
 		fontSize: 16,
 		backgroundColor: th.colors.backgroundSecondary,
-		padding: th.space.xl,
+		padding: th.space.lg,
 		borderRadius: th.radius.md,
 		borderWidth: 1,
 		borderColor: th.colors.labelQuaternary,
