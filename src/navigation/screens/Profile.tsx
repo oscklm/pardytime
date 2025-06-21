@@ -6,11 +6,12 @@ import { useQuery } from "convex/react";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native-unistyles";
 import LoadingView from "@/components/LoadingView";
-import { Card, CardContent } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { Image } from "@/components/ui/Image";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
+import { formatUnixTimestamp } from "@/lib/utils/time";
 
 type Props = StaticScreenProps<{
 	username: string;
@@ -33,6 +34,8 @@ export function Profile({ route }: Props) {
 		return <LoadingView />;
 	}
 
+	const createdAt = formatUnixTimestamp(user._creationTime);
+
 	return (
 		<YStack flex={1} gap="lg" pd="xl" insetTop>
 			<YStack gap="md" ai="center">
@@ -41,14 +44,16 @@ export function Profile({ route }: Props) {
 					<Text variant="h1">@{user.username}</Text>
 				</YStack>
 			</YStack>
-			<Card>
-				<CardContent>
-					<Text variant="h2">About</Text>
-					<Text>
-						{user.firstName} {user.lastName}
-					</Text>
-				</CardContent>
-			</Card>
+			<YStack gap="md">
+				<Card>
+					<YStack gap="md">
+						<YStack>
+							<Text variant="subtitle">Joined at</Text>
+							<Text>{createdAt}</Text>
+						</YStack>
+					</YStack>
+				</Card>
+			</YStack>
 		</YStack>
 	);
 }

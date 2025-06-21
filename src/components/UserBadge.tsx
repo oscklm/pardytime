@@ -44,13 +44,13 @@ const styles = StyleSheet.create((th) => ({
 		gap: th.space.md,
 	},
 	avatar: {
-		width: 32,
-		height: 32,
+		width: 24,
+		height: 24,
 		borderRadius: 9999,
 	},
 	label: {
 		fontWeight: "500",
-		color: th.colors.backgroundPrimary,
+		color: th.colors.labelPrimary,
 		fontSize: 14,
 		lineHeight: 20,
 	},
