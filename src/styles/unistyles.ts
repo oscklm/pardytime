@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import { StyleSheet } from "react-native-unistyles";
-import colors from "./colors";
 import { darkTheme, lightTheme } from "./theme";
 import { BASE_UNIT, radius, space } from "./tokens";
 import variants from "./variants";
@@ -14,12 +13,10 @@ const shared = {
 
 const appThemes = {
 	light: {
-		baseColors: colors,
 		...lightTheme,
 		...shared,
 	},
 	dark: {
-		baseColors: colors,
 		...darkTheme,
 		...shared,
 	},

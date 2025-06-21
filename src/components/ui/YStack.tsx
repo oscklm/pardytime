@@ -40,19 +40,34 @@ const styles = StyleSheet.create((th, rt) => ({
 			gap: th.variants.gap,
 			bg: {
 				primary: {
-					backgroundColor: th.colors.primary,
+					backgroundColor: th.colors.backgroundPrimary,
 				},
 				secondary: {
-					backgroundColor: th.colors.secondary,
+					backgroundColor: th.colors.backgroundSecondary,
 				},
-				accent: {
-					backgroundColor: th.colors.accent,
+				tertiary: {
+					backgroundColor: th.colors.backgroundTertiary,
 				},
-				card: {
-					backgroundColor: th.colors.card,
+				red: {
+					backgroundColor: th.colors.red,
 				},
-				cardMuted: {
-					backgroundColor: th.colors.cardMuted,
+				orange: {
+					backgroundColor: th.colors.orange,
+				},
+				yellow: {
+					backgroundColor: th.colors.yellow,
+				},
+				green: {
+					backgroundColor: th.colors.green,
+				},
+				blue: {
+					backgroundColor: th.colors.blue,
+				},
+				indigo: {
+					backgroundColor: th.colors.indigo,
+				},
+				purple: {
+					backgroundColor: th.colors.purple,
 				},
 			},
 			insetTop: {

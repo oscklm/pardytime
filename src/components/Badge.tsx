@@ -1,17 +1,25 @@
-import type { PropsWithChildren } from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
-const Badge = ({ children }: PropsWithChildren) => {
-	return <View style={styles.badge}>{children}</View>;
+const Badge = ({ label }: { label: string }) => {
+	return (
+		<View style={styles.badge}>
+			<Text style={styles.label}>{label}</Text>
+		</View>
+	);
 };
 
-const styles = StyleSheet.create((th, rt) => ({
+const styles = StyleSheet.create((th) => ({
 	badge: {
-		backgroundColor:
-			rt.colorScheme === "light" ? th.baseColors.black : th.baseColors.white,
+		backgroundColor: th.colors.labelPrimary,
 		borderRadius: th.radius.md,
 		padding: th.space.md,
+	},
+	label: {
+		fontWeight: "500",
+		color: th.colors.backgroundPrimary,
+		fontSize: 14,
+		lineHeight: 20,
 	},
 }));
 

@@ -3,7 +3,7 @@ import { v } from "convex/values";
 
 const userSchema = v.object({
 	clerkId: v.string(),
-	username: v.union(v.string(), v.null()),
+	username: v.string(),
 	firstName: v.union(v.string(), v.null()),
 	lastName: v.union(v.string(), v.null()),
 	imageUrl: v.string(),
@@ -21,7 +21,9 @@ const userSchema = v.object({
 });
 
 const userTables = {
-	users: defineTable(userSchema).index("by_clerkId", ["clerkId"]),
+	users: defineTable(userSchema)
+		.index("by_clerkId", ["clerkId"])
+		.index("by_username", ["username"]),
 };
 
 export { userSchema, userTables };

@@ -1,7 +1,6 @@
 import { useSignUp } from "@clerk/clerk-expo";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { StyleSheet } from "react-native-unistyles";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import TextInput from "@/components/ui/TextInput";
@@ -77,7 +76,7 @@ const SignUpScreen = () => {
 	// Show verification form if pending verification
 	if (pendingVerification) {
 		return (
-			<YStack flex={1} pd="lg" gap="md" style={styles.container}>
+			<YStack flex={1} pd="lg" gap="md">
 				<YStack gap="lg">
 					<TextInput
 						placeholder="Enter verification code"
@@ -102,7 +101,7 @@ const SignUpScreen = () => {
 
 	// Main sign up form
 	return (
-		<YStack flex={1} pd="lg" gap="md" style={styles.container}>
+		<YStack flex={1} pd="lg" gap="md">
 			<YStack style={{ marginTop: 32, marginBottom: 16 }}>
 				<Text variant="h1">Sign up</Text>
 			</YStack>
@@ -130,19 +129,12 @@ const SignUpScreen = () => {
 					secureTextEntry
 					onChangeText={setPassword}
 				/>
-				<Button isLoading={loading} onPress={handleSignUp}>
+				<Button variant="purple" isLoading={loading} onPress={handleSignUp}>
 					Create account
 				</Button>
 			</YStack>
 		</YStack>
 	);
 };
-
-const styles = StyleSheet.create((th) => ({
-	container: {
-		flex: 1,
-		backgroundColor: th.colors.background,
-	},
-}));
 
 export default SignUpScreen;

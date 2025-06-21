@@ -18,7 +18,7 @@ type Variants = UnistylesVariants<typeof styles>;
 const PlatformPressable = withUnistyles(RNPlatformPressable);
 
 const FontAwesomeIcon = withUnistyles(FontAwesome, (th) => ({
-	color: th.colors.text,
+	color: th.colors.labelPrimary,
 }));
 
 type ButtonBaseProps = Omit<
@@ -120,16 +120,16 @@ function ButtonBase({
 		>
 			{variant === "link" ? (
 				<YStack>
-					<Text style={styles.buttonText}>{children}</Text>
-					<View style={{ height: 1, backgroundColor: "black" }} />
+					<Text style={styles.label}>{children}</Text>
+					<View style={styles.hairline} />
 				</YStack>
 			) : (
-				<Text style={styles.buttonText}>{children}</Text>
+				<Text style={styles.label}>{children}</Text>
 			)}
 			{isLoading && (
 				<AnimatedSpinner
 					variant="flat"
-					tintColor={styles.buttonText.color}
+					tintColor={styles.label.color}
 					style={{ marginLeft: 8, width: 16, height: 16 }}
 				/>
 			)}
@@ -140,35 +140,43 @@ function ButtonBase({
 
 const styles = StyleSheet.create((th) => ({
 	button: {
-		backgroundColor: th.colors.accent,
+		backgroundColor: th.colors.backgroundSecondary,
 		flexDirection: "row",
 		justifyContent: "center",
-		paddingHorizontal: th.space.lg,
-		paddingVertical: th.space.md,
+		paddingHorizontal: th.space.xl,
+		paddingVertical: th.space.lg,
 		borderRadius: th.radius.md,
 		alignItems: "center",
+		borderWidth: 1,
+		borderColor: th.colors.labelQuaternary,
 		variants: {
 			variant: {
 				link: {
 					backgroundColor: undefined,
 					alignSelf: "center",
+					borderWidth: 0,
 				},
 				outline: {
 					backgroundColor: "transparent",
-					borderWidth: 2,
-					borderColor: th.baseColors.primaryMuted,
 				},
 				menu: {
-					paddingHorizontal: th.space.xl,
-					paddingVertical: th.space.lg,
 					flexDirection: "row",
 					justifyContent: "space-between",
-					backgroundColor: th.colors.cardMuted,
+					backgroundColor: th.colors.backgroundSecondary,
 					alignItems: "center",
 					gap: th.space.sm,
 				},
+				purple: {
+					backgroundColor: th.colors.purple,
+				},
 				error: {
-					backgroundColor: th.colors.error,
+					backgroundColor: th.colors.red,
+				},
+				success: {
+					backgroundColor: th.colors.green,
+				},
+				warning: {
+					backgroundColor: th.colors.yellow,
 				},
 			},
 			isLoading: {
@@ -191,23 +199,40 @@ const styles = StyleSheet.create((th) => ({
 		],
 	},
 	hoverEffect: {
-		color: th.colors.accent,
+		color: th.colors.backgroundSecondary,
 	},
-	buttonText: {
+	hairline: {
+		marginTop: th.space.sm,
+		borderWidth: 1,
+		borderRadius: th.radius.sm,
+		borderColor: th.colors.labelPrimary,
+	},
+	label: {
 		fontSize: 16,
 		fontWeight: "700",
 		lineHeight: 24,
-		color: th.colors.text,
+		color: th.colors.labelPrimary,
 		variants: {
 			variant: {
 				link: {
 					fontWeight: "500",
-					color: th.colors.text,
+					color: th.colors.labelPrimary,
+				},
+				purple: {
+					color: "white",
 				},
 				outline: {},
-				error: {},
+				error: {
+					color: "white",
+				},
+				success: {
+					color: "white",
+				},
+				warning: {
+					color: "white",
+				},
 				menu: {
-					color: th.colors.text,
+					color: th.colors.labelPrimary,
 				},
 			},
 			isLoading: {
@@ -223,7 +248,7 @@ const styles = StyleSheet.create((th) => ({
 		right: 0,
 		height: 2,
 		borderRadius: th.radius.sm,
-		backgroundColor: th.colors.accent,
+		backgroundColor: th.colors.backgroundPrimary,
 	},
 }));
 

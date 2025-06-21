@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native-unistyles";
-import SignOutButton from "@/components/sign-out-button";
+import SignOutButton from "@/components/SignOutButton";
 import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";

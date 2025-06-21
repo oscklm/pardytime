@@ -1,24 +1,62 @@
-import { Text } from "@react-navigation/elements";
-import type { StaticScreenProps } from "@react-navigation/native";
-import { StyleSheet, View } from "react-native";
+import {
+	type StaticScreenProps,
+	useNavigation,
+} from "@react-navigation/native";
+import { useQuery } from "convex/react";
+import { useEffect } from "react";
+import { StyleSheet } from "react-native-unistyles";
+import LoadingView from "@/components/LoadingView";
+import { Card, CardContent } from "@/components/ui/Card";
+import { Image } from "@/components/ui/Image";
+import Text from "@/components/ui/Text";
+import YStack from "@/components/ui/YStack";
+import { api } from "@/convex/_generated/api";
 
 type Props = StaticScreenProps<{
-	user: string;
+	username: string;
 }>;
 
 export function Profile({ route }: Props) {
+	const navigation = useNavigation();
+
+	const user = useQuery(api.users.queries.getByUsername, {
+		username: route.params.username,
+	});
+
+	useEffect(() => {
+		navigation.setOptions({
+			title: route.params.username,
+		});
+	}, [route.params.username]);
+
+	if (!user) {
+		return <LoadingView />;
+	}
+
 	return (
-		<View style={styles.container}>
-			<Text>{route.params.user}'s Profile</Text>
-		</View>
+		<YStack flex={1} gap="lg" pd="xl" insetTop>
+			<YStack gap="md" ai="center">
+				<Image source={{ uri: user.imageUrl }} style={styles.avatar} />
+				<YStack>
+					<Text variant="h1">@{user.username}</Text>
+				</YStack>
+			</YStack>
+			<Card>
+				<CardContent>
+					<Text variant="h2">About</Text>
+					<Text>
+						{user.firstName} {user.lastName}
+					</Text>
+				</CardContent>
+			</Card>
+		</YStack>
 	);
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		gap: 10,
+	avatar: {
+		width: 100,
+		height: 100,
+		borderRadius: 9999,
 	},
 });

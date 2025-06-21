@@ -11,6 +11,7 @@ import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { Image, LogBox } from "react-native";
 import { Easing } from "react-native-reanimated";
+import { StyleSheet } from "react-native-unistyles";
 import menu from "@/assets/icons/hamburger-menu.png";
 import home from "@/assets/icons/house.png";
 import SplashScreenController from "@/components/splash-screen-controller";
@@ -47,6 +48,13 @@ if (!publishableKey) {
 		"Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env",
 	);
 }
+
+const styles = StyleSheet.create((th) => ({
+	tabBarBadgeStyle: {
+		color: th.colors.labelSecondary,
+		backgroundColor: th.colors.yellow,
+	},
+}));
 
 const HomeTabs = createBottomTabNavigator({
 	screenOptions: {
@@ -98,6 +106,7 @@ const HomeTabs = createBottomTabNavigator({
 						}}
 					/>
 				),
+				tabBarBadgeStyle: styles.tabBarBadgeStyle,
 			},
 		},
 	},
@@ -147,6 +156,10 @@ const RootStack = createNativeStackNavigator({
 		},
 		Profile: {
 			screen: Profile,
+			options: {
+				title: "Profile",
+				presentation: "modal",
+			},
 			linking: {
 				path: ":user(@[a-zA-Z0-9-_]+)",
 				parse: {

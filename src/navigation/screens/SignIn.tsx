@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import { ResultAsync } from "neverthrow";
 import React from "react";
 import { ActivityIndicator, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import TextInput from "@/components/ui/TextInput";
@@ -66,14 +65,7 @@ const SignInScreen = () => {
 	if (isSigningIn) {
 		return (
 			<>
-				<YStack
-					flex={1}
-					ai="center"
-					jc="center"
-					pd="lg"
-					gap="md"
-					style={styles.container}
-				>
+				<YStack flex={1} ai="center" jc="center" pd="lg" gap="md">
 					<YStack gap="lg">
 						<Text variant="h3">Signing you in...</Text>
 						<ActivityIndicator size="large" color={"black"} />
@@ -84,49 +76,39 @@ const SignInScreen = () => {
 	}
 
 	return (
-		<>
-			<YStack flex={1} pd="lg" gap="md" style={styles.container}>
-				<YStack style={{ marginTop: 32, marginBottom: 16 }}>
-					<Text variant="h1">Sign in</Text>
-				</YStack>
-				<YStack gap="lg">
-					<TextInput
-						autoCapitalize="none"
-						autoFocus
-						value={emailAddress}
-						placeholder="Enter email"
-						onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
-					/>
-					<TextInput
-						value={password}
-						placeholder="Enter password"
-						secureTextEntry={true}
-						onChangeText={(password) => setPassword(password)}
-						onSubmitEditing={handleLogin}
-					/>
-					<Button isLoading={isLoading} onPress={handleLogin}>
-						Sign in
-					</Button>
-				</YStack>
-
-				<YStack ai="center" pd="xl">
-					<Text>Don't have an account?</Text>
-					<Button variant="link" onPress={handlePressSignUp}>
-						Sign up now
-					</Button>
-				</YStack>
-				<View style={{ flex: 1 }} />
+		<YStack flex={1} pd="lg" gap="md">
+			<YStack style={{ marginTop: 32, marginBottom: 16 }}>
+				<Text variant="h1">Sign in</Text>
 			</YStack>
-		</>
+			<YStack gap="lg">
+				<TextInput
+					autoCapitalize="none"
+					autoFocus
+					value={emailAddress}
+					placeholder="Enter email"
+					onChangeText={(emailAddress) => setEmailAddress(emailAddress)}
+				/>
+				<TextInput
+					value={password}
+					placeholder="Enter password"
+					secureTextEntry={true}
+					onChangeText={(password) => setPassword(password)}
+					onSubmitEditing={handleLogin}
+				/>
+				<Button variant="purple" isLoading={isLoading} onPress={handleLogin}>
+					Sign in
+				</Button>
+			</YStack>
+
+			<YStack ai="center" pd="xl">
+				<Text>Don't have an account?</Text>
+				<Button variant="link" onPress={handlePressSignUp}>
+					Sign up now
+				</Button>
+			</YStack>
+			<View style={{ flex: 1 }} />
+		</YStack>
 	);
 };
-
-const styles = StyleSheet.create((th, rt) => ({
-	container: {
-		flex: 1,
-		paddingBottom: rt.insets.bottom,
-		backgroundColor: th.colors.background,
-	},
-}));
 
 export default SignInScreen;

@@ -1,3 +1,5 @@
+import { Authenticated } from "convex/react";
+import SignOutButton from "@/components/SignOutButton";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
@@ -13,6 +15,9 @@ export function Menu() {
 				<Button variant="menu" screen="Settings">
 					Help
 				</Button>
+				<Authenticated>
+					<SignOutButton />
+				</Authenticated>
 			</YStack>
 		</YStack>
 	);

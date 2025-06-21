@@ -3,6 +3,7 @@ import { Authenticated, Unauthenticated, useQuery } from "convex/react";
 import { FlatList, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Badge from "@/components/Badge";
+import Skeleton from "@/components/Skeleton";
 import { Card, CardContent } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
 import TouchableBounce from "@/components/ui/TouchableBounce";
@@ -10,35 +11,36 @@ import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@/providers/user-provider";
-import colors from "@/styles/colors";
 
 export function Home() {
-	const boards = useQuery(api.boards.getAllEnriched);
+	const boards = useQuery(api.boards.queries.getAllEnriched);
 	const navigation = useNavigation();
 	const { user } = useUser();
 
 	return (
 		<YStack flex={1} gap="lg">
 			<View style={styles.heroSection}>
-				<Text variant="h1" color="white">
-					Home
-				</Text>
+				<Text variant="h1">Home</Text>
 				<Authenticated>
 					<YStack gap="md">
-						<Text variant="subtitle" color="white">
-							Welcome back, @{user?.username}!
-						</Text>
+						<Text variant="subtitle">Welcome back, @{user?.username}!</Text>
 					</YStack>
 				</Authenticated>
 			</View>
 			<View style={styles.listSection}>
 				<YStack px="lg">
-					<Text variant="h2">Boards for you</Text>
+					<Text variant="h2">Recent boards</Text>
 				</YStack>
 				<FlatList
 					horizontal
 					contentContainerStyle={styles.contentContainer}
 					showsHorizontalScrollIndicator={false}
+					ListEmptyComponent={() =>
+						Array.from({ length: 10 }).map((_, index) => (
+							// biome-ignore lint/suspicious/noArrayIndexKey: <its ok>
+							<Skeleton key={index} style={{ width: 265, height: 140 }} />
+						))
+					}
 					data={boards}
 					renderItem={({ item: board }) => {
 						const totalQuestions = board.enriched.categories.reduce(
@@ -52,30 +54,20 @@ export function Home() {
 									navigation.navigate("Board", { boardId: board._id })
 								}
 							>
-								<Card key={board._id}>
+								<Card key={board._id} style={{ width: 265, height: 150 }}>
 									<CardContent>
-										<YStack gap="lg">
+										<YStack flex={1} jc="between">
 											<YStack>
 												<Text variant="h3">{board.title}</Text>
-												<Text>{board.description}</Text>
+												<Text numberOfLines={2} lineBreakMode="tail">
+													{board.description}
+												</Text>
 											</YStack>
 											<XStack gap="sm">
-												<Badge>
-													<Text invert>
-														<Text invert style={{ fontWeight: "bold" }}>
-															{board.enriched.categories.length}
-														</Text>{" "}
-														categories
-													</Text>
-												</Badge>
-												<Badge>
-													<Text invert>
-														<Text invert style={{ fontWeight: "bold" }}>
-															{totalQuestions}
-														</Text>{" "}
-														questions
-													</Text>
-												</Badge>
+												<Badge
+													label={`${board.enriched.categories.length} categories`}
+												/>
+												<Badge label={`${totalQuestions} questions`} />
 											</XStack>
 										</YStack>
 									</CardContent>
@@ -85,18 +77,17 @@ export function Home() {
 					}}
 				/>
 			</View>
+
 			<YStack px="lg">
 				<Unauthenticated>
 					<TouchableBounce
 						sensory="light"
 						onPress={() => navigation.navigate("SignIn")}
 					>
-						<Card style={{ backgroundColor: colors.accent }}>
+						<Card>
 							<YStack pd="md" gap="sm">
-								<Text variant="h2" color="white">
-									Sign in to get started
-								</Text>
-								<Text color="white">
+								<Text variant="h2">Sign in to get started</Text>
+								<Text>
 									Sign in or create your account to get access to more features.
 								</Text>
 							</YStack>
@@ -113,7 +104,7 @@ const styles = StyleSheet.create((th, rt) => ({
 		paddingTop: rt.insets.top,
 		padding: th.space.lg,
 		gap: th.space.lg,
-		backgroundColor: th.colors.accent,
+		backgroundColor: th.colors.purple,
 	},
 	listSection: {
 		gap: th.space.md,

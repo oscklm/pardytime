@@ -9,7 +9,8 @@ import { StyleSheet } from "react-native-unistyles";
 import { AnimatedSpinner } from "@/components/AnimatedSpinner";
 import Badge from "@/components/Badge";
 import { QuestionPreviewCard } from "@/components/questions/QuestionPreviewCard";
-import { Card, CardContent, CardHeader } from "@/components/ui/Card";
+import UserBadge from "@/components/UserBadge";
+import { Card, CardContent } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
@@ -20,9 +21,18 @@ type Props = StaticScreenProps<{
 }>;
 
 export function Board({ route }: Props) {
-	const board = useQuery(api.boards.getByIdEnriched, {
+	const board = useQuery(api.boards.queries.getByIdEnriched, {
 		id: route.params.boardId,
 	});
+
+	const user = useQuery(
+		api.users.queries.getById,
+		board
+			? {
+					id: board.ownerId,
+				}
+			: "skip",
+	);
 
 	const navigation = useNavigation();
 
@@ -51,37 +61,19 @@ export function Board({ route }: Props) {
 	const { enriched } = board;
 
 	return (
-		<YStack flex={1} gap="xl" pd="lg">
-			<YStack gap="md">
-				<Text variant="h1">{board?.title}</Text>
-				<Card>
-					<CardHeader>
-						<Text variant="h3">Details</Text>
-					</CardHeader>
-					<CardContent>
-						<Text>{board?.description}</Text>
-						<XStack gap="sm">
-							<Badge>
-								<Text invert>
-									<Text invert style={{ fontWeight: "bold" }}>
-										{enriched.categories.length}
-									</Text>{" "}
-									categories
-								</Text>
-							</Badge>
-							<Badge>
-								<Text invert>
-									<Text invert style={{ fontWeight: "bold" }}>
-										{totalQuestions}
-									</Text>{" "}
-									questions
-								</Text>
-							</Badge>
-						</XStack>
-					</CardContent>
-				</Card>
+		<YStack flex={1}>
+			<YStack gap="md" bg="purple" pd="lg">
+				<YStack>
+					<Text variant="h1">{board?.title}</Text>
+					<UserBadge user={user} />
+					<Text>{board?.description}</Text>
+				</YStack>
+				<XStack gap="sm">
+					<Badge label={`${enriched.categories.length} categories`} />
+					<Badge label={`${totalQuestions} questions`} />
+				</XStack>
 			</YStack>
-			<YStack gap="lg">
+			<YStack gap="lg" pd="lg">
 				<FlatList
 					data={enriched.categories}
 					contentContainerStyle={styles.contentContainer}

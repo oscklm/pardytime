@@ -15,6 +15,7 @@ const space = {
 	md: BASE_UNIT,
 	lg: BASE_UNIT * 2,
 	xl: BASE_UNIT * 3,
+	xxl: BASE_UNIT * 4,
 } as const;
 
 export { BASE_UNIT, radius, space };

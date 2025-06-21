@@ -1,5 +1,6 @@
-import { ActivityIndicator, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import { AnimatedSpinner } from "./AnimatedSpinner";
 
 interface LoadingViewProps {
 	message?: string;
@@ -8,7 +9,7 @@ interface LoadingViewProps {
 const LoadingView = ({ message }: LoadingViewProps) => {
 	return (
 		<View style={styles.container}>
-			<ActivityIndicator size="large" color={styles.indicator.color} />
+			<AnimatedSpinner />
 			{message && <Text>{message}</Text>}
 		</View>
 	);
@@ -21,10 +22,10 @@ const styles = StyleSheet.create((th, rt) => ({
 		alignItems: "center",
 		justifyContent: "center",
 		gap: th.space.md,
-		backgroundColor: th.colors.background,
+		backgroundColor: th.colors.backgroundPrimary,
 	},
 	indicator: {
-		color: th.colors.accent,
+		color: th.colors.labelPrimary,
 	},
 }));
 

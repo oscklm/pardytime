@@ -22,16 +22,24 @@ const TextInput = ({
 
 const styles = StyleSheet.create((th) => ({
 	text: {
-		fontWeight: "400",
+		fontWeight: "500",
 		fontSize: 16,
-		backgroundColor: th.colors.card,
-		padding: th.space.lg,
+		backgroundColor: th.colors.backgroundSecondary,
+		padding: th.space.xl,
 		borderRadius: th.radius.md,
-		color: th.colors.text,
+		borderWidth: 1,
+		borderColor: th.colors.labelQuaternary,
+		color: th.colors.labelPrimary,
 		variants: {
 			color: {
-				accent: {
-					color: th.colors.accent,
+				primary: {
+					color: th.colors.labelPrimary,
+				},
+				secondary: {
+					color: th.colors.labelSecondary,
+				},
+				tertiary: {
+					color: th.colors.labelTertiary,
 				},
 			},
 			variant: {
@@ -53,10 +61,10 @@ const styles = StyleSheet.create((th) => ({
 			},
 			invert: {
 				true: {
-					color: th.colors.background,
+					color: th.colors.backgroundPrimary,
 				},
 				false: {
-					color: th.colors.text,
+					color: th.colors.labelPrimary,
 				},
 			},
 		},

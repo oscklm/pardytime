@@ -23,44 +23,69 @@ const Text = ({
 const styles = StyleSheet.create((th) => ({
 	text: {
 		fontWeight: "400",
-		fontSize: th.space.lg,
-		lineHeight: th.space.lg * 1.5,
-		color: th.colors.text,
+		fontSize: 16,
+		lineHeight: 24,
+		color: th.colors.labelPrimary,
 		variants: {
 			color: {
-				accent: {
-					color: th.colors.accent,
-				},
 				primary: {
-					color: th.colors.primary,
-				},
-				primaryMuted: {
-					color: th.baseColors.primaryMuted,
+					color: th.colors.labelPrimary,
 				},
 				secondary: {
-					color: th.colors.secondary,
+					color: th.colors.labelSecondary,
 				},
-				white: {
-					color: th.baseColors.white,
+				tertiary: {
+					color: th.colors.labelTertiary,
+				},
+				quaternary: {
+					color: th.colors.labelQuaternary,
 				},
 			},
 			variant: {
 				h1: {
+					color: th.colors.labelPrimary,
 					fontWeight: "700",
 					fontSize: 32,
-					lineHeight: 40,
+					lineHeight: 42,
 				},
 				h2: {
+					color: th.colors.labelPrimary,
 					fontWeight: "700",
 					fontSize: 24,
-					lineHeight: 32,
+					lineHeight: 34,
 				},
 				h3: {
+					color: th.colors.labelPrimary,
 					fontWeight: "700",
 					fontSize: 20,
 					lineHeight: 28,
 				},
 				subtitle: {
+					color: th.colors.labelSecondary,
+					fontWeight: "500",
+					fontSize: 16,
+					lineHeight: 24,
+				},
+				primary: {
+					color: th.colors.labelPrimary,
+					fontWeight: "500",
+					fontSize: 16,
+					lineHeight: 24,
+				},
+				secondary: {
+					color: th.colors.labelSecondary,
+					fontWeight: "500",
+					fontSize: 16,
+					lineHeight: 24,
+				},
+				tertiary: {
+					color: th.colors.labelTertiary,
+					fontWeight: "500",
+					fontSize: 16,
+					lineHeight: 24,
+				},
+				quarternary: {
+					color: th.colors.labelQuaternary,
 					fontWeight: "500",
 					fontSize: 16,
 					lineHeight: 24,
@@ -86,10 +111,10 @@ const styles = StyleSheet.create((th) => ({
 			},
 			invert: {
 				true: {
-					color: th.colors.background,
+					color: th.colors.backgroundPrimary,
 				},
 				false: {
-					color: th.colors.text,
+					color: th.colors.labelPrimary,
 				},
 			},
 		},
