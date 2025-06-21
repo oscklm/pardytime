@@ -20,6 +20,8 @@ android
 *.key
 *.mobileprovision
 
+*.ipa
+
 # Cursor
 mcp.json
 
