@@ -1,15 +1,17 @@
-import { Text } from "@react-navigation/elements";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppState, Linking, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import { ScannerOverlay } from "@/components/ScannerOverlay";
 import Button from "@/components/ui/Button";
+import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
 
 export function Scanner() {
 	const qrLock = useRef(false);
 	const appState = useRef(AppState.currentState);
 	const [permission, requestPermission] = useCameraPermissions();
+	const [isScanned, setIsScanned] = useState(false);
 
 	useEffect(() => {
 		const subscription = AppState.addEventListener("change", (nextAppState) => {
@@ -18,6 +20,7 @@ export function Scanner() {
 				nextAppState === "active"
 			) {
 				qrLock.current = false;
+				setIsScanned(false);
 			}
 			appState.current = nextAppState;
 		});
@@ -55,12 +58,15 @@ export function Scanner() {
 				onBarcodeScanned={async ({ data }) => {
 					if (data && !qrLock.current) {
 						qrLock.current = true;
+						setIsScanned(true);
 						setTimeout(async () => {
 							await Linking.openURL(data);
 						}, 500);
 					}
 				}}
-			/>
+			>
+				<ScannerOverlay isScanned={isScanned} />
+			</CameraView>
 		</YStack>
 	);
 }
@@ -94,5 +100,15 @@ const styles = StyleSheet.create((th) => ({
 		fontSize: 24,
 		fontWeight: "bold",
 		color: "white",
+	},
+	mask: {
+		flex: 1,
+	},
+	cutout: {
+		width: 250,
+		height: 250,
+		borderWidth: 2,
+		borderColor: "white",
+		borderRadius: th.radius.lg,
 	},
 }));

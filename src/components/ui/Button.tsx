@@ -196,7 +196,7 @@ const styles = StyleSheet.create((th) => ({
 				},
 				white: {
 					backgroundColor: th.colors.white,
-					borderColor: th.colors.gray3,
+					borderColor: th.colors.gray4,
 				},
 				purple: {
 					backgroundColor: th.colors.purple,
@@ -275,6 +275,9 @@ const styles = StyleSheet.create((th) => ({
 				},
 				warning: {
 					color: "white",
+				},
+				white: {
+					color: th.colors.black,
 				},
 				menu: {
 					color: th.colors.labelPrimary,
