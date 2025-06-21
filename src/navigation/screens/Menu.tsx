@@ -1,4 +1,3 @@
-import { Authenticated } from "convex/react";
 import SignOutButton from "@/components/SignOutButton";
 import Button from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -18,7 +17,8 @@ export function Menu() {
 			</YStack>
 			<YStack flex={1} px="lg" gap="md">
 				<YStack>
-					<Text variant="h2">Recent boards</Text>
+					<Text variant="subtitle">Signed in as</Text>
+					<Text variant="h2">@{user.username}</Text>
 				</YStack>
 				<YStack gap="md">
 					<Card>
@@ -34,17 +34,14 @@ export function Menu() {
 						</YStack>
 					</Card>
 				</YStack>
-
 				<YStack gap="md">
 					<Button variant="menu" screen="Settings">
 						Settings
 					</Button>
-					<Button variant="menu" screen="Settings">
+					<Button variant="menu" screen="Help">
 						Help
 					</Button>
-					<Authenticated>
-						<SignOutButton />
-					</Authenticated>
+					<SignOutButton />
 				</YStack>
 			</YStack>
 		</YStack>

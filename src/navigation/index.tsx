@@ -13,6 +13,7 @@ import menu from "@/assets/icons/hamburger-menu.png";
 import home from "@/assets/icons/house.png";
 import { UniThemeProvider } from "@/styles/theme";
 import { Board } from "./screens/Board";
+import { Help } from "./screens/Help";
 import { Home } from "./screens/Home";
 import { Menu } from "./screens/Menu";
 import { NotFound } from "./screens/NotFound";
@@ -150,6 +151,12 @@ const RootStack = createNativeStackNavigator({
 					</HeaderButton>
 				),
 			}),
+		},
+		Help: {
+			screen: Help,
+			options: {
+				title: "Help",
+			},
 		},
 		NotFound: {
 			screen: NotFound,
