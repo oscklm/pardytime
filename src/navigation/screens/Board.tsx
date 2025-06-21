@@ -62,9 +62,11 @@ export function Board({ route }: Props) {
 	return (
 		<YStack flex={1}>
 			<YStack gap="md" bg="purple" pd="lg">
-				<YStack>
-					<Text variant="h1">{board?.title}</Text>
-					<UserBadge user={user} />
+				<YStack gap="md">
+					<YStack>
+						<Text variant="h1">{board?.title}</Text>
+						<UserBadge user={user} />
+					</YStack>
 					<Text>{board?.description}</Text>
 				</YStack>
 				<XStack gap="sm">

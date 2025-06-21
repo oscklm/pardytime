@@ -26,10 +26,10 @@ export function QuestionPreviewCard({
 	}));
 
 	const handleLongPress = () => {
-		fade.value = withTiming(1, { duration: 200 });
+		fade.value = withTiming(1, { duration: 250 });
 	};
 	const handlePressOut = () => {
-		fade.value = withTiming(0, { duration: 200 });
+		fade.value = withTiming(0, { duration: 350 });
 	};
 
 	return (
@@ -51,7 +51,7 @@ export function QuestionPreviewCard({
 				<Animated.View
 					style={[backStyleAnimated, styles.backStyle, styles.face]}
 				>
-					<Text>{answer}</Text>
+					<Text style={styles.answerText}>{answer}</Text>
 				</Animated.View>
 			</Animated.View>
 		</TouchableWithoutFeedback>
@@ -65,10 +65,12 @@ const styles = StyleSheet.create((th) => ({
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	answerTitle: {
-		position: "absolute",
-		left: 10,
-		top: 10,
+	answerText: {
+		fontSize: 18,
+		lineHeight: 28,
+		fontWeight: "600",
+		textAlign: "center",
+		color: th.colors.labelSecondary,
 	},
 	backStyle: {
 		backgroundColor: th.colors.green,

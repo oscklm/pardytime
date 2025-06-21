@@ -1,17 +1,16 @@
 import { useNavigation } from "@react-navigation/native";
-import { Text, View } from "react-native";
+import { Text, TouchableWithoutFeedback, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import type { Doc } from "@/convex/_generated/dataModel";
 import Skeleton from "./Skeleton";
 import { Image } from "./ui/Image";
-import TouchableBounce from "./ui/TouchableBounce";
 
 const UserBadge = ({ user }: { user: Doc<"users"> | undefined }) => {
 	const navigation = useNavigation();
 	if (user === undefined) {
 		return (
 			<View style={styles.badge}>
-				<Skeleton style={{ width: 32, height: 32, borderRadius: 9999 }} />
+				<Skeleton style={{ width: 24, height: 24, borderRadius: 9999 }} />
 				<Skeleton style={{ width: 80, height: 20 }} />
 			</View>
 		);
@@ -20,8 +19,7 @@ const UserBadge = ({ user }: { user: Doc<"users"> | undefined }) => {
 	const { username, imageUrl } = user;
 
 	return (
-		<TouchableBounce
-			sensory="light"
+		<TouchableWithoutFeedback
 			onPress={() =>
 				user.username &&
 				navigation.navigate("Profile", { username: user.username })
@@ -31,14 +29,14 @@ const UserBadge = ({ user }: { user: Doc<"users"> | undefined }) => {
 				<Image source={{ uri: imageUrl }} style={styles.avatar} />
 				<Text style={styles.label}>@{username}</Text>
 			</View>
-		</TouchableBounce>
+		</TouchableWithoutFeedback>
 	);
 };
 
 const styles = StyleSheet.create((th) => ({
 	badge: {
 		width: 150,
-		height: 40,
+		height: 32,
 		flexDirection: "row",
 		alignItems: "center",
 		gap: th.space.md,
@@ -51,8 +49,8 @@ const styles = StyleSheet.create((th) => ({
 	label: {
 		fontWeight: "500",
 		color: th.colors.labelPrimary,
-		fontSize: 14,
-		lineHeight: 20,
+		fontSize: 16,
+		lineHeight: 24,
 	},
 }));
 
