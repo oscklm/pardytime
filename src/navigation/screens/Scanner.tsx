@@ -1,4 +1,5 @@
 import { CameraView, useCameraPermissions } from "expo-camera";
+import * as Haptics from "expo-haptics";
 import { useEffect, useRef, useState } from "react";
 import { AppState, Linking, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
@@ -12,6 +13,8 @@ export function Scanner() {
 	const appState = useRef(AppState.currentState);
 	const [permission, requestPermission] = useCameraPermissions();
 	const [isScanned, setIsScanned] = useState(false);
+	const [parentWidth, setParentWidth] = useState(0);
+	const [parentHeight, setParentHeight] = useState(0);
 
 	useEffect(() => {
 		const subscription = AppState.addEventListener("change", (nextAppState) => {
@@ -55,17 +58,27 @@ export function Scanner() {
 				barcodeScannerSettings={{
 					barcodeTypes: ["qr"],
 				}}
+				onLayout={(event) => {
+					setParentWidth(event.nativeEvent.layout.width);
+					setParentHeight(event.nativeEvent.layout.height);
+				}}
 				onBarcodeScanned={async ({ data }) => {
 					if (data && !qrLock.current) {
+						Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 						qrLock.current = true;
 						setIsScanned(true);
 						setTimeout(async () => {
 							await Linking.openURL(data);
+							setIsScanned(false);
 						}, 500);
 					}
 				}}
 			>
-				<ScannerOverlay isScanned={isScanned} />
+				<ScannerOverlay
+					isScanned={isScanned}
+					parentWidth={parentWidth}
+					parentHeight={parentHeight}
+				/>
 			</CameraView>
 		</YStack>
 	);
