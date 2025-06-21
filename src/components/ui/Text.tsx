@@ -44,7 +44,7 @@ const styles = StyleSheet.create((th) => ({
 			variant: {
 				h1: {
 					color: th.colors.labelPrimary,
-					fontWeight: "700",
+					fontWeight: "800",
 					fontSize: 32,
 					lineHeight: 42,
 				},

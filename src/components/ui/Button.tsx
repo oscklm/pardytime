@@ -168,6 +168,10 @@ const styles = StyleSheet.create((th) => ({
 					alignItems: "center",
 					gap: th.space.sm,
 				},
+				white: {
+					backgroundColor: th.colors.white,
+					borderColor: th.colors.gray3,
+				},
 				purple: {
 					backgroundColor: th.colors.purple,
 				},

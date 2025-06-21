@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { Unauthenticated, useQuery } from "convex/react";
-import { FlatList } from "react-native";
+import { FlatList, TouchableWithoutFeedback } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Badge from "@/components/Badge";
 import Skeleton from "@/components/Skeleton";
@@ -41,7 +41,7 @@ export function Home() {
 							0,
 						);
 						return (
-							<TouchableBounce
+							<TouchableWithoutFeedback
 								key={board._id}
 								onPress={() =>
 									navigation.navigate("Board", { boardId: board._id })
@@ -63,7 +63,7 @@ export function Home() {
 										</XStack>
 									</YStack>
 								</Card>
-							</TouchableBounce>
+							</TouchableWithoutFeedback>
 						);
 					}}
 				/>

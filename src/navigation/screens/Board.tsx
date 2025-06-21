@@ -10,7 +10,6 @@ import { AnimatedSpinner } from "@/components/AnimatedSpinner";
 import Badge from "@/components/Badge";
 import { QuestionPreviewCard } from "@/components/questions/QuestionPreviewCard";
 import UserBadge from "@/components/UserBadge";
-import { Card, CardContent } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
@@ -81,20 +80,18 @@ export function Board({ route }: Props) {
 					ListHeaderComponent={() => (
 						<YStack gap="xs">
 							<Text variant="h2">Categories</Text>
-							<Text style={{ fontSize: 14, lineHeight: 17 }}>
+							<Text variant="subtitle">
 								Hold down on a card to reveal the answer.
 							</Text>
 						</YStack>
 					)}
 					renderItem={({ item }) => (
-						<Card key={item._id}>
-							<CardContent>
-								<Text>{item.title}</Text>
-								{item.questions.map((question) => (
-									<QuestionPreviewCard key={question._id} question={question} />
-								))}
-							</CardContent>
-						</Card>
+						<YStack gap="md">
+							<Text variant="h3">{item.title}</Text>
+							{item.questions.map((question) => (
+								<QuestionPreviewCard key={question._id} question={question} />
+							))}
+						</YStack>
 					)}
 				/>
 			</YStack>

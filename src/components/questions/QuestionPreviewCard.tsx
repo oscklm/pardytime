@@ -43,15 +43,14 @@ export function QuestionPreviewCard({
 				<Animated.View
 					style={[frontStyleAnimated, styles.frontStyle, styles.face]}
 				>
-					<Text>{text}</Text>
+					<Text numberOfLines={3} style={styles.questionText}>
+						{text}
+					</Text>
 				</Animated.View>
 				{/* Back: Answer */}
 				<Animated.View
 					style={[backStyleAnimated, styles.backStyle, styles.face]}
 				>
-					<Text variant="subtitle" style={styles.answerTitle}>
-						Answer
-					</Text>
 					<Text>{answer}</Text>
 				</Animated.View>
 			</Animated.View>
@@ -59,7 +58,7 @@ export function QuestionPreviewCard({
 	);
 }
 
-const styles = StyleSheet.create((th, rt) => ({
+const styles = StyleSheet.create((th) => ({
 	container: {
 		flex: 1,
 		height: 100,
@@ -72,16 +71,17 @@ const styles = StyleSheet.create((th, rt) => ({
 		top: 10,
 	},
 	backStyle: {
-		backgroundColor:
-			rt.colorScheme === "dark"
-				? "hsl(240, 18.90%, 7.30%)"
-				: "hsl(0, 0.00%, 70.20%)",
+		backgroundColor: th.colors.green,
 	},
 	frontStyle: {
-		backgroundColor:
-			rt.colorScheme === "dark"
-				? "hsl(240, 19.20%, 10.20%)"
-				: "hsl(0, 0.00%, 90.00%)",
+		backgroundColor: th.colors.gray2,
+	},
+	questionText: {
+		fontWeight: "600",
+		textAlign: "center",
+		color: th.colors.labelPrimary,
+		fontSize: 18,
+		lineHeight: 28,
 	},
 	face: {
 		position: "absolute",
