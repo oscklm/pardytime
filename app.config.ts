@@ -66,6 +66,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     "expo-asset",
     "expo-secure-store",
     [
+      "expo-dev-client",
+      {
+        launchMode: "most-recent"
+      }
+    ],
+    [
       "expo-splash-screen",
       {
         image: "./src/assets/images/splash-icon.png",
