@@ -19,11 +19,15 @@ import type * as boards_queries from "../boards/queries.js";
 import type * as boards_utils from "../boards/utils.js";
 import type * as changelogs_queries from "../changelogs/queries.js";
 import type * as controllers from "../controllers.js";
+import type * as games_mutations from "../games/mutations.js";
+import type * as games_queries from "../games/queries.js";
 import type * as http from "../http.js";
+import type * as triggers from "../triggers.js";
 import type * as users_actions from "../users/actions.js";
 import type * as users_mutations from "../users/mutations.js";
 import type * as users_queries from "../users/queries.js";
-import type * as utils from "../utils.js";
+import type * as utils_clerk from "../utils/clerk.js";
+import type * as utils_functions from "../utils/functions.js";
 import type * as validators from "../validators.js";
 
 /**
@@ -41,11 +45,15 @@ declare const fullApi: ApiFromModules<{
   "boards/utils": typeof boards_utils;
   "changelogs/queries": typeof changelogs_queries;
   controllers: typeof controllers;
+  "games/mutations": typeof games_mutations;
+  "games/queries": typeof games_queries;
   http: typeof http;
+  triggers: typeof triggers;
   "users/actions": typeof users_actions;
   "users/mutations": typeof users_mutations;
   "users/queries": typeof users_queries;
-  utils: typeof utils;
+  "utils/clerk": typeof utils_clerk;
+  "utils/functions": typeof utils_functions;
   validators: typeof validators;
 }>;
 export declare const api: FilterApi<

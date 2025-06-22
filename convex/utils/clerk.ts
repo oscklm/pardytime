@@ -1,6 +1,6 @@
 import type { EmailAddressJSON } from "@clerk/backend";
 import type { Infer } from "convex/values";
-import type { userSchema } from "./users/schema";
+import type { userSchema } from "../users/schema";
 
 // Utility function to process email addresses from Clerk webhook
 export function processEmailAddresses(

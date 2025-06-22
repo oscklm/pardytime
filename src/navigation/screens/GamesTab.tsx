@@ -1,10 +1,29 @@
 import { useNavigation } from "@react-navigation/native";
+import { FlatList, TouchableWithoutFeedback, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import { ListEmptyComponent } from "@/components/ListEmptyComponent";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
+import { api } from "@/convex/_generated/api";
+import { useQueryWithStatus } from "@/lib/convex";
+import { useUser } from "@/providers/user-provider";
 
 export function GamesTab() {
 	const navigation = useNavigation();
+	const user = useUser();
+
+	const { data, status, error } = useQueryWithStatus(
+		api.games.queries.getAllByOwnerId,
+		{
+			ownerId: user._id,
+		},
+	);
+
+	const handlePress = (code: string) => {
+		navigation.navigate("Game", {
+			code,
+		});
+	};
 
 	return (
 		<YStack flex={1} gap="lg" py="lg">
@@ -12,6 +31,26 @@ export function GamesTab() {
 				<YStack px="lg">
 					<Text variant="h2">Your Games</Text>
 				</YStack>
+				<FlatList
+					data={data}
+					contentContainerStyle={styles.contentContainer}
+					ListEmptyComponent={() => (
+						<ListEmptyComponent
+							status={status}
+							descriptor="games"
+							message={error?.message}
+						/>
+					)}
+					renderItem={({ item }) => (
+						<TouchableWithoutFeedback
+							onPress={() => handlePress(item.gameCode)}
+						>
+							<View>
+								<Text>{item.gameCode}</Text>
+							</View>
+						</TouchableWithoutFeedback>
+					)}
+				/>
 			</YStack>
 		</YStack>
 	);

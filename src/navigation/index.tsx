@@ -15,6 +15,7 @@ import { Board } from "./screens/Board";
 import { BoardsTab } from "./screens/BoardsTab";
 import { CreateBoard } from "./screens/CreateBoard";
 import { CreateGame } from "./screens/CreateGame";
+import { Game } from "./screens/Game";
 import { GamesTab } from "./screens/GamesTab";
 import { Help } from "./screens/Help";
 import { NotFound } from "./screens/NotFound";
@@ -130,6 +131,12 @@ const RootStack = createNativeStackNavigator({
 			options: {
 				title: "Welcome",
 				headerShown: false,
+			},
+		},
+		Game: {
+			screen: Game,
+			options: {
+				title: "Game",
 			},
 		},
 		SignIn: {

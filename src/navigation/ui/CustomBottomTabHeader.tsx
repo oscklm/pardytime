@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
 import type {
 	BottomTabHeaderProps,
 	BottomTabNavigationOptions,
@@ -36,9 +37,12 @@ export const CustomBottomTabHeader = ({
 				<View style={styles.toolbar}>
 					{toolbarItems.map((item, index) => (
 						<>
-							{item}
+							<View key={`toolbar-item-${index}`}>{item}</View>
 							{index < toolbarItems.length - 1 && (
-								<View style={styles.toolbarSeparator} />
+								<View
+									key={`seperator-${index}`}
+									style={styles.toolbarSeparator}
+								/>
 							)}
 						</>
 					))}

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import * as Haptics from "expo-haptics";
 import { useEffect, useRef, useState } from "react";
@@ -10,6 +11,7 @@ import YStack from "@/components/ui/YStack";
 
 export function Scanner() {
 	const qrLock = useRef(false);
+	const navigation = useNavigation();
 	const appState = useRef(AppState.currentState);
 	const [permission, requestPermission] = useCameraPermissions();
 	const [isScanned, setIsScanned] = useState(false);
@@ -73,6 +75,7 @@ export function Scanner() {
 						qrLock.current = true;
 						setIsScanned(true);
 						setTimeout(async () => {
+							navigation.canGoBack() && navigation.goBack();
 							await Linking.openURL(data);
 							setIsScanned(false);
 						}, 500);

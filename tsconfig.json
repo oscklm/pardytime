@@ -3,19 +3,11 @@
   "compilerOptions": {
     "strict": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/convex/*": [
-        "./convex/*"
-      ]
+      "@/*": ["./src/*"],
+      "@/convex/*": ["./convex/*"]
     }
   },
-  "include": [
-    "src",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ],
+  "include": ["src", "convex", ".expo/types/**/*.ts", "expo-env.d.ts"],
   "exclude": [
     "**/node_modules",
     "./convex/_generated",

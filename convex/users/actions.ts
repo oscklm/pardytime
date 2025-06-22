@@ -4,7 +4,7 @@ import { verifyWebhook } from "@clerk/backend/webhooks";
 import { v } from "convex/values";
 import { internalAction } from "@/convex/_generated/server";
 import { internal } from "../_generated/api";
-import { processEmailAddresses } from "../utils";
+import { processEmailAddresses } from "../utils/clerk";
 
 // Convex action that verifies and handles Clerk webhook
 export const handleClerkWebhook = internalAction({

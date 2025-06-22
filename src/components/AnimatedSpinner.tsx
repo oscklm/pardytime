@@ -17,11 +17,13 @@ const easing = Easing.linear;
 type AnimatedSpinnerProps = {
 	style?: StyleProp<ImageStyle>;
 	tintColor?: string;
+	size?: number;
 	variant?: "colored" | "flat";
 };
 
 const AnimatedSpinner = ({
 	style,
+	size = 64,
 	tintColor,
 	variant = "colored",
 }: AnimatedSpinnerProps) => {
@@ -41,8 +43,8 @@ const AnimatedSpinner = ({
 			source={variant === "colored" ? coloredSpinner : flatSpinner}
 			style={[
 				{
-					width: 64,
-					height: 64,
+					width: size,
+					height: size,
 				},
 				style,
 				animatedStyle,
