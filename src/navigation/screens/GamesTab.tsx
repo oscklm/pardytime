@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import { FlatList, TouchableWithoutFeedback, View } from "react-native";
+import { FlatList } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import { GameListItem } from "@/components/games/GameListItem";
 import { ListEmptyComponent } from "@/components/ListEmptyComponent";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
@@ -41,15 +42,7 @@ export function GamesTab() {
 							message={error?.message}
 						/>
 					)}
-					renderItem={({ item }) => (
-						<TouchableWithoutFeedback
-							onPress={() => handlePress(item.gameCode)}
-						>
-							<View>
-								<Text>{item.gameCode}</Text>
-							</View>
-						</TouchableWithoutFeedback>
-					)}
+					renderItem={({ item }) => <GameListItem game={item} />}
 				/>
 			</YStack>
 		</YStack>

@@ -1,0 +1,58 @@
+import { useNavigation } from "@react-navigation/native";
+import { TouchableWithoutFeedback, View } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
+import Text from "@/components/ui/Text";
+import type { api } from "@/convex/_generated/api";
+import XStack from "../ui/XStack";
+import { GameStatusBadge } from "./GameStatusBadge";
+
+type GamesWithBoard = typeof api.games.queries.getAllByOwnerId._returnType;
+
+export function GameListItem({ game }: { game: GamesWithBoard[number] }) {
+	const navigation = useNavigation();
+	const { code } = game;
+
+	const onPress = () => {
+		navigation.navigate("Game", {
+			code,
+		});
+	};
+
+	return (
+		<TouchableWithoutFeedback onPress={onPress}>
+			<View style={styles.container}>
+				<XStack jc="between" ai="center">
+					<Text style={styles.boardLabel}>{game.board?.title}</Text>
+					<GameStatusBadge status={game.status} />
+				</XStack>
+				<Text>{game.board?.description}</Text>
+			</View>
+		</TouchableWithoutFeedback>
+	);
+}
+
+const styles = StyleSheet.create((th) => ({
+	container: {
+		flex: 1,
+		height: 100,
+		backgroundColor: th.colors.backgroundSecondary,
+		borderRadius: th.radius.md,
+		padding: th.space.lg,
+	},
+	boardLabel: {
+		fontSize: 20,
+		lineHeight: 24,
+		fontWeight: "800",
+		textAlign: "center",
+	},
+	face: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		width: "100%",
+		height: "100%",
+		borderRadius: th.radius.md,
+		justifyContent: "center",
+		alignItems: "center",
+	},
+}));

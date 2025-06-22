@@ -16,27 +16,27 @@ export const create = mutation({
 
 		invariant(boardId, "Could not compute boardId");
 
-		let gameCode: string | undefined;
+		let code: string | undefined;
 		let isUnique = false;
 		while (!isUnique) {
-			const code = generateGameCode();
+			const generatedCode = generateGameCode();
 			const existingGame = await ctx.db
 				.query("games")
-				.withIndex("by_gameCode", (q) => q.eq("gameCode", code))
+				.withIndex("by_code", (q) => q.eq("code", generatedCode))
 				.first();
 			if (!existingGame) {
-				gameCode = code;
+				code = generatedCode;
 				isUnique = true;
 			}
 		}
 
-		invariant(gameCode, "Could not generate unique game code");
+		invariant(code, "Could not generate unique game code");
 
 		const game = await ctx.db.insert("games", {
 			boardId,
 			ownerId: args.userId,
 			status: "pending",
-			gameCode,
+			code,
 		});
 
 		return game;

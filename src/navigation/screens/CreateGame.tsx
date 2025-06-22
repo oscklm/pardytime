@@ -1,7 +1,7 @@
-import { Text } from "@react-navigation/elements";
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "convex/react";
 import Button from "@/components/ui/Button";
+import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@/providers/user-provider";
@@ -21,9 +21,10 @@ export function CreateGame() {
 
 	return (
 		<YStack flex={1} gap="md" pd="lg">
-			<Text>Create Game Screen</Text>
+			<Text variant="h2">Create a new game</Text>
+			<Text>This is WIP. So only to use for testing QR feature.</Text>
 			<Button sensory="light" variant="success" onPress={handleCreateGame}>
-				Create Game
+				Create Test Game
 			</Button>
 		</YStack>
 	);

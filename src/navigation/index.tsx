@@ -117,6 +117,9 @@ const BottomTabs = createBottomTabNavigator({
 
 const RootStack = createNativeStackNavigator({
 	layout: ({ children }) => <UniThemeProvider>{children}</UniThemeProvider>,
+	screenOptions: {
+		headerBackButtonDisplayMode: "minimal",
+	},
 	screens: {
 		BottomTabs: {
 			if: () => useConvexAuth().isAuthenticated,

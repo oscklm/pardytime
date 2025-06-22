@@ -11,7 +11,7 @@ const gameSchema = v.object({
 	ownerId: v.id("users"),
 	boardId: v.id("boards"),
 	status: gameStatus,
-	gameCode: v.string(),
+	code: v.string(),
 	// Tracks the question currently being presented.
 	activeQuestionId: v.optional(v.id("questions")),
 	// Tracks which team has control to select the next question.
@@ -34,7 +34,7 @@ const gameTables = {
 	games: defineTable(gameSchema)
 		.index("by_ownerId", ["ownerId"])
 		.index("by_boardId", ["boardId"])
-		.index("by_gameCode", ["gameCode"]),
+		.index("by_code", ["code"]),
 	teams: defineTable(teamSchema).index("by_gameId", ["gameId"]),
 	answeredQuestions: defineTable(answeredQuestionSchema).index("by_gameId", [
 		"gameId",

@@ -1,4 +1,5 @@
 import { v } from "convex/values";
+import { asyncMap } from "convex-helpers";
 import invariant from "tiny-invariant";
 import { query } from "@/convex/_generated/server";
 
@@ -12,7 +13,15 @@ export const getAllByOwnerId = query({
 			.withIndex("by_ownerId", (q) => q.eq("ownerId", ownerId))
 			.collect();
 
-		return games;
+		const gamesWithBoards = await asyncMap(games, async (game) => {
+			const board = await ctx.db.get(game.boardId);
+			return {
+				...game,
+				board,
+			};
+		});
+
+		return gamesWithBoards;
 	},
 });
 
@@ -23,7 +32,7 @@ export const getByGameCode = query({
 	handler: async (ctx, { code }) => {
 		const game = await ctx.db
 			.query("games")
-			.withIndex("by_gameCode", (q) => q.eq("gameCode", code))
+			.withIndex("by_code", (q) => q.eq("code", code))
 			.first();
 
 		invariant(game, "Game not found");

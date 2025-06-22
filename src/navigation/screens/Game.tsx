@@ -1,12 +1,10 @@
-import {
-	type StaticScreenProps,
-	useNavigation,
-} from "@react-navigation/native";
+import type { StaticScreenProps } from "@react-navigation/native";
 import { useQuery } from "convex/react";
 import QRCode from "react-native-qrcode-svg";
-import { StyleSheet } from "react-native-unistyles";
+import { GameStatusBadge } from "@/components/games/GameStatusBadge";
 import LoadingView from "@/components/LoadingView";
 import Text from "@/components/ui/Text";
+import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 
@@ -14,9 +12,13 @@ type Props = StaticScreenProps<{
 	code: string;
 }>;
 
-export function Game({ route }: Props) {
-	const navigation = useNavigation();
+const statusToColor = {
+	pending: "yellow",
+	active: "green",
+	completed: "red",
+};
 
+export function Game({ route }: Props) {
 	const game = useQuery(api.games.queries.getByGameCode, {
 		code: route.params.code,
 	});
@@ -25,24 +27,19 @@ export function Game({ route }: Props) {
 		return <LoadingView />;
 	}
 
-	const gameLink = `jeopardytime://game?code=${game.gameCode}`;
+	const gameLink = `jeopardytime://game?code=${game.code}`;
 
 	return (
-		<YStack flex={1} gap="lg" py="xl" insetTop>
-			<YStack gap="md" ai="center">
-				<QRCode value={gameLink} size={200} />
-				<YStack>
-					<Text variant="h1">#{game.gameCode}</Text>
-				</YStack>
+		<YStack flex={1} gap="lg" pd="lg">
+			<YStack gap="md">
+				<XStack jc="between" gap="md">
+					<YStack>
+						<GameStatusBadge status={game.status} />
+						<Text variant="h1">#{game.code}</Text>
+					</YStack>
+					<QRCode value={gameLink} size={100} />
+				</XStack>
 			</YStack>
 		</YStack>
 	);
 }
-
-const styles = StyleSheet.create({
-	avatar: {
-		width: 100,
-		height: 100,
-		borderRadius: 9999,
-	},
-});
