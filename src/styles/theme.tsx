@@ -14,6 +14,9 @@ export interface UnistylesTheme {
 		labelSecondary: string;
 		labelTertiary: string;
 		labelQuaternary: string;
+		borderPrimary: string;
+		borderSecondary: string;
+		borderTertiary: string;
 		red: string;
 		orange: string;
 		yellow: string;
@@ -42,6 +45,9 @@ const lightTheme: UnistylesTheme = {
 		labelSecondary: colors.labelSecondaryLight,
 		labelTertiary: colors.labelTertiaryLight,
 		labelQuaternary: colors.labelQuaternaryLight,
+		borderPrimary: colors.borderPrimaryLight,
+		borderSecondary: colors.borderSecondaryLight,
+		borderTertiary: colors.borderTertiaryLight,
 		red: colors.redLight,
 		orange: colors.orangeLight,
 		yellow: colors.yellowLight,
@@ -70,6 +76,9 @@ const darkTheme: UnistylesTheme = {
 		labelSecondary: colors.labelSecondaryDark,
 		labelTertiary: colors.labelTertiaryDark,
 		labelQuaternary: colors.labelQuaternaryDark,
+		borderPrimary: colors.borderPrimaryDark,
+		borderSecondary: colors.borderSecondaryDark,
+		borderTertiary: colors.borderTertiaryDark,
 		red: colors.redDark,
 		orange: colors.orangeDark,
 		yellow: colors.yellowDark,

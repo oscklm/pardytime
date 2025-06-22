@@ -51,16 +51,21 @@ export function Scanner() {
 	}
 
 	return (
-		<YStack flex={1} gap="md" pd="lg" insetBottom>
+		<YStack
+			flex={1}
+			gap="md"
+			pd="lg"
+			insetBottom
+			onLayout={(event) => {
+				setParentWidth(event.nativeEvent.layout.width);
+				setParentHeight(event.nativeEvent.layout.height);
+			}}
+		>
 			<CameraView
 				style={styles.camera}
 				facing={"back"}
 				barcodeScannerSettings={{
 					barcodeTypes: ["qr"],
-				}}
-				onLayout={(event) => {
-					setParentWidth(event.nativeEvent.layout.width);
-					setParentHeight(event.nativeEvent.layout.height);
 				}}
 				onBarcodeScanned={async ({ data }) => {
 					if (data && !qrLock.current) {
@@ -73,13 +78,12 @@ export function Scanner() {
 						}, 500);
 					}
 				}}
-			>
-				<ScannerOverlay
-					isScanned={isScanned}
-					parentWidth={parentWidth}
-					parentHeight={parentHeight}
-				/>
-			</CameraView>
+			/>
+			<ScannerOverlay
+				isScanned={isScanned}
+				parentWidth={parentWidth}
+				parentHeight={parentHeight}
+			/>
 		</YStack>
 	);
 }
@@ -94,8 +98,11 @@ const styles = StyleSheet.create((th) => ({
 		paddingBottom: 10,
 	},
 	camera: {
-		flex: 1,
-		borderRadius: th.radius.lg,
+		position: "absolute",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
 		overflow: "hidden",
 	},
 	buttonContainer: {

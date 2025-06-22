@@ -6,20 +6,14 @@ import YStack from "@/components/ui/YStack";
 import { formatUnixTimestamp } from "@/lib/utils/time";
 import { useUser } from "@/providers/user-provider";
 
-export function Menu() {
+export function ProfileTab() {
 	const user = useUser();
 
 	const createdAt = formatUnixTimestamp(user._creationTime);
 	return (
-		<YStack flex={1} gap="lg">
-			<YStack gap="md" pd="lg" bg="blue" insetTop style={{ height: 125 }}>
-				<Text variant="h1" color="white">
-					Menu
-				</Text>
-			</YStack>
+		<YStack flex={1} gap="lg" py="lg">
 			<YStack flex={1} px="lg" gap="md">
 				<YStack>
-					<Text variant="subtitle">Signed in as</Text>
 					<Text variant="h2">@{user.username}</Text>
 				</YStack>
 				<YStack gap="md">
@@ -37,10 +31,10 @@ export function Menu() {
 					</Card>
 				</YStack>
 				<YStack gap="md">
-					<Button variant="menu" screen="Settings" iconRight="chevron-right">
+					<Button variant="menu" screen="Settings">
 						Settings
 					</Button>
-					<Button variant="menu" screen="Help" iconRight="chevron-right">
+					<Button variant="menu" screen="Help">
 						Help
 					</Button>
 					<SignOutButton />

@@ -17,7 +17,7 @@ type Props = StaticScreenProps<{
 	username: string;
 }>;
 
-export function Profile({ route }: Props) {
+export function PublicProfile({ route }: Props) {
 	const navigation = useNavigation();
 
 	const user = useQuery(api.users.queries.getByUsername, {
@@ -37,7 +37,7 @@ export function Profile({ route }: Props) {
 	const createdAt = formatUnixTimestamp(user._creationTime);
 
 	return (
-		<YStack flex={1} gap="lg" pd="xl" insetTop>
+		<YStack flex={1} gap="lg" py="xl" insetTop>
 			<YStack gap="md" ai="center">
 				<Image source={{ uri: user.imageUrl }} style={styles.avatar} />
 				<YStack>

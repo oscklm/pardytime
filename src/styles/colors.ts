@@ -36,6 +36,14 @@ const colors = {
 	gray5Light: "#E5E5EA",
 	gray5Dark: "#2C2C2E",
 
+	// Border colors
+	borderPrimaryLight: "#00000070",
+	borderPrimaryDark: "#FFFFFF70",
+	borderSecondaryLight: "#00000030",
+	borderSecondaryDark: "#FFFFFF30",
+	borderTertiaryLight: "#00000018",
+	borderTertiaryDark: "#FFFFFF18",
+
 	// Accent colors
 	redLight: "#FF3B30",
 	redDark: "#FF453A",

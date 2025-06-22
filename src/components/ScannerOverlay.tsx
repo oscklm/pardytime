@@ -88,5 +88,6 @@ const styles = StyleSheet.create((_th) => ({
 		left: 0,
 		right: 0,
 		bottom: 0,
+		zIndex: 999,
 	},
 }));

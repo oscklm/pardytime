@@ -1,42 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
-import { Unauthenticated, useQuery } from "convex/react";
+import { useQuery } from "convex/react";
 import { FlatList, TouchableWithoutFeedback } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Badge from "@/components/Badge";
 import Skeleton from "@/components/Skeleton";
-import Button from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import Text from "@/components/ui/Text";
-import TouchableBounce from "@/components/ui/TouchableBounce";
 import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 
-export function Home() {
+export function BoardsTab() {
 	const boards = useQuery(api.boards.queries.getAllEnriched);
 	const navigation = useNavigation();
 
-	const handleScan = () => {
-		navigation.navigate("Scanner");
-	};
-
 	return (
-		<YStack flex={1} gap="lg">
-			<YStack gap="md" pd="lg" bg="purple" insetTop style={{ height: 125 }}>
-				<XStack ai="center" jc="between">
-					<Text variant="h1" color="white">
-						Home
-					</Text>
-
-					<Button
-						icon="qrcode"
-						sensory="light"
-						variant="icon"
-						inverted
-						screen="Scanner"
-					/>
-				</XStack>
-			</YStack>
+		<YStack flex={1} gap="lg" py="lg">
 			<YStack flex={1} gap="md">
 				<YStack px="lg">
 					<Text variant="h2">Recent boards</Text>
@@ -84,23 +63,6 @@ export function Home() {
 						);
 					}}
 				/>
-			</YStack>
-			<YStack px="lg">
-				<Unauthenticated>
-					<TouchableBounce
-						sensory="light"
-						onPress={() => navigation.navigate("SignIn")}
-					>
-						<Card>
-							<YStack pd="md" gap="sm">
-								<Text variant="h2">Sign in to get started</Text>
-								<Text>
-									Sign in or create your account to get access to more features.
-								</Text>
-							</YStack>
-						</Card>
-					</TouchableBounce>
-				</Unauthenticated>
 			</YStack>
 		</YStack>
 	);

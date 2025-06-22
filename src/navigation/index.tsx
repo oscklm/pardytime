@@ -1,3 +1,4 @@
+import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HeaderButton, Text } from "@react-navigation/elements";
 import {
@@ -6,23 +7,28 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useConvexAuth } from "convex/react";
-import { Image } from "react-native";
 import { Easing } from "react-native-reanimated";
 import { StyleSheet } from "react-native-unistyles";
-import menu from "@/assets/icons/hamburger-menu.png";
-import home from "@/assets/icons/house.png";
+import Button from "@/components/ui/Button";
 import { UniThemeProvider } from "@/styles/theme";
 import { Board } from "./screens/Board";
+import { BoardsTab } from "./screens/BoardsTab";
+import { CreateBoard } from "./screens/CreateBoard";
+import { CreateGame } from "./screens/CreateGame";
+import { GamesTab } from "./screens/GamesTab";
 import { Help } from "./screens/Help";
-import { Home } from "./screens/Home";
-import { Menu } from "./screens/Menu";
 import { NotFound } from "./screens/NotFound";
-import { Profile } from "./screens/Profile";
+import { ProfileTab } from "./screens/ProfileTab";
+import { PublicProfile } from "./screens/PublicProfile";
 import { Scanner } from "./screens/Scanner";
 import { Settings } from "./screens/Settings";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import { Welcome } from "./screens/Welcome";
+import {
+	CustomBottomTabHeader,
+	type CustomBottomTabNavigationOptions,
+} from "./ui/CustomBottomTabHeader";
 
 const styles = StyleSheet.create((th) => ({
 	tabBarBadgeStyle: {
@@ -31,12 +37,13 @@ const styles = StyleSheet.create((th) => ({
 	},
 }));
 
-const HomeTabs = createBottomTabNavigator({
+const BottomTabs = createBottomTabNavigator({
 	screenOptions: {
+		header: (props) => <CustomBottomTabHeader {...props} />,
 		transitionSpec: {
 			animation: "timing",
 			config: {
-				duration: 250,
+				duration: 150,
 				easing: Easing.inOut(Easing.ease),
 			},
 		},
@@ -50,36 +57,56 @@ const HomeTabs = createBottomTabNavigator({
 		}),
 	},
 	screens: {
-		Home: {
-			screen: Home,
+		Games: {
+			screen: GamesTab,
 			options: {
-				title: "Home",
-				headerShown: false,
+				title: "Games",
 				tabBarIcon: ({ color, size }) => (
-					<Image
-						source={home}
-						tintColor={color}
-						style={{
-							width: size,
-							height: size,
-						}}
-					/>
+					<FontAwesome name="gamepad" size={size} color={color} />
 				),
+				headerBgColor: "purple",
+				toolbarItems: [
+					<Button
+						icon="plus"
+						sensory="light"
+						variant="icon"
+						screen="CreateGame"
+					/>,
+					<Button
+						icon="qrcode"
+						sensory="light"
+						variant="icon"
+						screen="Scanner"
+					/>,
+				],
 			},
 		},
-		Menu: {
-			screen: Menu,
+		Boards: {
+			screen: BoardsTab,
 			options: {
-				headerShown: false,
+				title: "Boards",
 				tabBarIcon: ({ color, size }) => (
-					<Image
-						source={menu}
-						tintColor={color}
-						style={{
-							width: size,
-							height: size,
-						}}
-					/>
+					<FontAwesome name="star" size={size} color={color} />
+				),
+				headerBgColor: "green",
+				toolbarItems: [
+					<Button
+						icon="plus"
+						sensory="light"
+						variant="icon"
+						screen="CreateBoard"
+					/>,
+				],
+			} as CustomBottomTabNavigationOptions,
+		},
+
+		Profile: {
+			screen: ProfileTab,
+			options: {
+				title: "My Profile",
+				headerBgColor: "blue",
+				tabBarIcon: ({ color, size }) => (
+					<FontAwesome name="user" size={size} color={color} />
 				),
 				tabBarBadgeStyle: styles.tabBarBadgeStyle,
 			},
@@ -90,11 +117,10 @@ const HomeTabs = createBottomTabNavigator({
 const RootStack = createNativeStackNavigator({
 	layout: ({ children }) => <UniThemeProvider>{children}</UniThemeProvider>,
 	screens: {
-		HomeTabs: {
+		BottomTabs: {
 			if: () => useConvexAuth().isAuthenticated,
-			screen: HomeTabs,
+			screen: BottomTabs,
 			options: {
-				title: "Home",
 				headerShown: false,
 			},
 		},
@@ -121,7 +147,7 @@ const RootStack = createNativeStackNavigator({
 			},
 		},
 		Profile: {
-			screen: Profile,
+			screen: PublicProfile,
 			options: {
 				title: "Profile",
 				presentation: "modal",
@@ -142,6 +168,20 @@ const RootStack = createNativeStackNavigator({
 				path: ":boardId(^[a-z0-9]{32}$)",
 			},
 		},
+		CreateBoard: {
+			screen: CreateBoard,
+			options: {
+				title: "Create Board",
+				presentation: "modal",
+			},
+		},
+		CreateGame: {
+			screen: CreateGame,
+			options: {
+				title: "Create Game",
+				presentation: "modal",
+			},
+		},
 		Settings: {
 			screen: Settings,
 			options: ({ navigation }) => ({
@@ -158,6 +198,7 @@ const RootStack = createNativeStackNavigator({
 			options: {
 				title: "Scanner",
 				presentation: "modal",
+				headerShown: false,
 			},
 		},
 		Help: {
