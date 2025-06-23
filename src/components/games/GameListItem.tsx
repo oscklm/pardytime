@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native-unistyles";
 import Text from "@/components/ui/Text";
 import type { api } from "@/convex/_generated/api";
 import XStack from "../ui/XStack";
+import YStack from "../ui/YStack";
 import { GameStatusBadge } from "./GameStatusBadge";
 
 type GamesWithBoard = typeof api.games.queries.getAllByOwnerId._returnType;
@@ -25,7 +26,9 @@ export function GameListItem({ game }: { game: GamesWithBoard[number] }) {
 					<Text style={styles.boardLabel}>{game.board?.title}</Text>
 					<GameStatusBadge status={game.status} />
 				</XStack>
-				<Text>{game.board?.description}</Text>
+				<YStack py="sm">
+					<Text variant="secondary">{game.board?.description}</Text>
+				</YStack>
 			</View>
 		</TouchableWithoutFeedback>
 	);
@@ -37,6 +40,8 @@ const styles = StyleSheet.create((th) => ({
 		height: 100,
 		backgroundColor: th.colors.backgroundSecondary,
 		borderRadius: th.radius.md,
+		borderWidth: 1,
+		borderColor: th.colors.labelQuaternary,
 		padding: th.space.lg,
 	},
 	boardLabel: {

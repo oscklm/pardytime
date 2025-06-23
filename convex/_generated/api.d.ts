@@ -19,6 +19,7 @@ import type * as boards_queries from "../boards/queries.js";
 import type * as boards_utils from "../boards/utils.js";
 import type * as changelogs_queries from "../changelogs/queries.js";
 import type * as controllers from "../controllers.js";
+import type * as crons from "../crons.js";
 import type * as games_mutations from "../games/mutations.js";
 import type * as games_queries from "../games/queries.js";
 import type * as http from "../http.js";
@@ -45,6 +46,7 @@ declare const fullApi: ApiFromModules<{
   "boards/utils": typeof boards_utils;
   "changelogs/queries": typeof changelogs_queries;
   controllers: typeof controllers;
+  crons: typeof crons;
   "games/mutations": typeof games_mutations;
   "games/queries": typeof games_queries;
   http: typeof http;

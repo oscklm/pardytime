@@ -60,7 +60,7 @@ const styles = StyleSheet.create((th, rt) => ({
 		flexDirection: "row",
 		justifyContent: "space-between",
 		alignItems: "center",
-		height: 145,
+		height: 125,
 		variants: {
 			bgColor: {
 				purple: {
@@ -86,7 +86,7 @@ const styles = StyleSheet.create((th, rt) => ({
 	},
 	toolbarSeparator: {
 		width: 1.25,
-		height: 24,
+		height: 20,
 		backgroundColor: th.colors.borderTertiary,
 	},
 	toolbar: {
@@ -95,7 +95,8 @@ const styles = StyleSheet.create((th, rt) => ({
 		alignItems: "center",
 		borderWidth: 1,
 		borderColor: th.colors.borderSecondary,
-		gap: th.space.md,
+		gap: th.space.sm,
+		padding: th.space.xs,
 		borderRadius: th.radius.lg,
 		backgroundColor: th.colors.backgroundSecondary,
 	},

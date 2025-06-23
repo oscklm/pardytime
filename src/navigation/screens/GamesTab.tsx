@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import { FlatList } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { GameListItem } from "@/components/games/GameListItem";
@@ -10,7 +9,6 @@ import { useQueryWithStatus } from "@/lib/convex";
 import { useUser } from "@/providers/user-provider";
 
 export function GamesTab() {
-	const navigation = useNavigation();
 	const user = useUser();
 
 	const { data, status, error } = useQueryWithStatus(
@@ -19,12 +17,6 @@ export function GamesTab() {
 			ownerId: user._id,
 		},
 	);
-
-	const handlePress = (code: string) => {
-		navigation.navigate("Game", {
-			code,
-		});
-	};
 
 	return (
 		<YStack flex={1} gap="lg" py="lg">

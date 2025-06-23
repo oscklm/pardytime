@@ -38,7 +38,7 @@ const boardTagSchema = v.object({
 });
 
 const boardTables = {
-	boards: defineTable(boardSchema),
+	boards: defineTable(boardSchema).index("by_ownerId", ["ownerId"]),
 	categories: defineTable(categorySchema),
 	questions: defineTable(questionSchema),
 	tags: defineTable(tagSchema).index("by_name", ["name"]),

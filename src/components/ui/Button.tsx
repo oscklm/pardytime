@@ -23,6 +23,7 @@ type IconGlyphs =
 	| "qrcode"
 	| "plus"
 	| "minus"
+	| "edit"
 	| "chevron-right"
 	| "chevron-left";
 
@@ -30,6 +31,7 @@ interface ButtonBaseProps
 	extends Omit<React.ComponentProps<typeof PlatformPressable>, "children"> {
 	/** Enables haptic feedback on press down. */
 	variant?: UnistylesVariants<typeof styles>["variant"];
+	size?: UnistylesVariants<typeof styles>["size"];
 	inverted?: UnistylesVariants<typeof styles>["inverted"];
 	icon?: IconGlyphs;
 	iconSize?: number;
@@ -82,10 +84,12 @@ function ButtonBase({
 	// Unistyles variants
 	icon,
 	variant,
+	size = "md",
 	isLoading,
 	inverted,
 	iconSize = 24,
 	// Other props
+	disabled,
 	android_ripple,
 	sensory,
 	onPressIn,
@@ -112,15 +116,26 @@ function ButtonBase({
 		}
 	}, [sensory]);
 
-	styles.useVariants({ variant, isLoading, inverted });
+	styles.useVariants({
+		variant,
+		isLoading,
+		inverted,
+		size,
+		disabled: disabled ?? false,
+	});
 
 	const Icon = icon ? (
-		<FontAwesomeIcon name={icon} size={iconSize} color={styles.label.color} />
+		<FontAwesomeIcon
+			name={icon}
+			size={children ? styles.label.fontSize : iconSize}
+			color={styles.label.color}
+		/>
 	) : null;
 
 	return (
 		<PlatformPressable
 			{...rest}
+			disabled={disabled}
 			android_ripple={{
 				...android_ripple,
 			}}
@@ -159,21 +174,30 @@ function ButtonBase({
 const styles = StyleSheet.create((th) => ({
 	button: {
 		flexDirection: "row",
-		height: 48,
 		justifyContent: "center",
-		paddingHorizontal: th.space.lg,
 		borderRadius: th.radius.md,
 		alignItems: "center",
+		paddingHorizontal: th.space.md,
+		gap: th.space.md,
 		borderWidth: 1,
 		borderColor: th.colors.labelQuaternary,
 		backgroundColor: th.colors.gray4,
 		variants: {
+			size: {
+				sm: {
+					height: 34,
+				},
+				md: {
+					height: 42,
+				},
+				lg: {
+					height: 50,
+				},
+			},
 			variant: {
 				icon: {
+					width: 42,
 					flexDirection: "row",
-					justifyContent: "center",
-					alignItems: "center",
-					gap: th.space.sm,
 					borderWidth: 0,
 					backgroundColor: "transparent",
 				},
@@ -223,6 +247,12 @@ const styles = StyleSheet.create((th) => ({
 				},
 				false: {},
 			},
+			disabled: {
+				true: {
+					opacity: 0.5,
+				},
+				false: {},
+			},
 		},
 		compoundVariants: [
 			{
@@ -243,6 +273,7 @@ const styles = StyleSheet.create((th) => ({
 			},
 		],
 	},
+
 	hoverEffect: {
 		color: th.colors.backgroundSecondary,
 	},
@@ -258,6 +289,17 @@ const styles = StyleSheet.create((th) => ({
 		lineHeight: 24,
 		color: th.colors.labelPrimary,
 		variants: {
+			size: {
+				sm: {
+					fontSize: 14,
+				},
+				md: {
+					fontSize: 18,
+				},
+				lg: {
+					fontSize: 20,
+				},
+			},
 			variant: {
 				link: {
 					fontWeight: "500",

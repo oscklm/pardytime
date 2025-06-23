@@ -70,7 +70,7 @@ const styles = StyleSheet.create((th) => ({
 		lineHeight: 28,
 		fontWeight: "600",
 		textAlign: "center",
-		color: th.colors.labelSecondary,
+		color: th.colors.labelPrimary,
 	},
 	backStyle: {
 		backgroundColor: th.colors.green,

@@ -1,12 +1,30 @@
 import { v } from "convex/values";
+import type { Doc } from "../_generated/dataModel";
 import { query } from "../_generated/server";
 import { BoardReaderController } from "./controllers";
 
 export const getAll = query({
-	args: {},
-	handler: async (ctx) => {
+	args: {
+		filters: v.optional(
+			v.object({
+				ownerId: v.optional(v.id("users")),
+			}),
+		),
+	},
+	handler: async (ctx, { filters }) => {
+		let boards: Doc<"boards">[] = [];
 		const boardController = new BoardReaderController(ctx.db);
-		const boards = await boardController.query().collect();
+		if (filters) {
+			if (filters.ownerId) {
+				const ownerId = filters.ownerId;
+				boards = await boardController
+					.query()
+					.withIndex("by_ownerId", (q) => q.eq("ownerId", ownerId))
+					.collect();
+			}
+		} else {
+			boards = await boardController.query().collect();
+		}
 		return boards;
 	},
 });

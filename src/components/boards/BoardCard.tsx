@@ -1,15 +1,17 @@
-import { Text, View } from "react-native";
 import type { Doc } from "@/convex/_generated/dataModel";
+import { Card } from "../ui/Card";
+import Text from "../ui/Text";
 
 interface BoardCardProps {
-	title?: Doc<"boards">;
+	board: Doc<"boards">;
 }
 
-const BoardCard = ({ title }: BoardCardProps) => {
+const BoardCard = ({ board }: BoardCardProps) => {
 	return (
-		<View>
-			<Text>{title}</Text>
-		</View>
+		<Card>
+			<Text variant="h3">{board.title}</Text>
+			<Text variant="secondary">{board.description}</Text>
+		</Card>
 	);
 };
 

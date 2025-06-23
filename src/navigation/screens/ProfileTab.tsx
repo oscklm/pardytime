@@ -1,6 +1,8 @@
+import { StyleSheet } from "react-native-unistyles";
 import SignOutButton from "@/components/SignOutButton";
 import Button from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { Image } from "@/components/ui/Image";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
 import { formatUnixTimestamp } from "@/lib/utils/time";
@@ -13,8 +15,11 @@ export function ProfileTab() {
 	return (
 		<YStack flex={1} gap="lg" py="lg">
 			<YStack flex={1} px="lg" gap="md">
-				<YStack>
-					<Text variant="h2">@{user.username}</Text>
+				<YStack gap="md" ai="center">
+					<Image source={{ uri: user.imageUrl }} style={styles.avatar} />
+					<YStack>
+						<Text variant="h1">@{user.username}</Text>
+					</YStack>
 				</YStack>
 				<YStack gap="md">
 					<Card>
@@ -43,3 +48,11 @@ export function ProfileTab() {
 		</YStack>
 	);
 }
+
+const styles = StyleSheet.create((th) => ({
+	avatar: {
+		width: 100,
+		height: 100,
+		borderRadius: 9999,
+	},
+}));

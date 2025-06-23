@@ -66,6 +66,13 @@ const styles = StyleSheet.create((th) => ({
 					fontSize: 16,
 					lineHeight: 24,
 				},
+				label: {
+					color: th.colors.labelPrimary,
+					fontWeight: "500",
+					fontSize: 16,
+					lineHeight: 24,
+					marginBottom: th.space.sm,
+				},
 				primary: {
 					color: th.colors.labelPrimary,
 					fontWeight: "500",

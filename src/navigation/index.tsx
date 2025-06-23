@@ -15,6 +15,7 @@ import { Board } from "./screens/Board";
 import { BoardsTab } from "./screens/BoardsTab";
 import { CreateBoard } from "./screens/CreateBoard";
 import { CreateGame } from "./screens/CreateGame";
+import { CreateTeam } from "./screens/CreateTeam";
 import { Game } from "./screens/Game";
 import { GamesTab } from "./screens/GamesTab";
 import { Help } from "./screens/Help";
@@ -104,7 +105,8 @@ const BottomTabs = createBottomTabNavigator({
 		Profile: {
 			screen: ProfileTab,
 			options: {
-				title: "My Profile",
+				title: "Profile",
+				tabBarLabel: "You",
 				headerBgColor: "blue",
 				tabBarIcon: ({ color, size }) => (
 					<FontAwesome name="user" size={size} color={color} />
@@ -178,6 +180,7 @@ const RootStack = createNativeStackNavigator({
 				path: ":boardId(^[a-z0-9]{32}$)",
 			},
 		},
+
 		CreateBoard: {
 			screen: CreateBoard,
 			options: {
@@ -189,6 +192,13 @@ const RootStack = createNativeStackNavigator({
 			screen: CreateGame,
 			options: {
 				title: "Create Game",
+				presentation: "modal",
+			},
+		},
+		CreateTeam: {
+			screen: CreateTeam,
+			options: {
+				title: "Create Team",
 				presentation: "modal",
 			},
 		},
