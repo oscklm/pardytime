@@ -226,6 +226,9 @@ const styles = StyleSheet.create((th) => ({
 				purple: {
 					backgroundColor: th.colors.purple,
 				},
+				blue: {
+					backgroundColor: th.colors.blue,
+				},
 				error: {
 					backgroundColor: th.colors.red,
 				},

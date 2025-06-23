@@ -1,22 +1,29 @@
+import Logo from "@/assets/images/splash-icon.png";
 import Button from "@/components/ui/Button";
+import { Image } from "@/components/ui/Image";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
 
 export function Welcome() {
 	return (
-		<YStack flex={1} gap="xl" bg="purple" pd="lg" insetTop>
+		<YStack flex={1} gap="xl" bg="purple" pd="xl" insetTop>
 			<YStack gap="lg" insetTop>
-				<Text variant="h1">Welcome to JeopardyTime</Text>
-				<Text variant="h2">
+				<YStack gap="md" ai="center">
+					<Image source={Logo} style={{ width: 200, height: 200 }} />
+				</YStack>
+				<Text variant="h1" style={{ fontWeight: "900" }} invert>
+					JeopardyTime
+				</Text>
+				<Text variant="h2" invert>
 					Play Jeopardy with your friends, and family. Without the hassle of
 					needing anything but a phone.
 				</Text>
 			</YStack>
-			<YStack gap="md" jc="center">
+			<YStack gap="md" px="xl" jc="center">
 				<Button variant="white" screen="SignIn">
 					Sign in
 				</Button>
-				<Text variant="subtitle" style={{ textAlign: "center" }}>
+				<Text variant="label" style={{ textAlign: "center" }}>
 					or
 				</Text>
 				<Button variant="white" screen="SignUp">
