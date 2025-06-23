@@ -1,8 +1,9 @@
 import {
+	CommonActions,
 	type StaticScreenProps,
 	useNavigation,
 } from "@react-navigation/native";
-import { useQuery } from "convex/react";
+import { useMutation } from "convex/react";
 import { useEffect } from "react";
 import { View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
@@ -15,6 +16,7 @@ import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
+import { useQueryWithStatus } from "@/lib/convex";
 
 type Props = StaticScreenProps<{
 	code: string;
@@ -22,9 +24,36 @@ type Props = StaticScreenProps<{
 
 export function Game({ route }: Props) {
 	const navigation = useNavigation();
-	const game = useQuery(api.games.queries.getByGameCode, {
+
+	const {
+		data: game,
+		error: gameError,
+		status: gameStatus,
+	} = useQueryWithStatus(api.games.queries.getByGameCode, {
 		code: route.params.code,
 	});
+
+	const {
+		data: teams,
+		error: teamsError,
+		status: teamsStatus,
+	} = useQueryWithStatus(
+		api.games.queries.getTeamsByGameId,
+		game ? { gameId: game._id } : "skip",
+	);
+
+	const updateGame = useMutation(api.games.mutations.updateGame);
+
+	const handleStartGame = () => {
+		if (!game) return;
+
+		updateGame({
+			gameId: game._id,
+			values: {
+				status: "active",
+			},
+		});
+	};
 
 	useEffect(() => {
 		if (game) {
@@ -33,6 +62,26 @@ export function Game({ route }: Props) {
 			});
 		}
 	}, [game]);
+
+	useEffect(() => {
+		if (gameError) {
+			navigation.dispatch(
+				CommonActions.reset({
+					index: 0,
+					routes: [{ name: "BottomTabs" }],
+				}),
+			);
+		}
+	}, [gameError]);
+
+	if (gameError || teamsError) {
+		return (
+			<View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+				<Text>{gameError?.message}</Text>
+				<Text>{teamsError?.message}</Text>
+			</View>
+		);
+	}
 
 	if (!game) {
 		return <LoadingView />;
@@ -48,9 +97,9 @@ export function Game({ route }: Props) {
 					<Text style={styles.codeLabel}>#{game.code}</Text>
 				</View>
 			</XStack>
-			<TeamList gameId={game._id} />
+			<TeamList gameId={game._id} teams={teams ?? []} status={teamsStatus} />
 			<View style={{ flex: 1 }} />
-			<Button variant="success" size="md" onPress={() => {}}>
+			<Button variant="success" size="md" onPress={handleStartGame}>
 				Start the game
 			</Button>
 		</YStack>

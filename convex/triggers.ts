@@ -5,7 +5,6 @@ import type { DataModel } from "./_generated/dataModel";
 
 export const triggers = new Triggers<DataModel>();
 
-// 4. When a user is deleted, delete their messages (cascading deletes).
 triggers.register("games", async (ctx, change) => {
 	if (change.operation === "delete") {
 		console.log("Deleting game", change.id);
@@ -20,5 +19,20 @@ triggers.register("games", async (ctx, change) => {
 			await getManyFrom(ctx.db, "answeredQuestions", "by_gameId", change.id),
 			(answeredQuestion) => ctx.db.delete(answeredQuestion._id),
 		);
+	}
+});
+
+triggers.register("teams", async (ctx, change) => {
+	if (change.operation === "delete") {
+		if (change.oldDoc.imageId) {
+			await ctx.storage.delete(change.oldDoc.imageId);
+		}
+	}
+	if (change.operation === "update") {
+		if (change.oldDoc.imageId !== change.newDoc.imageId) {
+			if (change.oldDoc.imageId) {
+				await ctx.storage.delete(change.oldDoc.imageId);
+			}
+		}
 	}
 });

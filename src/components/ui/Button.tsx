@@ -23,6 +23,7 @@ type IconGlyphs =
 	| "qrcode"
 	| "plus"
 	| "minus"
+	| "trash"
 	| "edit"
 	| "chevron-right"
 	| "chevron-left";
@@ -121,7 +122,7 @@ function ButtonBase({
 		isLoading,
 		inverted,
 		size,
-		disabled: disabled ?? false,
+		disabled: disabled ?? undefined,
 	});
 
 	const Icon = icon ? (
@@ -269,6 +270,27 @@ const styles = StyleSheet.create((th) => ({
 				inverted: true,
 				styles: {
 					backgroundColor: "transparent",
+				},
+			},
+			{
+				variant: "icon",
+				size: "sm",
+				styles: {
+					width: 34,
+				},
+			},
+			{
+				variant: "icon",
+				size: "md",
+				styles: {
+					width: 42,
+				},
+			},
+			{
+				variant: "icon",
+				size: "lg",
+				styles: {
+					width: 50,
 				},
 			},
 		],

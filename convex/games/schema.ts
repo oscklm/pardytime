@@ -21,6 +21,7 @@ const teamSchema = v.object({
 	gameId: v.id("games"),
 	nickname: v.string(),
 	score: v.number(),
+	imageId: v.optional(v.id("_storage")),
 });
 
 const answeredQuestionSchema = v.object({

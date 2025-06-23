@@ -23,6 +23,7 @@ import type * as crons from "../crons.js";
 import type * as games_mutations from "../games/mutations.js";
 import type * as games_queries from "../games/queries.js";
 import type * as http from "../http.js";
+import type * as storage_mutations from "../storage/mutations.js";
 import type * as triggers from "../triggers.js";
 import type * as users_actions from "../users/actions.js";
 import type * as users_mutations from "../users/mutations.js";
@@ -50,6 +51,7 @@ declare const fullApi: ApiFromModules<{
   "games/mutations": typeof games_mutations;
   "games/queries": typeof games_queries;
   http: typeof http;
+  "storage/mutations": typeof storage_mutations;
   triggers: typeof triggers;
   "users/actions": typeof users_actions;
   "users/mutations": typeof users_mutations;

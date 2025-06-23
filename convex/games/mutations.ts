@@ -1,6 +1,8 @@
 import { v } from "convex/values";
+import { partial } from "convex-helpers/validators";
 import invariant from "tiny-invariant";
 import { internalMutation, mutation } from "../utils/functions";
+import { gameSchema, teamSchema } from "./schema";
 
 function generateGameCode() {
 	return Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -43,17 +45,50 @@ export const create = mutation({
 	},
 });
 
-export const createTeam = mutation({
+export const deleteGame = mutation({
 	args: {
 		gameId: v.id("games"),
-		nickname: v.string(),
 	},
 	handler: async (ctx, args) => {
-		return ctx.db.insert("teams", {
-			gameId: args.gameId,
-			nickname: args.nickname,
-			score: 0,
-		});
+		return ctx.db.delete(args.gameId);
+	},
+});
+
+export const updateGame = mutation({
+	args: {
+		gameId: v.id("games"),
+		values: v.object(partial(gameSchema.fields)),
+	},
+	handler: async (ctx, args) => {
+		return ctx.db.patch(args.gameId, args.values);
+	},
+});
+
+export const createTeam = mutation({
+	args: {
+		values: teamSchema,
+	},
+	handler: async (ctx, args) => {
+		return ctx.db.insert("teams", args.values);
+	},
+});
+
+export const updateTeam = mutation({
+	args: {
+		teamId: v.id("teams"),
+		values: v.object(partial(teamSchema.fields)),
+	},
+	handler: async (ctx, args) => {
+		return ctx.db.patch(args.teamId, args.values);
+	},
+});
+
+export const deleteTeam = mutation({
+	args: {
+		teamId: v.id("teams"),
+	},
+	handler: async (ctx, args) => {
+		return ctx.db.delete(args.teamId);
 	},
 });
 
