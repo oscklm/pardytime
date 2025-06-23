@@ -32,7 +32,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: getAppName(),
   slug: "jeopardytime",
-  version: "1.0.5",
+  version: "1.1.0",
   orientation: "portrait",
   icon: "./src/assets/images/icon.png",
   scheme: "jeopardytime",
