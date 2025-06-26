@@ -32,7 +32,7 @@ export const QuestionCard = ({
 
 	const handlePressComplete = () => {
 		onPress?.();
-		Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+		Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
 	};
 
 	const longPress = Gesture.LongPress()
