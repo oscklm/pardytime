@@ -99,6 +99,7 @@ export const BoardView = () => {
 				onPointAmountChange={setPointAmount}
 			/>
 			<ActionModal
+				icon="hand-sparkles"
 				actions={[
 					{
 						id: "back-to-lobby",
