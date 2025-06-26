@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
 import { ActionModal } from "@/components/ActionModal";
 import Text from "@/components/ui/Text";
 import { GameContext } from "../GameProvider";
@@ -38,7 +37,3 @@ export const ResultView = () => {
 		</>
 	);
 };
-
-const styles = StyleSheet.create((th) => ({
-	container: {},
-}));

@@ -162,6 +162,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
 				<GestureDetector gesture={buttonPress}>
 					<Animated.View style={[styles.fab, buttonStyle]}>
 						<FontAwesome5
+							// biome-ignore lint/suspicious/noExplicitAny: <its ok for now>
 							name={icon as any}
 							size={30}
 							color="rgb(122, 53, 159)"

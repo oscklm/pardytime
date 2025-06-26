@@ -14,7 +14,7 @@ const MIN_TEAMS_TO_START = 2;
 
 export const LobbyView = () => {
 	const { game, teams } = useContext(GameContext);
-	const { startGame, endGame, resetGame } = useGameController();
+	const { startGame } = useGameController();
 
 	const gameLink = `jeopardytime://game?code=${game.code}`;
 
