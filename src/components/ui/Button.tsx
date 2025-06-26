@@ -1,18 +1,21 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { PlatformPressable as RNPlatformPressable } from "@react-navigation/elements";
 import { type LinkProps, useLinkProps } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 import type * as React from "react";
 import { useCallback } from "react";
-import { Platform, Text, View } from "react-native";
+import {
+	Pressable,
+	type StyleProp,
+	Text,
+	View,
+	type ViewStyle,
+} from "react-native";
 import {
 	StyleSheet,
 	type UnistylesVariants,
 	withUnistyles,
 } from "react-native-unistyles";
 import { AnimatedSpinner } from "../AnimatedSpinner";
-
-const PlatformPressable = withUnistyles(RNPlatformPressable);
 
 const FontAwesomeIcon = withUnistyles(FontAwesome, (th) => ({
 	color: th.colors.labelPrimary,
@@ -28,7 +31,7 @@ type IconGlyphs =
 	| "chevron-left";
 
 interface ButtonBaseProps
-	extends Omit<React.ComponentProps<typeof PlatformPressable>, "children"> {
+	extends Omit<React.ComponentProps<typeof Pressable>, "children" | "style"> {
 	/** Enables haptic feedback on press down. */
 	variant?: UnistylesVariants<typeof styles>["variant"];
 	size?: UnistylesVariants<typeof styles>["size"];
@@ -36,6 +39,7 @@ interface ButtonBaseProps
 	icon?: IconGlyphs;
 	iconSize?: number;
 	isLoading?: UnistylesVariants<typeof styles>["isLoading"];
+	style?: StyleProp<ViewStyle>;
 	sensory?:
 		| boolean
 		| "success"
@@ -124,22 +128,17 @@ function ButtonBase({
 		isLoading,
 		inverted,
 		size,
-		disabled: disabled ?? undefined,
+		disabled: disabled ?? false,
 	});
 
 	return (
-		<PlatformPressable
+		<Pressable
 			style={[styles.button, style]}
 			disabled={disabled}
-			android_ripple={{
-				...android_ripple,
-			}}
 			onPressIn={(ev) => {
 				onSensory();
 				onPressIn?.(ev);
 			}}
-			pressOpacity={Platform.OS === "ios" ? 0.5 : 1}
-			hoverEffect={{ ...styles.hoverEffect }}
 			{...rest}
 		>
 			{variant === "link" ? (
@@ -167,7 +166,7 @@ function ButtonBase({
 					)}
 				</>
 			)}
-		</PlatformPressable>
+		</Pressable>
 	);
 }
 
@@ -248,15 +247,15 @@ const styles = StyleSheet.create((th) => ({
 				},
 				false: {},
 			},
-			inverted: {
-				true: {
-					backgroundColor: th.colors.white,
-				},
-				false: {},
-			},
 			disabled: {
 				true: {
 					opacity: 0.5,
+				},
+				false: {},
+			},
+			inverted: {
+				true: {
+					backgroundColor: th.colors.white,
 				},
 				false: {},
 			},

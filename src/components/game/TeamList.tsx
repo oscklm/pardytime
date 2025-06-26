@@ -3,8 +3,6 @@ import { ActionSheetIOS, FlatList, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { api } from "@/convex/_generated/api";
 import type { Doc, Id } from "@/convex/_generated/dataModel";
-import type { QueryStatus } from "@/lib/convex";
-import { ListEmptyComponent } from "../ListEmptyComponent";
 import Button from "../ui/Button";
 import { Image } from "../ui/Image";
 import Text from "../ui/Text";
@@ -14,10 +12,9 @@ import YStack from "../ui/YStack";
 interface Props {
 	gameId: Id<"games">;
 	teams: Doc<"teams">[];
-	status: QueryStatus;
 }
 
-const TeamList = ({ gameId, teams, status }: Props) => {
+const TeamList = ({ gameId, teams }: Props) => {
 	const deleteTeam = useMutation(api.games.mutations.deleteTeam);
 
 	const handleDeleteTeam = async (teamId: Id<"teams">) => {
@@ -54,7 +51,9 @@ const TeamList = ({ gameId, teams, status }: Props) => {
 			<FlatList
 				data={teams}
 				ListEmptyComponent={
-					<ListEmptyComponent descriptor="teams" status={status} />
+					<Text variant="subtitle">
+						No teams yet. Add a team to get started.
+					</Text>
 				}
 				contentContainerStyle={styles.contentContainer}
 				renderItem={({ item, index }) => {
@@ -132,7 +131,7 @@ const styles = StyleSheet.create((th) => ({
 		fontSize: 24,
 		lineHeight: 28,
 		fontWeight: "700",
-		color: th.colors.labelPrimary,
+		color: th.colors.white,
 	},
 }));
 

@@ -65,7 +65,7 @@ export const QuestionCard = ({
 		left: 0,
 		right: 0,
 		bottom: 0,
-		backgroundColor: theme.colors.backgroundTertiary, // Green color
+		backgroundColor: theme.colors.gray4, // Green color
 		opacity: fillProgress.value * 0.8,
 		transform: [{ scaleX: fillProgress.value }],
 	}));
@@ -108,13 +108,13 @@ const styles = StyleSheet.create((th) => ({
 	},
 	innerBorder: {
 		position: "absolute",
-		top: 2,
-		left: 2,
-		right: 2,
-		bottom: 2,
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
 		borderRadius: th.radius.md,
 		borderWidth: 3,
-		borderColor: th.colors.blue,
+		borderColor: th.colors.gray2,
 		opacity: 0.5,
 	},
 	text: {

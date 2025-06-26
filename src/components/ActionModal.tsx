@@ -30,10 +30,7 @@ interface ActionModalProps {
 	actions?: Array<ActionButton>;
 }
 
-export const ActionModal: React.FC<ActionModalProps> = ({
-	onCreatePress,
-	actions = [],
-}) => {
+export const ActionModal: React.FC<ActionModalProps> = ({ actions = [] }) => {
 	const { theme } = useUnistyles();
 	const isOpen = useSharedValue<boolean>(false);
 	const translateY = useSharedValue<number>(400);
@@ -47,7 +44,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
 	const openModal = useCallback(() => {
 		isOpen.value = true;
 		translateY.value = withSpring(0, {
-			damping: 20,
+			damping: 25,
 			stiffness: 300,
 		});
 		backgroundOpacity.value = withTiming(0.4, { duration: 200 });
@@ -133,6 +130,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
 			>
 				<View style={styles.actionIconContainer}>
 					<FontAwesome
+						// biome-ignore lint/suspicious/noExplicitAny: <its ok for now>
 						name={action.icon as any}
 						size={24}
 						color={theme.colors[action.color]}
@@ -152,11 +150,13 @@ export const ActionModal: React.FC<ActionModalProps> = ({
 	return (
 		<>
 			{/* Floating Action Button */}
-			<GestureDetector gesture={buttonPress}>
-				<Animated.View style={[styles.fab, buttonStyle]}>
-					<FontAwesome name="plus" size={26} color="white" />
-				</Animated.View>
-			</GestureDetector>
+			<View style={styles.fabContainer}>
+				<GestureDetector gesture={buttonPress}>
+					<Animated.View style={[styles.fab, buttonStyle]}>
+						<FontAwesome name="plus" size={36} color="rgb(122, 53, 159)" />
+					</Animated.View>
+				</GestureDetector>
+			</View>
 
 			{/* Modal Background Overlay - Always rendered */}
 			<GestureDetector gesture={backgroundTap}>
@@ -170,6 +170,15 @@ export const ActionModal: React.FC<ActionModalProps> = ({
 					{actions.length > 0 && actions.map(renderActionButton)}
 				</View>
 
+				<View
+					style={{
+						height: 0.85,
+						width: "100%",
+						borderRadius: theme.radius.lg,
+						backgroundColor: theme.colors.borderTertiary,
+					}}
+				/>
+
 				{/* Cancel Button */}
 				<Pressable style={styles.cancelButton} onPress={closeModal}>
 					<Text style={styles.cancelText}>Cancel</Text>
@@ -180,20 +189,25 @@ export const ActionModal: React.FC<ActionModalProps> = ({
 };
 
 const styles = StyleSheet.create((th, rt) => ({
-	fab: {
+	fabContainer: {
 		position: "absolute",
-		right: rt.insets.right + 20,
-		bottom: rt.insets.bottom,
+		justifyContent: "center",
+		alignItems: "center",
+		right: 0,
+		left: 0,
+		bottom: 20,
+	},
+	fab: {
 		width: 60,
 		height: 60,
 		borderRadius: 30,
-		backgroundColor: th.colors.blue,
+		backgroundColor: th.colors.purple,
 		justifyContent: "center",
 		alignItems: "center",
 		shadowColor: "#000",
-		shadowOffset: { width: 0, height: 2 },
-		shadowOpacity: 0.3,
-		shadowRadius: 5,
+		shadowOffset: { width: 1, height: 4 },
+		shadowOpacity: 0.2,
+		shadowRadius: 3,
 	},
 	overlay: {
 		position: "absolute",
@@ -210,7 +224,7 @@ const styles = StyleSheet.create((th, rt) => ({
 		left: 0,
 		right: 0,
 		paddingBottom: rt.insets.bottom + 80, // This added padding here compensates for the subtracted -100 above, for the bounce overshoot
-		backgroundColor: th.colors.backgroundPrimary,
+		backgroundColor: th.colors.backgroundSecondary,
 		borderTopLeftRadius: th.radius.lg,
 		borderTopRightRadius: th.radius.lg,
 		zIndex: 1001,
@@ -274,6 +288,6 @@ const styles = StyleSheet.create((th, rt) => ({
 	cancelText: {
 		fontSize: 18,
 		fontWeight: "600",
-		color: th.colors.labelSecondary,
+		color: th.colors.labelTertiary,
 	},
 }));

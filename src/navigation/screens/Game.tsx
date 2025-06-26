@@ -5,6 +5,7 @@ import LoadingView from "@/components/LoadingView";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import { GameView } from "@/features/game/GameView";
+import { useQueryWithStatus } from "@/lib/convex";
 
 type Props = StaticScreenProps<{
 	code: string;
@@ -38,6 +39,11 @@ export function Game({ route }: Props) {
 			: "skip",
 	);
 
+	const { data: teams, status: teamsStatus } = useQueryWithStatus(
+		api.games.queries.getTeamsByGameId,
+		game ? { gameId: game._id } : "skip",
+	);
+
 	if (!game || !board) {
 		return <LoadingView />;
 	}
@@ -47,7 +53,8 @@ export function Game({ route }: Props) {
 			<GameView
 				game={game}
 				board={board}
-				answeredQuestions={answeredQuestions || []}
+				teams={teams ?? []}
+				answeredQuestions={answeredQuestions ?? []}
 			/>
 		</YStack>
 	);

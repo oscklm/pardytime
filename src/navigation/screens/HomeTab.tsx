@@ -64,7 +64,7 @@ export function HomeTab() {
 						description: "Customize your own Jeopardy board",
 						color: "orange",
 						icon: "align-justify",
-						onPress: () => navigation.navigate("CreateGame"),
+						onPress: () => navigation.navigate("CreateBoard"),
 					},
 				]}
 			/>

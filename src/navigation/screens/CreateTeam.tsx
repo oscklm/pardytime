@@ -34,7 +34,7 @@ export function CreateTeam({ route }: Props) {
 			mediaTypes: ["images"],
 			allowsEditing: true,
 			aspect: [1, 1], // Square crop
-			quality: 0.3, // Moderate quality
+			quality: 0.2, // Moderate quality
 		});
 		if (!result.canceled && result.assets && result.assets.length > 0) {
 			setImage(result.assets[0].uri);
@@ -98,6 +98,7 @@ export function CreateTeam({ route }: Props) {
 					<TextInput
 						placeholder="Team name"
 						autoComplete="off"
+						autoCorrect={false}
 						value={nickname}
 						onChangeText={setNickname}
 					/>

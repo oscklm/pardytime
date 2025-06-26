@@ -18,7 +18,7 @@ const StatusToViewComponent: Record<Doc<"games">["status"], React.FC> = {
 
 interface GameViewProps extends GameState {}
 
-const GameView = ({ game, board, answeredQuestions }: GameViewProps) => {
+const GameView = ({ game, board, teams, answeredQuestions }: GameViewProps) => {
 	const navigation = useNavigation();
 
 	const handleQuitGame = () => {
@@ -64,6 +64,7 @@ const GameView = ({ game, board, answeredQuestions }: GameViewProps) => {
 		<GameProvider
 			game={game}
 			board={board}
+			teams={teams}
 			answeredQuestions={answeredQuestions}
 		>
 			<ViewComponent />

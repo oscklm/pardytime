@@ -7,24 +7,15 @@ import TeamList from "@/components/game/TeamList";
 import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
+import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
-import { useQueryWithStatus } from "@/lib/convex";
 import { GameContext } from "../GameProvider";
 
 const MIN_TEAMS_TO_START = 2;
 
 export const LobbyView = () => {
-	const { game } = useContext(GameContext);
+	const { game, teams } = useContext(GameContext);
 	const updateGame = useMutation(api.games.mutations.updateGame);
-
-	const {
-		data: teams,
-		error: teamsError,
-		status: teamsStatus,
-	} = useQueryWithStatus(
-		api.games.queries.getTeamsByGameId,
-		game ? { gameId: game._id } : "skip",
-	);
 
 	const handleStartGame = () => {
 		updateGame({
@@ -45,17 +36,25 @@ export const LobbyView = () => {
 					<Text style={styles.codeLabel}>#{game.code}</Text>
 				</View>
 			</XStack>
-			<TeamList gameId={game._id} teams={teams ?? []} status={teamsStatus} />
-			{teams && teams.length >= MIN_TEAMS_TO_START && (
+			<TeamList gameId={game._id} teams={teams ?? []} />
+			<YStack>
+				<YStack ai="center" py="md">
+					{teams && teams.length < MIN_TEAMS_TO_START && (
+						<Text variant="subtitle">
+							You need at least {MIN_TEAMS_TO_START} teams to start the game.
+						</Text>
+					)}
+				</YStack>
 				<Button
 					sensory="light"
 					variant="success"
 					size="lg"
 					onPress={handleStartGame}
+					disabled={teams && teams.length < MIN_TEAMS_TO_START}
 				>
 					Start
 				</Button>
-			)}
+			</YStack>
 		</View>
 	);
 };

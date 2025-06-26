@@ -4,6 +4,7 @@ import type { BoardEnrichedResult } from "@/convex/types";
 
 export interface GameState {
 	game: Doc<"games">;
+	teams: Doc<"teams">[];
 	board: BoardEnrichedResult;
 	answeredQuestions: Doc<"answeredQuestions">[];
 }

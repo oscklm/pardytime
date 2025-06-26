@@ -106,7 +106,7 @@ const UniThemeProvider = withUnistyles(NavigationThemeProvider, (_th, rt) => ({
 					colors: {
 						primary: colors.purpleDark,
 						background: colors.backgroundPrimaryDark,
-						card: colors.backgroundPrimaryDark,
+						card: colors.backgroundSecondaryDark,
 						text: colors.labelPrimaryDark,
 						border: colors.borderPrimaryDark,
 						notification: colors.yellowDark,
@@ -118,7 +118,7 @@ const UniThemeProvider = withUnistyles(NavigationThemeProvider, (_th, rt) => ({
 					colors: {
 						primary: colors.purpleLight,
 						background: colors.backgroundPrimaryLight,
-						card: colors.backgroundPrimaryLight,
+						card: colors.backgroundSecondaryLight,
 						text: colors.labelPrimaryLight,
 						border: colors.borderPrimaryLight,
 						notification: colors.yellowLight,

@@ -57,6 +57,10 @@ export const BoardView = () => {
 
 	return (
 		<View style={styles.container}>
+			<View>
+				<Text variant="h1">{board?.title}</Text>
+				<Text>{board?.description}</Text>
+			</View>
 			<View style={styles.selectedQuestionContainer}>
 				{activeQuestion && (
 					<SelectedQuestionDisplay
