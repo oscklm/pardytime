@@ -126,10 +126,10 @@ const styles = StyleSheet.create((th) => ({
 		alignItems: "center",
 		padding: th.space.lg,
 		gap: th.space.md,
-		backgroundColor: th.colors.blue,
+		backgroundColor: th.colors.gray,
 		borderRadius: th.radius.md,
 		overflow: "hidden",
-		minHeight: 80, // Ensure consistent height
+		minHeight: 80,
 	},
 	placeholderContainer: {
 		flexDirection: "row",
@@ -147,7 +147,9 @@ const styles = StyleSheet.create((th) => ({
 	},
 	text: {
 		zIndex: 1,
+		fontWeight: "700",
 		textAlign: "center",
+		color: th.colors.labelPrimary,
 	},
 	placeholderText: {
 		opacity: 0.7,

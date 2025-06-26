@@ -1,17 +1,22 @@
 import { useMutation } from "convex/react";
 import { useContext, useMemo } from "react";
 import { ScrollView, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import { QuestionCard } from "@/components/QuestionCard";
+import { Image } from "@/components/ui/Image";
 import Text from "@/components/ui/Text";
+import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { SelectedQuestionDisplay } from "../components/SelectedQuestionDisplay";
 import { GameContext } from "../GameProvider";
 
+const teamIndexToColor = ["blue", "pink", "orange", "purple"] as const;
+
 export const BoardView = () => {
-	const { game, board, answeredQuestions } = useContext(GameContext);
+	const { theme } = useUnistyles();
+	const { game, board, teams, answeredQuestions } = useContext(GameContext);
 
 	const updateGame = useMutation(api.games.mutations.updateGame);
 	const addAnsweredQuestion = useMutation(
@@ -57,11 +62,29 @@ export const BoardView = () => {
 
 	return (
 		<View style={styles.container}>
+			<YStack py="md">
+				<XStack gap="md">
+					{teams.map((team, index) => (
+						<YStack
+							key={team._id}
+							style={[
+								styles.teamCard,
+								{ backgroundColor: theme.colors[teamIndexToColor[index]] },
+							]}
+						>
+							<Image
+								storageId={team.imageId}
+								style={styles.teamImage}
+								width={300}
+							/>
+							<Text key={team._id} style={styles.teamScoreText}>
+								{team.score}
+							</Text>
+						</YStack>
+					))}
+				</XStack>
+			</YStack>
 			<View>
-				<Text variant="h1">{board?.title}</Text>
-				<Text>{board?.description}</Text>
-			</View>
-			<View style={styles.selectedQuestionContainer}>
 				{activeQuestion && (
 					<SelectedQuestionDisplay
 						question={activeQuestion}
@@ -99,10 +122,28 @@ export const BoardView = () => {
 const styles = StyleSheet.create((th) => ({
 	container: {
 		flex: 1,
+		gap: th.space.md,
 	},
-	selectedQuestionContainer: {
-		paddingHorizontal: th.space.md,
-		paddingBottom: th.space.md,
+	teamCard: {
+		flex: 1,
+		padding: th.space.sm,
+		flexDirection: "row",
+		alignItems: "center",
+		backgroundColor: th.colors.backgroundSecondary,
+		borderRadius: th.radius.md,
+	},
+	teamScoreText: {
+		flex: 1,
+		fontSize: 24,
+		lineHeight: 28,
+		textAlign: "center",
+		fontWeight: "700",
+		color: th.colors.white,
+	},
+	teamImage: {
+		width: 45,
+		height: 45,
+		borderRadius: th.radius.md,
 	},
 	contentContainer: {
 		gap: th.space.lg,

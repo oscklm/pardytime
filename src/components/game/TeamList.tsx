@@ -1,6 +1,6 @@
 import { useMutation } from "convex/react";
 import { ActionSheetIOS, FlatList, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import { api } from "@/convex/_generated/api";
 import type { Doc, Id } from "@/convex/_generated/dataModel";
 import Button from "../ui/Button";
@@ -14,7 +14,10 @@ interface Props {
 	teams: Doc<"teams">[];
 }
 
+const teamIndexToColor = ["blue", "pink", "orange", "purple"] as const;
+
 const TeamList = ({ gameId, teams }: Props) => {
+	const { theme } = useUnistyles();
 	const deleteTeam = useMutation(api.games.mutations.deleteTeam);
 
 	const handleDeleteTeam = async (teamId: Id<"teams">) => {
@@ -57,11 +60,13 @@ const TeamList = ({ gameId, teams }: Props) => {
 				}
 				contentContainerStyle={styles.contentContainer}
 				renderItem={({ item, index }) => {
-					styles.useVariants({
-						index: index.toString() as "0" | "1" | "2" | "3",
-					});
 					return (
-						<View style={styles.teamCard}>
+						<View
+							style={[
+								styles.teamCard,
+								{ backgroundColor: theme.colors[teamIndexToColor[index]] },
+							]}
+						>
 							<View style={styles.deleteButton}>
 								<Button
 									variant="icon"
@@ -110,22 +115,6 @@ const styles = StyleSheet.create((th) => ({
 		gap: th.space.lg,
 		backgroundColor: th.colors.backgroundSecondary,
 		borderRadius: th.radius.md,
-		variants: {
-			index: {
-				"0": {
-					backgroundColor: th.colors.blue,
-				},
-				"1": {
-					backgroundColor: th.colors.pink,
-				},
-				"2": {
-					backgroundColor: th.colors.orange,
-				},
-				"3": {
-					backgroundColor: th.colors.purple,
-				},
-			},
-		},
 	},
 	nicknameLabel: {
 		fontSize: 24,
