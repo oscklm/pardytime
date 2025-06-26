@@ -55,9 +55,8 @@ export const TeamControlModal = ({
 						style={styles.teamModalImage}
 						width={300}
 					/>
-					<YStack ai="center">
-						<Text variant="h3">{team?.nickname}</Text>
-						<Text variant="subtitle">Preview change</Text>
+					<Text variant="h2">{team?.nickname}</Text>
+					<YStack ai="center" gap="md">
 						<XStack jc="center" gap="sm" ai="center">
 							<Text style={styles.currentScoreText}>{team?.score}</Text>
 							<FontAwesome6
@@ -103,17 +102,16 @@ export const TeamControlModal = ({
 								fontStyle: "italic",
 							}}
 						>
-							{pointAmount > 0 &&
-								`Your team's score will increase by ${pointAmount}`}
+							{pointAmount > 0 && `Score will increase by ${pointAmount}`}
 							{pointAmount < 0 &&
-								`Your team's score will decrease by ${Math.abs(pointAmount)}`}
+								`Score will decrease by ${Math.abs(pointAmount)}`}
 							{pointAmount === 0 && `No change to team's score`}
 						</Text>
 					</YStack>
 					<XStack gap="md">
 						<Button
 							size="md"
-							variant="error"
+							variant="danger"
 							icon="minus"
 							onPress={() => onPointAmountChange(pointAmount - 50)}
 						>
@@ -139,7 +137,7 @@ export const TeamControlModal = ({
 				<View style={styles.teamModalDivider} />
 
 				<YStack gap="lg">
-					<Button variant="success" size="md" onPress={handleGivePoints}>
+					<Button variant="blue" size="md" onPress={handleGivePoints}>
 						Save changes
 					</Button>
 				</YStack>
@@ -175,8 +173,8 @@ const styles = StyleSheet.create((th) => ({
 		color: th.colors.white,
 	},
 	teamModalImage: {
-		width: 200,
-		height: 200,
+		width: 185,
+		height: 185,
 		borderRadius: th.radius.md,
 	},
 }));

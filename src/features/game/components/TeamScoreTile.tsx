@@ -25,7 +25,7 @@ const { width } = Dimensions.get("window");
 const getImageHeight = (teamCount: number) => {
 	// Make images take up a certain fraction of available width
 	const base = width / (teamCount * 1.2); // 1.2 is a fudge factor for padding/gap
-	return Math.max(40, Math.min(base, 90)); // Clamp between 40 and 120
+	return Math.max(40, Math.min(base, 80)); // Clamp between 40 and 120
 };
 
 export const TeamScoreTile = ({ teams, onTeamSelect }: TeamScoreTileProps) => {

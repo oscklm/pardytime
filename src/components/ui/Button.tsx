@@ -233,7 +233,7 @@ const styles = StyleSheet.create((th) => ({
 				blue: {
 					backgroundColor: th.colors.blue,
 				},
-				error: {
+				danger: {
 					backgroundColor: th.colors.red,
 				},
 				success: {

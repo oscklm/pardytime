@@ -41,6 +41,7 @@ export function HomeTab() {
 				</YStack>
 			</YStack>
 			<ActionModal
+				position="center"
 				actions={[
 					{
 						id: "note",

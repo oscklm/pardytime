@@ -1,4 +1,4 @@
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import type React from "react";
 import { useCallback } from "react";
@@ -27,10 +27,16 @@ interface ActionButton {
 
 interface ActionModalProps {
 	onCreatePress?: (actionType: string) => void;
+	icon?: string;
+	position?: "right" | "center" | "left";
 	actions?: Array<ActionButton>;
 }
 
-export const ActionModal: React.FC<ActionModalProps> = ({ actions = [] }) => {
+export const ActionModal: React.FC<ActionModalProps> = ({
+	actions = [],
+	icon = "plus",
+	position = "right",
+}) => {
 	const { theme } = useUnistyles();
 	const isOpen = useSharedValue<boolean>(false);
 	const translateY = useSharedValue<number>(400);
@@ -129,7 +135,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({ actions = [] }) => {
 				}}
 			>
 				<View style={styles.actionIconContainer}>
-					<FontAwesome
+					<FontAwesome5
 						// biome-ignore lint/suspicious/noExplicitAny: <its ok for now>
 						name={action.icon as any}
 						size={24}
@@ -147,13 +153,19 @@ export const ActionModal: React.FC<ActionModalProps> = ({ actions = [] }) => {
 		[closeModal],
 	);
 
+	styles.useVariants({ position });
+
 	return (
 		<>
 			{/* Floating Action Button */}
 			<View style={styles.fabContainer}>
 				<GestureDetector gesture={buttonPress}>
 					<Animated.View style={[styles.fab, buttonStyle]}>
-						<FontAwesome name="plus" size={36} color="rgb(122, 53, 159)" />
+						<FontAwesome5
+							name={icon as any}
+							size={30}
+							color="rgb(122, 53, 159)"
+						/>
 					</Animated.View>
 				</GestureDetector>
 			</View>
@@ -199,9 +211,21 @@ const styles = StyleSheet.create((th, rt) => ({
 		position: "absolute",
 		justifyContent: "center",
 		alignItems: "center",
-		right: 0,
-		left: 0,
 		bottom: 20,
+		variants: {
+			position: {
+				right: {
+					right: 20,
+				},
+				center: {
+					right: 0,
+					left: 0,
+				},
+				left: {
+					left: 20,
+				},
+			},
+		},
 	},
 	fab: {
 		width: 60,

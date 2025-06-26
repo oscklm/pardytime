@@ -14,38 +14,40 @@ const MIN_TEAMS_TO_START = 2;
 
 export const LobbyView = () => {
 	const { game, teams } = useContext(GameContext);
-	const { startGame } = useGameController();
+	const { startGame, endGame, resetGame } = useGameController();
 
 	const gameLink = `jeopardytime://game?code=${game.code}`;
 
 	return (
-		<View style={styles.container}>
-			<XStack jc="between" gap="md">
-				<View style={styles.codeContainer}>
-					<QRCode value={gameLink} size={125} />
-					<Text style={styles.codeLabel}>#{game.code}</Text>
-				</View>
-			</XStack>
-			<TeamList gameId={game._id} teams={teams ?? []} />
-			<YStack>
-				<YStack ai="center" py="md">
-					{teams && teams.length < MIN_TEAMS_TO_START && (
-						<Text variant="subtitle">
-							You need at least {MIN_TEAMS_TO_START} teams to start the game.
-						</Text>
-					)}
+		<>
+			<View style={styles.container}>
+				<XStack jc="between" gap="md">
+					<View style={styles.codeContainer}>
+						<QRCode value={gameLink} size={125} />
+						<Text style={styles.codeLabel}>#{game.code}</Text>
+					</View>
+				</XStack>
+				<TeamList gameId={game._id} teams={teams ?? []} />
+				<YStack>
+					<YStack ai="center" py="md">
+						{teams && teams.length < MIN_TEAMS_TO_START && (
+							<Text variant="subtitle">
+								You need at least {MIN_TEAMS_TO_START} teams to start the game.
+							</Text>
+						)}
+					</YStack>
+					<Button
+						sensory="light"
+						variant="success"
+						size="lg"
+						onPress={startGame}
+						disabled={teams && teams.length < MIN_TEAMS_TO_START}
+					>
+						Start
+					</Button>
 				</YStack>
-				<Button
-					sensory="light"
-					variant="success"
-					size="lg"
-					onPress={startGame}
-					disabled={teams && teams.length < MIN_TEAMS_TO_START}
-				>
-					Start
-				</Button>
-			</YStack>
-		</View>
+			</View>
+		</>
 	);
 };
 

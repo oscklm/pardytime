@@ -1,6 +1,7 @@
 import { useContext, useMemo, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
+import { ActionModal } from "@/components/ActionModal";
 import { QuestionCard } from "@/components/QuestionCard";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
@@ -19,7 +20,13 @@ export const BoardView = () => {
 
 	const { game, board, teams, answeredQuestions } = useContext(GameContext);
 
-	const { setActiveQuestion, markQuestionAnswered } = useGameController();
+	const {
+		setActiveQuestion,
+		markQuestionAnswered,
+		resetGame,
+		resetToLobby,
+		endGame,
+	} = useGameController();
 
 	const focusedTeam = useMemo(() => {
 		return teams.find((team) => team._id === focusedTeamId) ?? null;
@@ -91,39 +98,41 @@ export const BoardView = () => {
 				pointAmount={pointAmount}
 				onPointAmountChange={setPointAmount}
 			/>
+			<ActionModal
+				actions={[
+					{
+						id: "back-to-lobby",
+						label: "Back to lobby",
+						icon: "arrow-left",
+						color: "purple",
+						onPress: () => resetToLobby(),
+					},
+					{
+						id: "end-game",
+						label: "End game",
+						icon: "check",
+						color: "green",
+						onPress: () => endGame(),
+					},
+					{
+						id: "reset-game",
+						label: "Reset game",
+						icon: "redo",
+						color: "blue",
+						onPress: () => resetGame(),
+					},
+				]}
+			/>
 		</>
 	);
 };
 
 const styles = StyleSheet.create((th) => ({
 	container: {
-		flex: 1,
 		gap: th.space.md,
-	},
-
-	teamModalDivider: {
-		width: "100%",
-		height: 2,
-		backgroundColor: th.colors.borderTertiary,
-	},
-	teamModalContainer: {
-		flex: 1,
-		gap: th.space.md,
-		padding: th.space.lg,
-	},
-	teamModalScoreText: {
-		fontSize: 32,
-		lineHeight: 32 * 1.3,
-		textAlign: "center",
-		fontWeight: "700",
-		color: th.colors.white,
-	},
-	teamModalImage: {
-		width: 200,
-		height: 200,
-		borderRadius: th.radius.md,
 	},
 	contentContainer: {
 		gap: th.space.lg,
+		paddingBottom: 300,
 	},
 }));

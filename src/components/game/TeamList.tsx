@@ -14,7 +14,13 @@ interface Props {
 	teams: Doc<"teams">[];
 }
 
-const teamIndexToColor = ["blue", "pink", "orange", "purple"] as const;
+const teamIndexToColor = [
+	"blue",
+	"pink",
+	"orange",
+	"purple",
+	"indigo",
+] as const;
 
 const TeamList = ({ gameId, teams }: Props) => {
 	const { theme } = useUnistyles();
@@ -58,6 +64,7 @@ const TeamList = ({ gameId, teams }: Props) => {
 						No teams yet. Add a team to get started.
 					</Text>
 				}
+				showsVerticalScrollIndicator={false}
 				contentContainerStyle={styles.contentContainer}
 				renderItem={({ item, index }) => {
 					return (
@@ -102,10 +109,9 @@ const styles = StyleSheet.create((th) => ({
 	},
 	deleteButton: {
 		position: "absolute",
-		right: 10,
-		top: 10,
+		right: 8,
+		top: 8,
 		backgroundColor: th.colors.backgroundPrimary,
-		padding: th.space.xs,
 		borderRadius: th.radius.md,
 	},
 	teamCard: {
@@ -117,8 +123,8 @@ const styles = StyleSheet.create((th) => ({
 		borderRadius: th.radius.md,
 	},
 	nicknameLabel: {
-		fontSize: 24,
-		lineHeight: 28,
+		fontSize: 16,
+		lineHeight: 16 * 1.3,
 		fontWeight: "700",
 		color: th.colors.white,
 	},

@@ -23,7 +23,7 @@ const SignOutButton = () => {
 	};
 
 	return (
-		<Button variant="error" onPress={handleSignOut}>
+		<Button variant="danger" onPress={handleSignOut}>
 			Sign out
 		</Button>
 	);

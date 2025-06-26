@@ -1,5 +1,10 @@
-import type { StaticScreenProps } from "@react-navigation/native";
+import {
+	CommonActions,
+	type StaticScreenProps,
+	useNavigation,
+} from "@react-navigation/native";
 import { useQuery } from "convex/react";
+import { useEffect } from "react";
 import LoadingView from "@/components/LoadingView";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
@@ -11,7 +16,12 @@ type Props = StaticScreenProps<{
 }>;
 
 export function Game({ route }: Props) {
-	const game = useQuery(
+	const navigation = useNavigation();
+	const {
+		data: game,
+		status: gameStatus,
+		error: gameError,
+	} = useQueryWithStatus(
 		api.games.queries.getByGameCode,
 		route.params.code
 			? {
@@ -42,6 +52,17 @@ export function Game({ route }: Props) {
 		api.games.queries.getTeamsByGameId,
 		game ? { gameId: game._id } : "skip",
 	);
+
+	useEffect(() => {
+		if (gameStatus === "error" && gameError) {
+			navigation.dispatch(
+				CommonActions.reset({
+					index: 0,
+					routes: [{ name: "BottomTabs" }],
+				}),
+			);
+		}
+	}, [gameStatus, gameError]);
 
 	if (!game || !board) {
 		return <LoadingView />;

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
 	interpolate,
@@ -106,11 +107,9 @@ export const ActiveQuestionDisplay = ({
 	// Show placeholder when no question
 	if (!question) {
 		return (
-			<Animated.View
-				style={[styles.placeholderContainer, { opacity: opacity.value }]}
-			>
-				<Text style={styles.placeholderText}>Select a question</Text>
-			</Animated.View>
+			<View style={styles.placeholderContainer}>
+				<Text style={styles.placeholderText}>Hold down on any question</Text>
+			</View>
 		);
 	}
 
@@ -142,16 +141,23 @@ const styles = StyleSheet.create((th) => ({
 		backgroundColor: th.colors.gray,
 		borderRadius: th.radius.md,
 		overflow: "hidden",
-		minHeight: 80,
+		minHeight: 110,
 	},
 	placeholderContainer: {
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
 		padding: th.space.lg,
-		backgroundColor: th.colors.blue,
+		backgroundColor: th.colors.gray2,
 		borderRadius: th.radius.md,
-		minHeight: 80,
+		minHeight: 110,
+	},
+	placeholderText: {
+		fontSize: 16,
+		lineHeight: 16 * 1.3,
+		fontWeight: "700",
+		textAlign: "center",
+		color: th.colors.labelSecondary,
 	},
 	cardContent: {
 		flex: 1,
@@ -169,9 +175,5 @@ const styles = StyleSheet.create((th) => ({
 		fontWeight: "500",
 		textAlign: "center",
 		color: th.colors.labelSecondary,
-	},
-	placeholderText: {
-		opacity: 0.7,
-		textAlign: "center",
 	},
 }));

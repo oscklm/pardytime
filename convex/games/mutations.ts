@@ -64,6 +64,38 @@ export const updateGame = mutation({
 	},
 });
 
+export const resetGame = mutation({
+	args: {
+		gameId: v.id("games"),
+	},
+	handler: async (ctx, args) => {
+		await ctx.db.patch(args.gameId, {
+			status: "active",
+			activeQuestionId: undefined,
+		});
+
+		// Delete all answered questions
+		const answeredQuestions = await ctx.db
+			.query("answeredQuestions")
+			.withIndex("by_gameId", (q) => q.eq("gameId", args.gameId))
+			.collect();
+
+		await Promise.all(
+			answeredQuestions.map((question) => ctx.db.delete(question._id)),
+		);
+
+		// Reset all team scores to 0
+		const teams = await ctx.db
+			.query("teams")
+			.withIndex("by_gameId", (q) => q.eq("gameId", args.gameId))
+			.collect();
+
+		await Promise.all(
+			teams.map((team) => ctx.db.patch(team._id, { score: 0 })),
+		);
+	},
+});
+
 export const addAnsweredQuestion = mutation({
 	args: {
 		gameId: v.id("games"),

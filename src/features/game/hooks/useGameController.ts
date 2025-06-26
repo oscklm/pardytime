@@ -7,6 +7,8 @@ import { GameContext } from "../GameProvider";
 export const useGameController = () => {
 	const { game } = useContext(GameContext);
 	const updateGameMutation = useMutation(api.games.mutations.updateGame);
+	const deleteGameMutation = useMutation(api.games.mutations.deleteGame);
+	const resetGameMutation = useMutation(api.games.mutations.resetGame);
 	const updateTeamScoreMutation = useMutation(
 		api.games.mutations.updateTeamScore,
 	);
@@ -23,6 +25,48 @@ export const useGameController = () => {
 			gameId: game._id,
 			values: {
 				status: "active",
+			},
+		});
+	};
+
+	/**
+	 * Delete the game
+	 * @description Deletes the game
+	 */
+	const deleteGame = () => {
+		deleteGameMutation({ gameId: game._id });
+	};
+
+	/**
+	 * Reset the game
+	 * @description Resets the game to its initial state, deleting all answered questions and resetting all team scores to 0
+	 */
+	const resetGame = () => {
+		resetGameMutation({ gameId: game._id });
+	};
+
+	/**
+	 * Reset the game to lobby
+	 * @description Resets the game to lobby, which will show the lobby view
+	 */
+	const resetToLobby = () => {
+		updateGameMutation({
+			gameId: game._id,
+			values: {
+				status: "pending",
+			},
+		});
+	};
+
+	/**
+	 * End the game
+	 * @description Updates the game status to completed, which will show the completed view
+	 */
+	const endGame = () => {
+		updateGameMutation({
+			gameId: game._id,
+			values: {
+				status: "completed",
 			},
 		});
 	};
@@ -63,8 +107,12 @@ export const useGameController = () => {
 
 	return {
 		startGame,
+		endGame,
+		resetGame,
+		resetToLobby,
 		setActiveQuestion,
 		updateTeamScore,
 		markQuestionAnswered,
+		deleteGame,
 	};
 };

@@ -39,7 +39,7 @@ export const handleClerkWebhook = internalAction({
 					// Create a new user in Convex
 					await ctx.runMutation(internal.users.mutations.upsert, {
 						clerkId: evt.data.id,
-						username: evt.data.username,
+						username: evt.data.username ?? "",
 						firstName: evt.data.first_name,
 						lastName: evt.data.last_name,
 						imageUrl: evt.data.image_url,
@@ -60,7 +60,7 @@ export const handleClerkWebhook = internalAction({
 
 					await ctx.runMutation(internal.users.mutations.upsert, {
 						clerkId: evt.data.id,
-						username: evt.data.username,
+						username: evt.data.username ?? "",
 						firstName: evt.data.first_name,
 						lastName: evt.data.last_name,
 						imageUrl: evt.data.image_url,

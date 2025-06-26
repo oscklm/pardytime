@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics";
 import { View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -31,6 +32,7 @@ export const QuestionCard = ({
 
 	const handlePressComplete = () => {
 		onPress?.();
+		Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 	};
 
 	const longPress = Gesture.LongPress()

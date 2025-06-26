@@ -48,10 +48,10 @@ const GameView = ({ game, board, teams, answeredQuestions }: GameViewProps) => {
 				title: board.title,
 				headerLeft: () => (
 					<TouchableBounce
-						style={styles.leaveButton}
+						style={styles.headerButton}
 						onPress={() => handleQuitGame()}
 					>
-						<Text style={styles.leaveButtonText}>Leave</Text>
+						<Text style={styles.headerButtonText}>Leave</Text>
 					</TouchableBounce>
 				),
 			});
@@ -74,10 +74,10 @@ const GameView = ({ game, board, teams, answeredQuestions }: GameViewProps) => {
 
 const styles = StyleSheet.create((th) => ({
 	container: {},
-	leaveButton: {
+	headerButton: {
 		paddingHorizontal: th.space.sm,
 	},
-	leaveButtonText: {
+	headerButtonText: {
 		fontSize: 16,
 		lineHeight: 16 * 1.3,
 		fontWeight: "700",
