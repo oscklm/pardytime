@@ -1,6 +1,5 @@
 import type { StaticScreenProps } from "@react-navigation/native";
 import { useQuery } from "convex/react";
-import { StyleSheet } from "react-native-unistyles";
 import LoadingView from "@/components/LoadingView";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
@@ -39,7 +38,7 @@ export function Game({ route }: Props) {
 			: "skip",
 	);
 
-	const { data: teams, status: teamsStatus } = useQueryWithStatus(
+	const { data: teams } = useQueryWithStatus(
 		api.games.queries.getTeamsByGameId,
 		game ? { gameId: game._id } : "skip",
 	);
@@ -59,7 +58,3 @@ export function Game({ route }: Props) {
 		</YStack>
 	);
 }
-
-const styles = StyleSheet.create((th) => ({
-	container: {},
-}));

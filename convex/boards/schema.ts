@@ -16,7 +16,7 @@ const questionSchema = v.object({
 	text: v.string(),
 	answer: v.string(),
 	order: v.optional(v.number()),
-	value: v.optional(v.number()),
+	value: v.number(),
 });
 
 const categorySchema = v.object({

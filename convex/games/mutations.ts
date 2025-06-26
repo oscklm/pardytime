@@ -105,6 +105,16 @@ export const deleteTeam = mutation({
 	},
 });
 
+export const updateTeamScore = mutation({
+	args: {
+		teamId: v.id("teams"),
+		score: v.number(),
+	},
+	handler: async (ctx, args) => {
+		return ctx.db.patch(args.teamId, { score: args.score });
+	},
+});
+
 export const deleteOldGames = internalMutation({
 	handler: async (ctx) => {
 		const twelveHoursAgo = Date.now() - 12 * 60 * 60 * 1000; // 12 hours ago

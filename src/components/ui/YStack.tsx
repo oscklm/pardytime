@@ -30,7 +30,6 @@ const YStack = ({
 
 const styles = StyleSheet.create((th, rt) => ({
 	stack: {
-		flexDirection: "column",
 		variants: {
 			pd: th.variants.padding,
 			py: th.variants.paddingVertical,

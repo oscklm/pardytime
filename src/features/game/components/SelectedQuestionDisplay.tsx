@@ -40,7 +40,18 @@ export const SelectedQuestionDisplay = ({
 		}
 	}, [question?._id, opacity]);
 
-	// Animate flip when isAnswered changes
+	// Reset flip animation when question changes, then animate based on isAnswered
+	useEffect(() => {
+		// Reset flip rotation immediately when question changes
+		flipRotation.value = 0;
+
+		// Then animate to the correct state based on isAnswered
+		if (isAnswered) {
+			flipRotation.value = withTiming(180, { duration: 600 });
+		}
+	}, [question?._id, flipRotation]);
+
+	// Separate effect for when only isAnswered changes (same question)
 	useEffect(() => {
 		if (isAnswered) {
 			flipRotation.value = withTiming(180, { duration: 600 });
@@ -108,6 +119,7 @@ export const SelectedQuestionDisplay = ({
 				{/* Front of card - Question */}
 				<Animated.View style={[styles.cardContent, frontCardStyle]}>
 					<Text style={styles.text}>{question.text}</Text>
+					<Text style={styles.valueText}>{question.value}</Text>
 				</Animated.View>
 
 				{/* Back of card - Answer */}
@@ -149,7 +161,13 @@ const styles = StyleSheet.create((th) => ({
 		zIndex: 1,
 		fontWeight: "700",
 		textAlign: "center",
-		color: th.colors.labelPrimary,
+		color: th.colors.white,
+	},
+	valueText: {
+		zIndex: 1,
+		fontWeight: "500",
+		textAlign: "center",
+		color: th.colors.labelSecondary,
 	},
 	placeholderText: {
 		opacity: 0.7,

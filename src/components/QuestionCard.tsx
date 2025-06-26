@@ -35,6 +35,7 @@ export const QuestionCard = ({
 
 	const longPress = Gesture.LongPress()
 		.minDuration(PRESS_DURATION) // 2 seconds
+		.enabled(!isAnswered)
 		.onBegin(() => {
 			isPressed.value = true;
 			fillProgress.value = withTiming(
@@ -76,7 +77,7 @@ export const QuestionCard = ({
 		<GestureDetector gesture={longPress}>
 			<View style={styles.container}>
 				<Animated.View style={animatedFillStyle} />
-				<Text style={styles.text}>{question.text}</Text>
+				<Text style={styles.text}>{question.value}</Text>
 				{isSelected && <View style={styles.innerBorder} />}
 			</View>
 		</GestureDetector>
@@ -100,7 +101,7 @@ const styles = StyleSheet.create((th) => ({
 			},
 			isAnswered: {
 				true: {
-					backgroundColor: th.colors.backgroundTertiary,
+					opacity: 0.5,
 				},
 				false: {},
 			},
@@ -118,6 +119,9 @@ const styles = StyleSheet.create((th) => ({
 		opacity: 0.5,
 	},
 	text: {
+		flex: 1,
+		fontWeight: "800",
 		zIndex: 1,
+		textAlign: "center",
 	},
 }));

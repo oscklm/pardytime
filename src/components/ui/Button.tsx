@@ -291,12 +291,12 @@ const styles = StyleSheet.create((th) => ({
 					lineHeight: 14 * 1.3,
 				},
 				md: {
-					fontSize: 18,
-					lineHeight: 18 * 1.3,
+					fontSize: 15,
+					lineHeight: 15 * 1.3,
 				},
 				lg: {
-					fontSize: 20,
-					lineHeight: 20 * 1.3,
+					fontSize: 18,
+					lineHeight: 18 * 1.3,
 				},
 			},
 			variant: {
