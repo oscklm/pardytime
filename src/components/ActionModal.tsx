@@ -254,7 +254,7 @@ const styles = StyleSheet.create((th, rt) => ({
 		bottom: -100, // To compensate for overshoot of the bounce animation
 		left: 0,
 		right: 0,
-		paddingBottom: rt.insets.bottom + 80, // This added padding here compensates for the subtracted -100 above, for the bounce overshoot
+		paddingBottom: rt.insets.bottom + 90, // This added padding here compensates for the subtracted -100 above, for the bounce overshoot
 		backgroundColor: th.colors.backgroundSecondary,
 		borderTopLeftRadius: th.radius.lg,
 		borderTopRightRadius: th.radius.lg,
