@@ -95,8 +95,11 @@ const styles = StyleSheet.create((th) => ({
 	container: {
 		flex: 1,
 		justifyContent: "center",
+		alignItems: "center",
+		gap: 8,
 	},
 	message: {
+		fontWeight: "600",
 		textAlign: "center",
 		paddingBottom: 10,
 	},

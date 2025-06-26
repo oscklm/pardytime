@@ -34,14 +34,14 @@ export const create = mutation({
 
 		invariant(code, "Could not generate unique game code");
 
-		const game = await ctx.db.insert("games", {
+		await ctx.db.insert("games", {
 			boardId,
 			ownerId: args.userId,
 			status: "pending",
 			code,
 		});
 
-		return game;
+		return code;
 	},
 });
 
@@ -61,6 +61,21 @@ export const updateGame = mutation({
 	},
 	handler: async (ctx, args) => {
 		return ctx.db.patch(args.gameId, args.values);
+	},
+});
+
+export const addAnsweredQuestion = mutation({
+	args: {
+		gameId: v.id("games"),
+		questionId: v.id("questions"),
+		teamId: v.optional(v.id("teams")),
+	},
+	handler: async (ctx, args) => {
+		return ctx.db.insert("answeredQuestions", {
+			gameId: args.gameId,
+			questionId: args.questionId,
+			teamId: args.teamId,
+		});
 	},
 });
 

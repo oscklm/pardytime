@@ -1,5 +1,5 @@
 import { useMutation } from "convex/react";
-import { FlatList, View } from "react-native";
+import { ActionSheetIOS, FlatList, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { api } from "@/convex/_generated/api";
 import type { Doc, Id } from "@/convex/_generated/dataModel";
@@ -21,25 +21,36 @@ const TeamList = ({ gameId, teams, status }: Props) => {
 	const deleteTeam = useMutation(api.games.mutations.deleteTeam);
 
 	const handleDeleteTeam = async (teamId: Id<"teams">) => {
-		await deleteTeam({ teamId });
+		ActionSheetIOS.showActionSheetWithOptions(
+			{
+				title: "Are you sure?",
+				message: "You wont be able to undo deleting this team",
+				options: ["Cancel", "Delete"],
+				destructiveButtonIndex: 1,
+				cancelButtonIndex: 0,
+			},
+			(buttonIndex) => {
+				if (buttonIndex === 1) {
+					void deleteTeam({ teamId });
+				}
+			},
+		);
 	};
 
 	return (
-		<YStack gap="lg">
-			<YStack>
-				<XStack ai="center" jc="between">
-					<Text variant="h2">Teams</Text>
-					<Button
-						icon="plus"
-						size="sm"
-						screen="CreateTeam"
-						disabled={teams.length === 4}
-						params={{ gameId }}
-					>
-						Add Team
-					</Button>
-				</XStack>
-			</YStack>
+		<YStack flex={1} gap="lg">
+			<XStack ai="center" jc="between">
+				<Text variant="h2">Teams</Text>
+				<Button
+					icon="plus"
+					size="sm"
+					screen="CreateTeam"
+					disabled={teams.length === 4}
+					params={{ gameId }}
+				>
+					Add Team
+				</Button>
+			</XStack>
 			<FlatList
 				data={teams}
 				ListEmptyComponent={
@@ -77,11 +88,11 @@ const TeamList = ({ gameId, teams, status }: Props) => {
 
 const styles = StyleSheet.create((th) => ({
 	contentContainer: {
-		gap: th.space.md,
+		gap: th.space.lg,
 	},
 	teamImage: {
-		width: 80,
-		height: 80,
+		width: 75,
+		height: 75,
 		backgroundColor: th.colors.backgroundPrimary,
 		borderRadius: th.radius.md,
 	},

@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { TouchableWithoutFeedback, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Text from "@/components/ui/Text";
@@ -14,9 +14,12 @@ export function GameListItem({ game }: { game: GamesWithBoard[number] }) {
 	const { code } = game;
 
 	const onPress = () => {
-		navigation.navigate("Game", {
-			code,
-		});
+		navigation.dispatch(
+			CommonActions.reset({
+				index: 0,
+				routes: [{ name: "Game", params: { code } }],
+			}),
+		);
 	};
 
 	return (

@@ -11,7 +11,6 @@ import {
 	withUnistyles,
 } from "react-native-unistyles";
 import { AnimatedSpinner } from "../AnimatedSpinner";
-import YStack from "./YStack";
 
 const PlatformPressable = withUnistyles(RNPlatformPressable);
 
@@ -117,25 +116,20 @@ function ButtonBase({
 		}
 	}, [sensory]);
 
+	// Resolve whether the button displays an icon only
+	const resolvedVariant = children ? variant : "icon";
+
 	styles.useVariants({
-		variant,
+		variant: resolvedVariant,
 		isLoading,
 		inverted,
 		size,
 		disabled: disabled ?? undefined,
 	});
 
-	const Icon = icon ? (
-		<FontAwesomeIcon
-			name={icon}
-			size={children ? styles.label.fontSize : iconSize}
-			color={styles.label.color}
-		/>
-	) : null;
-
 	return (
 		<PlatformPressable
-			{...rest}
+			style={[styles.button, style]}
 			disabled={disabled}
 			android_ripple={{
 				...android_ripple,
@@ -146,13 +140,13 @@ function ButtonBase({
 			}}
 			pressOpacity={Platform.OS === "ios" ? 0.5 : 1}
 			hoverEffect={{ ...styles.hoverEffect }}
-			style={[styles.button, style]}
+			{...rest}
 		>
 			{variant === "link" ? (
-				<YStack>
+				<>
 					<Text style={styles.label}>{children}</Text>
 					<View style={styles.hairline} />
-				</YStack>
+				</>
 			) : isLoading ? (
 				<AnimatedSpinner
 					variant="flat"
@@ -161,7 +155,13 @@ function ButtonBase({
 				/>
 			) : (
 				<>
-					{Icon}
+					{icon && (
+						<FontAwesomeIcon
+							name={icon}
+							size={children ? styles.label.fontSize : iconSize}
+							color={styles.label.color}
+						/>
+					)}
 					{children && <Text style={styles.label}>{children}</Text>}
 					{variant === "menu" && (
 						<FontAwesomeIcon name="chevron-right" size={16} />
@@ -176,29 +176,32 @@ const styles = StyleSheet.create((th) => ({
 	button: {
 		flexDirection: "row",
 		justifyContent: "center",
-		borderRadius: th.radius.md,
 		alignItems: "center",
-		paddingHorizontal: th.space.md,
+		borderRadius: th.radius.md,
 		gap: th.space.md,
 		borderWidth: 1,
-		borderColor: th.colors.labelQuaternary,
+		borderColor: th.colors.borderTertiary,
 		backgroundColor: th.colors.gray4,
 		variants: {
 			size: {
 				sm: {
-					height: 34,
+					height: 36,
+					paddingVertical: 8,
+					paddingHorizontal: 12,
 				},
 				md: {
-					height: 42,
+					height: 44,
+					paddingVertical: 10,
+					paddingHorizontal: 16,
 				},
 				lg: {
-					height: 50,
+					height: 56,
+					paddingVertical: 14,
+					paddingHorizontal: 20,
 				},
 			},
 			variant: {
 				icon: {
-					width: 42,
-					flexDirection: "row",
 					borderWidth: 0,
 					backgroundColor: "transparent",
 				},
@@ -208,6 +211,7 @@ const styles = StyleSheet.create((th) => ({
 					borderWidth: 0,
 				},
 				outline: {
+					borderWidth: 2,
 					backgroundColor: "transparent",
 				},
 				menu: {
@@ -261,39 +265,9 @@ const styles = StyleSheet.create((th) => ({
 		compoundVariants: [
 			{
 				variant: "link",
-				hovered: true, // and color is link
-				// apply following styles
+				hovered: true,
 				styles: {
 					backgroundColor: undefined,
-					// and more styles
-				},
-			},
-			{
-				variant: "icon",
-				inverted: true,
-				styles: {
-					backgroundColor: "transparent",
-				},
-			},
-			{
-				variant: "icon",
-				size: "sm",
-				styles: {
-					width: 34,
-				},
-			},
-			{
-				variant: "icon",
-				size: "md",
-				styles: {
-					width: 42,
-				},
-			},
-			{
-				variant: "icon",
-				size: "lg",
-				styles: {
-					width: 50,
 				},
 			},
 		],
@@ -311,18 +285,20 @@ const styles = StyleSheet.create((th) => ({
 	label: {
 		fontSize: 16,
 		fontWeight: "700",
-		lineHeight: 24,
 		color: th.colors.labelPrimary,
 		variants: {
 			size: {
 				sm: {
 					fontSize: 14,
+					lineHeight: 14 * 1.3,
 				},
 				md: {
 					fontSize: 18,
+					lineHeight: 18 * 1.3,
 				},
 				lg: {
 					fontSize: 20,
+					lineHeight: 20 * 1.3,
 				},
 			},
 			variant: {

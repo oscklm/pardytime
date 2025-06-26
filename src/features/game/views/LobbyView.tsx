@@ -1,0 +1,89 @@
+import { useMutation } from "convex/react";
+import { useContext } from "react";
+import { View } from "react-native";
+import QRCode from "react-native-qrcode-svg";
+import { StyleSheet } from "react-native-unistyles";
+import TeamList from "@/components/game/TeamList";
+import Button from "@/components/ui/Button";
+import Text from "@/components/ui/Text";
+import XStack from "@/components/ui/XStack";
+import { api } from "@/convex/_generated/api";
+import { useQueryWithStatus } from "@/lib/convex";
+import { GameContext } from "../GameView";
+
+const MIN_TEAMS_TO_START = 2;
+
+export const LobbyView = () => {
+	const { game } = useContext(GameContext);
+	const updateGame = useMutation(api.games.mutations.updateGame);
+
+	const {
+		data: teams,
+		error: teamsError,
+		status: teamsStatus,
+	} = useQueryWithStatus(
+		api.games.queries.getTeamsByGameId,
+		game ? { gameId: game._id } : "skip",
+	);
+
+	const handleStartGame = () => {
+		updateGame({
+			gameId: game._id,
+			values: {
+				status: "active",
+			},
+		});
+	};
+
+	const gameLink = `jeopardytime://game?code=${game.code}`;
+
+	return (
+		<View style={styles.container}>
+			<XStack jc="between" gap="md">
+				<View style={styles.codeContainer}>
+					<QRCode value={gameLink} size={125} />
+					<Text style={styles.codeLabel}>#{game.code}</Text>
+				</View>
+			</XStack>
+			<TeamList gameId={game._id} teams={teams ?? []} status={teamsStatus} />
+			{teams && teams.length >= MIN_TEAMS_TO_START && (
+				<Button
+					sensory="light"
+					variant="success"
+					size="lg"
+					onPress={handleStartGame}
+				>
+					Start
+				</Button>
+			)}
+		</View>
+	);
+};
+
+const styles = StyleSheet.create((th, rt) => ({
+	container: {
+		flex: 1,
+		paddingBottom: rt.insets.bottom,
+		gap: th.space.lg,
+	},
+	codeContainer: {
+		flex: 1,
+		alignItems: "center",
+		backgroundColor: th.colors.backgroundSecondary,
+		borderRadius: th.radius.md,
+		padding: th.space.lg,
+		gap: th.space.md,
+		borderWidth: 1,
+		borderColor: th.colors.labelQuaternary,
+	},
+	codeLabel: {
+		fontSize: 16,
+		lineHeight: 24,
+		fontWeight: "600",
+		letterSpacing: 0.5,
+		width: "100%",
+		textAlign: "center",
+		color: th.colors.labelPrimary,
+		textTransform: "uppercase",
+	},
+}));

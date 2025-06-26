@@ -43,27 +43,18 @@ export const getAllEnriched = query({
 });
 
 export const getById = query({
-	args: { id: v.string() },
-	handler: async (ctx, { id }) => {
+	args: { boardId: v.id("boards") },
+	handler: async (ctx, { boardId }) => {
 		const boardController = new BoardReaderController(ctx.db);
 
-		const normalizedId = ctx.db.normalizeId("boards", id);
-		if (!normalizedId) {
-			throw new Error(`Invalid board ID: ${id}`);
-		}
-
-		return boardController.get(normalizedId);
+		return boardController.get(boardId);
 	},
 });
 
 export const getByIdEnriched = query({
-	args: { id: v.string() },
-	handler: async (ctx, { id }) => {
+	args: { boardId: v.id("boards") },
+	handler: async (ctx, { boardId }) => {
 		const boardController = new BoardReaderController(ctx.db);
-		const normalizedId = ctx.db.normalizeId("boards", id);
-		if (!normalizedId) {
-			throw new Error(`Invalid board ID: ${id}`);
-		}
-		return boardController.getEnriched(normalizedId);
+		return await boardController.getEnriched(boardId);
 	},
 });

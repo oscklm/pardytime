@@ -1,9 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import { useMutation, useQuery } from "convex/react";
 import { useState } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import BoardCard from "@/components/boards/BoardCard";
+import BoardCard from "@/components/BoardCard";
 import { Modal } from "@/components/Modal";
 import { Button } from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
@@ -29,12 +29,19 @@ export function CreateGame() {
 			return;
 		}
 
-		await createGame({
+		const code = await createGame({
 			userId: user._id,
 			boardId,
 		});
 
 		navigation.canGoBack() && navigation.goBack();
+
+		navigation.dispatch(
+			CommonActions.reset({
+				index: 0,
+				routes: [{ name: "Game", params: { code } }],
+			}),
+		);
 	};
 
 	const handleSelectBoard = (board: Doc<"boards">) => {

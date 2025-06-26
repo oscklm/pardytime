@@ -49,6 +49,10 @@ const BottomTabs = createBottomTabNavigator({
 				easing: Easing.inOut(Easing.ease),
 			},
 		},
+		tabBarStyle: {
+			paddingTop: 5,
+		},
+		tabBarShowLabel: false,
 		sceneStyleInterpolator: ({ current }) => ({
 			sceneStyle: {
 				opacity: current.progress.interpolate({
@@ -101,7 +105,6 @@ const BottomTabs = createBottomTabNavigator({
 				],
 			} as CustomBottomTabNavigationOptions,
 		},
-
 		Profile: {
 			screen: ProfileTab,
 			options: {

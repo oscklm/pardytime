@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/suspicious/noArrayIndexKey: <explanation> */
+/** biome-ignore-all lint/suspicious/noArrayIndexKey: <its ok> */
 import type {
 	BottomTabHeaderProps,
 	BottomTabNavigationOptions,
@@ -20,9 +20,7 @@ interface CustomBottomTabHeaderProps
 }
 
 export const CustomBottomTabHeader = ({
-	navigation,
 	options,
-	route,
 }: CustomBottomTabHeaderProps) => {
 	const { title, hideTitle, toolbarItems, headerBgColor } = options;
 

@@ -8,6 +8,7 @@ import * as SplashScreen from "expo-splash-screen";
 import * as TaskManager from "expo-task-manager";
 import { useEffect } from "react";
 import { LogBox } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import {
 	registerUpdateCheckTask,
 	UPDATE_CHECK_TASK_IDENTIFIER,
@@ -66,16 +67,18 @@ export function App() {
 		<ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
 			<ClerkLoaded>
 				<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-					<SplashScreenController>
-						<AuthProvider>
-							<Navigation
-								linking={{
-									enabled: "auto",
-									prefixes: ["jeopardytime://"],
-								}}
-							/>
-						</AuthProvider>
-					</SplashScreenController>
+					<GestureHandlerRootView style={{ flex: 1 }}>
+						<SplashScreenController>
+							<AuthProvider>
+								<Navigation
+									linking={{
+										enabled: "auto",
+										prefixes: ["jeopardytime://"],
+									}}
+								/>
+							</AuthProvider>
+						</SplashScreenController>
+					</GestureHandlerRootView>
 				</ConvexProviderWithClerk>
 			</ClerkLoaded>
 		</ClerkProvider>

@@ -14,14 +14,15 @@ import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
+import type { Id } from "@/convex/_generated/dataModel";
 
 type Props = StaticScreenProps<{
-	boardId: string;
+	boardId: Id<"boards">;
 }>;
 
 export function Board({ route }: Props) {
 	const board = useQuery(api.boards.queries.getByIdEnriched, {
-		id: route.params.boardId,
+		boardId: route.params.boardId,
 	});
 
 	const user = useQuery(
