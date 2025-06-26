@@ -9,7 +9,7 @@ import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
 import { api } from "@/convex/_generated/api";
 import { useQueryWithStatus } from "@/lib/convex";
-import { GameContext } from "../GameView";
+import { GameContext } from "../GameProvider";
 
 const MIN_TEAMS_TO_START = 2;
 

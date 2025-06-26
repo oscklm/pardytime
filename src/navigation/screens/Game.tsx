@@ -29,13 +29,26 @@ export function Game({ route }: Props) {
 			: "skip",
 	);
 
+	const answeredQuestions = useQuery(
+		api.games.queries.getAnsweredQuestionsByGameId,
+		game?._id
+			? {
+					gameId: game._id,
+				}
+			: "skip",
+	);
+
 	if (!game || !board) {
 		return <LoadingView />;
 	}
 
 	return (
 		<YStack flex={1} gap="xl" pd="lg" insetBottom>
-			<GameView game={game} board={board} />
+			<GameView
+				game={game}
+				board={board}
+				answeredQuestions={answeredQuestions || []}
+			/>
 		</YStack>
 	);
 }

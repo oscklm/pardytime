@@ -13,8 +13,8 @@ const colors = {
 	labelPrimaryLight: "#000000",
 	labelPrimaryDark: "#FFFFFF",
 
-	labelSecondaryLight: "#3C3C4370",
-	labelSecondaryDark: "#EBEBF570",
+	labelSecondaryLight: "#3C3C4385",
+	labelSecondaryDark: "#EBEBF585",
 
 	labelTertiaryLight: "#3C3C4330",
 	labelTertiaryDark: "#EBEBF530",

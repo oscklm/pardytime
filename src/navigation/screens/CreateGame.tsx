@@ -14,13 +14,17 @@ import type { Doc, Id } from "@/convex/_generated/dataModel";
 import { useUser } from "@/providers/user-provider";
 
 export function CreateGame() {
-	const navigation = useNavigation();
-	const user = useUser();
-	const createGame = useMutation(api.games.mutations.create);
+	// Local state
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [boardId, setBoardId] = useState<Id<"boards"> | undefined>(undefined);
 	const [boardLabel, setBoardLabel] = useState<string | undefined>(undefined);
 
+	// Hooks
+	const navigation = useNavigation();
+	const user = useUser();
+
+	// API hooks
+	const createGame = useMutation(api.games.mutations.create);
 	const boards = useQuery(api.boards.queries.getAll, {});
 
 	const handleCreateGame = async () => {
@@ -53,13 +57,16 @@ export function CreateGame() {
 	return (
 		<>
 			<YStack flex={1} gap="lg" pd="lg">
-				<Text variant="h2">Create a new game</Text>
+				<YStack py="md">
+					<Text variant="h2">Create new game</Text>
+					<Text variant="subtitle">Create a game to play with ur friends.</Text>
+				</YStack>
 				<YStack>
 					<Text variant="label">Board</Text>
 					<View>
 						<TextInput
 							editable={false}
-							placeholder="Select a board"
+							placeholder="Click to select "
 							value={boardLabel}
 							onPress={() => setIsModalVisible(true)}
 						/>
@@ -91,7 +98,10 @@ export function CreateGame() {
 				onRequestClose={() => setIsModalVisible(false)}
 			>
 				<YStack gap="md" pd="lg">
-					<Text variant="h2">Pick a board</Text>
+					<YStack py="md">
+						<Text variant="h2">Pick a board</Text>
+						<Text variant="subtitle">Click on the board you want to play.</Text>
+					</YStack>
 					<FlatList
 						data={boards}
 						contentContainerStyle={styles.boardListContainer}

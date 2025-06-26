@@ -68,13 +68,11 @@ export const addAnsweredQuestion = mutation({
 	args: {
 		gameId: v.id("games"),
 		questionId: v.id("questions"),
-		teamId: v.optional(v.id("teams")),
 	},
 	handler: async (ctx, args) => {
 		return ctx.db.insert("answeredQuestions", {
 			gameId: args.gameId,
 			questionId: args.questionId,
-			teamId: args.teamId,
 		});
 	},
 });

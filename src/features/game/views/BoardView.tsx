@@ -8,7 +8,7 @@ import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { SelectedQuestionDisplay } from "../components/SelectedQuestionDisplay";
-import { GameContext } from "../GameView";
+import { GameContext } from "../GameProvider";
 
 export const BoardView = () => {
 	const { game, board, answeredQuestions } = useContext(GameContext);

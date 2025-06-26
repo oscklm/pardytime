@@ -1,20 +1,14 @@
 import { CommonActions, useNavigation } from "@react-navigation/native";
-import { useQuery } from "convex/react";
-import { createContext, useEffect } from "react";
+import { useEffect } from "react";
 import { ActionSheetIOS } from "react-native";
-import Button from "@/components/ui/Button";
-import { api } from "@/convex/_generated/api";
+import { StyleSheet } from "react-native-unistyles";
+import Text from "@/components/ui/Text";
+import TouchableBounce from "@/components/ui/TouchableBounce";
 import type { Doc } from "@/convex/_generated/dataModel";
-import type { BoardEnrichedResult } from "@/convex/types";
+import { GameProvider, type GameState } from "./GameProvider";
 import { BoardView } from "./views/BoardView";
 import { LobbyView } from "./views/LobbyView";
 import { ResultView } from "./views/ResultView";
-
-interface GameState {
-	game: Doc<"games">;
-	board: BoardEnrichedResult;
-	answeredQuestions: Doc<"answeredQuestions">[];
-}
 
 const StatusToViewComponent: Record<Doc<"games">["status"], React.FC> = {
 	pending: LobbyView,
@@ -22,19 +16,10 @@ const StatusToViewComponent: Record<Doc<"games">["status"], React.FC> = {
 	completed: ResultView,
 } as const;
 
-export const GameContext = createContext<GameState>({} as GameState);
-
 interface GameViewProps extends GameState {}
 
-const GameView = ({ game, board }: GameViewProps) => {
+const GameView = ({ game, board, answeredQuestions }: GameViewProps) => {
 	const navigation = useNavigation();
-
-	const answeredQuestions = useQuery(
-		api.games.queries.getAnsweredQuestionsByGameId,
-		{
-			gameId: game._id,
-		},
-	);
 
 	const handleQuitGame = () => {
 		ActionSheetIOS.showActionSheetWithOptions(
@@ -62,14 +47,12 @@ const GameView = ({ game, board }: GameViewProps) => {
 			navigation.setOptions({
 				title: board.title,
 				headerLeft: () => (
-					<Button
-						sensory="light"
-						size="sm"
-						variant="outline"
+					<TouchableBounce
+						style={styles.leaveButton}
 						onPress={() => handleQuitGame()}
 					>
-						Leave
-					</Button>
+						<Text style={styles.leaveButtonText}>Leave</Text>
+					</TouchableBounce>
 				),
 			});
 		}
@@ -78,12 +61,27 @@ const GameView = ({ game, board }: GameViewProps) => {
 	const ViewComponent = StatusToViewComponent[game.status];
 
 	return (
-		<GameContext
-			value={{ game, board, answeredQuestions: answeredQuestions ?? [] }}
+		<GameProvider
+			game={game}
+			board={board}
+			answeredQuestions={answeredQuestions}
 		>
 			<ViewComponent />
-		</GameContext>
+		</GameProvider>
 	);
 };
+
+const styles = StyleSheet.create((th) => ({
+	container: {},
+	leaveButton: {
+		paddingHorizontal: th.space.sm,
+	},
+	leaveButtonText: {
+		fontSize: 16,
+		lineHeight: 16 * 1.3,
+		fontWeight: "700",
+		color: th.colors.labelSecondary,
+	},
+}));
 
 export { GameView };

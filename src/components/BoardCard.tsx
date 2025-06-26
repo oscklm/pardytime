@@ -8,7 +8,7 @@ interface BoardCardProps {
 
 const BoardCard = ({ board }: BoardCardProps) => {
 	return (
-		<Card>
+		<Card bg="tertiary">
 			<Text variant="h3">{board.title}</Text>
 			<Text variant="secondary">{board.description}</Text>
 		</Card>

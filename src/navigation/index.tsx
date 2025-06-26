@@ -12,13 +12,12 @@ import { StyleSheet } from "react-native-unistyles";
 import Button from "@/components/ui/Button";
 import { UniThemeProvider } from "@/styles/theme";
 import { Board } from "./screens/Board";
-import { BoardsTab } from "./screens/BoardsTab";
 import { CreateBoard } from "./screens/CreateBoard";
 import { CreateGame } from "./screens/CreateGame";
 import { CreateTeam } from "./screens/CreateTeam";
 import { Game } from "./screens/Game";
-import { GamesTab } from "./screens/GamesTab";
 import { Help } from "./screens/Help";
+import { HomeTab } from "./screens/HomeTab";
 import { NotFound } from "./screens/NotFound";
 import { ProfileTab } from "./screens/ProfileTab";
 import { PublicProfile } from "./screens/PublicProfile";
@@ -27,10 +26,7 @@ import { Settings } from "./screens/Settings";
 import SignIn from "./screens/SignIn";
 import SignUp from "./screens/SignUp";
 import { Welcome } from "./screens/Welcome";
-import {
-	CustomBottomTabHeader,
-	type CustomBottomTabNavigationOptions,
-} from "./ui/CustomBottomTabHeader";
+import { CustomBottomTabHeader } from "./ui/CustomBottomTabHeader";
 
 const styles = StyleSheet.create((th) => ({
 	tabBarBadgeStyle: {
@@ -52,7 +48,6 @@ const BottomTabs = createBottomTabNavigator({
 		tabBarStyle: {
 			paddingTop: 5,
 		},
-		tabBarShowLabel: false,
 		sceneStyleInterpolator: ({ current }) => ({
 			sceneStyle: {
 				opacity: current.progress.interpolate({
@@ -63,21 +58,15 @@ const BottomTabs = createBottomTabNavigator({
 		}),
 	},
 	screens: {
-		Games: {
-			screen: GamesTab,
+		Home: {
+			screen: HomeTab,
 			options: {
-				title: "Games",
+				title: "Home",
 				tabBarIcon: ({ color, size }) => (
-					<FontAwesome name="gamepad" size={size} color={color} />
+					<FontAwesome name="home" size={size} color={color} />
 				),
 				headerBgColor: "purple",
 				toolbarItems: [
-					<Button
-						icon="plus"
-						sensory="light"
-						variant="icon"
-						screen="CreateGame"
-					/>,
 					<Button
 						icon="qrcode"
 						sensory="light"
@@ -86,24 +75,6 @@ const BottomTabs = createBottomTabNavigator({
 					/>,
 				],
 			},
-		},
-		Boards: {
-			screen: BoardsTab,
-			options: {
-				title: "Boards",
-				tabBarIcon: ({ color, size }) => (
-					<FontAwesome name="star" size={size} color={color} />
-				),
-				headerBgColor: "green",
-				toolbarItems: [
-					<Button
-						icon="plus"
-						sensory="light"
-						variant="icon"
-						screen="CreateBoard"
-					/>,
-				],
-			} as CustomBottomTabNavigationOptions,
 		},
 		Profile: {
 			screen: ProfileTab,

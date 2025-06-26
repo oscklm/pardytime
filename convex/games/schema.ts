@@ -27,7 +27,6 @@ const teamSchema = v.object({
 const answeredQuestionSchema = v.object({
 	gameId: v.id("games"),
 	questionId: v.id("questions"),
-	teamId: v.optional(v.id("teams")),
 });
 
 const gameTables = {

@@ -1,5 +1,5 @@
-import { Text } from "react-native";
 import { AnimatedSpinner } from "./AnimatedSpinner";
+import Text from "./ui/Text";
 import YStack from "./ui/YStack";
 
 interface ListEmptyComponentProps {
@@ -16,9 +16,11 @@ export const ListEmptyComponent = ({
 	return (
 		<YStack flex={1} gap="md">
 			{status === "pending" && <AnimatedSpinner variant="flat" size={32} />}
-			{status === "error" && <Text>{message || "Error"}</Text>}
+			{status === "error" && (
+				<Text variant="subtitle">{message || "Error"}</Text>
+			)}
 			{status === "success" && (
-				<Text>{message || `No ${descriptor} found`}</Text>
+				<Text variant="subtitle">{message || `No ${descriptor} found`}</Text>
 			)}
 		</YStack>
 	);

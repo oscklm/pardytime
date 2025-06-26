@@ -3,14 +3,12 @@ import type {
 	BottomTabHeaderProps,
 	BottomTabNavigationOptions,
 } from "@react-navigation/bottom-tabs";
-import type React from "react";
 import { Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 
 export interface CustomBottomTabNavigationOptions
 	extends BottomTabNavigationOptions {
 	hideTitle?: boolean;
-	toolbarItems?: React.ReactNode[];
 	headerBgColor?: "purple" | "blue" | "green" | "yellow" | "red" | "orange";
 }
 
@@ -22,7 +20,7 @@ interface CustomBottomTabHeaderProps
 export const CustomBottomTabHeader = ({
 	options,
 }: CustomBottomTabHeaderProps) => {
-	const { title, hideTitle, toolbarItems, headerBgColor } = options;
+	const { title, hideTitle, headerBgColor } = options;
 
 	styles.useVariants({
 		bgColor: headerBgColor,
@@ -31,21 +29,6 @@ export const CustomBottomTabHeader = ({
 	return (
 		<View style={styles.header}>
 			{!hideTitle && <Text style={styles.titleLabel}>{title}</Text>}
-			{toolbarItems && (
-				<View style={styles.toolbar}>
-					{toolbarItems.map((item, index) => (
-						<>
-							<View key={`toolbar-item-${index}`}>{item}</View>
-							{index < toolbarItems.length - 1 && (
-								<View
-									key={`seperator-${index}`}
-									style={styles.toolbarSeparator}
-								/>
-							)}
-						</>
-					))}
-				</View>
-			)}
 		</View>
 	);
 };
@@ -81,22 +64,6 @@ const styles = StyleSheet.create((th, rt) => ({
 				},
 			},
 		},
-	},
-	toolbarSeparator: {
-		width: 1.25,
-		height: 20,
-		backgroundColor: th.colors.borderTertiary,
-	},
-	toolbar: {
-		flexDirection: "row",
-		justifyContent: "space-between",
-		alignItems: "center",
-		borderWidth: 1,
-		borderColor: th.colors.borderSecondary,
-		gap: th.space.sm,
-		padding: th.space.xs,
-		borderRadius: th.radius.lg,
-		backgroundColor: th.colors.backgroundSecondary,
 	},
 	titleLabel: {
 		fontSize: 34,
