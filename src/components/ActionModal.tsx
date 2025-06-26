@@ -181,7 +181,13 @@ export const ActionModal: React.FC<ActionModalProps> = ({ actions = [] }) => {
 
 				{/* Cancel Button */}
 				<Pressable style={styles.cancelButton} onPress={closeModal}>
-					<Text style={styles.cancelText}>Cancel</Text>
+					<Text style={styles.cancelText}>
+						<FontAwesome
+							name="chevron-down"
+							size={16}
+							color={theme.colors.labelSecondary}
+						/>
+					</Text>
 				</Pressable>
 			</Animated.View>
 		</>
@@ -277,17 +283,15 @@ const styles = StyleSheet.create((th, rt) => ({
 		lineHeight: 18,
 	},
 	cancelButton: {
-		borderColor: th.colors.borderTertiary,
-		backgroundColor: th.colors.backgroundSecondary,
+		backgroundColor: th.colors.backgroundTertiary,
 		borderRadius: th.radius.lg,
 		justifyContent: "center",
 		alignItems: "center",
 		padding: th.space.md,
-		gap: th.space.lg,
 	},
 	cancelText: {
-		fontSize: 18,
+		fontSize: 16,
 		fontWeight: "600",
-		color: th.colors.labelTertiary,
+		color: th.colors.labelSecondary,
 	},
 }));

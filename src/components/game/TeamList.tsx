@@ -45,7 +45,7 @@ const TeamList = ({ gameId, teams }: Props) => {
 					icon="plus"
 					size="sm"
 					screen="CreateTeam"
-					disabled={teams.length === 4}
+					disabled={teams.length === 5}
 					params={{ gameId }}
 				>
 					Add Team

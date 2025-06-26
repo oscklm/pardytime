@@ -25,6 +25,8 @@ type IconGlyphs =
 	| "qrcode"
 	| "plus"
 	| "minus"
+	| "rotate-right"
+	| "rotate-left"
 	| "trash"
 	| "edit"
 	| "chevron-right"

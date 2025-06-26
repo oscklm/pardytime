@@ -1,4 +1,3 @@
-import { useMutation } from "convex/react";
 import { useContext } from "react";
 import { View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
@@ -8,23 +7,14 @@ import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
-import { api } from "@/convex/_generated/api";
 import { GameContext } from "../GameProvider";
+import { useGameController } from "../hooks/useGameController";
 
 const MIN_TEAMS_TO_START = 2;
 
 export const LobbyView = () => {
 	const { game, teams } = useContext(GameContext);
-	const updateGame = useMutation(api.games.mutations.updateGame);
-
-	const handleStartGame = () => {
-		updateGame({
-			gameId: game._id,
-			values: {
-				status: "active",
-			},
-		});
-	};
+	const { startGame } = useGameController();
 
 	const gameLink = `jeopardytime://game?code=${game.code}`;
 
@@ -49,7 +39,7 @@ export const LobbyView = () => {
 					sensory="light"
 					variant="success"
 					size="lg"
-					onPress={handleStartGame}
+					onPress={startGame}
 					disabled={teams && teams.length < MIN_TEAMS_TO_START}
 				>
 					Start

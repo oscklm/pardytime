@@ -1,73 +1,28 @@
-import { useMutation } from "convex/react";
 import { useContext, useMemo, useState } from "react";
-import { Pressable, ScrollView, View } from "react-native";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import { Modal } from "@/components/Modal";
+import { ScrollView, View } from "react-native";
+import { StyleSheet } from "react-native-unistyles";
 import { QuestionCard } from "@/components/QuestionCard";
-import Button from "@/components/ui/Button";
-import { Image } from "@/components/ui/Image";
 import Text from "@/components/ui/Text";
-import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
-import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
-import { SelectedQuestionDisplay } from "../components/SelectedQuestionDisplay";
+import { ActiveQuestionDisplay } from "../components/ActiveQuestionDisplay";
+import { TeamControlModal } from "../components/TeamControlModal";
+import { TeamScoreTile } from "../components/TeamScoreTile";
 import { GameContext } from "../GameProvider";
-
-const teamIndexToColor = ["blue", "pink", "orange", "purple"] as const;
+import { useGameController } from "../hooks/useGameController";
 
 export const BoardView = () => {
-	const { theme } = useUnistyles();
-	const { game, board, teams, answeredQuestions } = useContext(GameContext);
-
+	const [pointAmount, setPointAmount] = useState(0);
 	const [focusedTeamId, setFocusedTeamId] = useState<Id<"teams"> | undefined>(
 		undefined,
 	);
 
-	const [pointAmount, setPointAmount] = useState(0);
+	const { game, board, teams, answeredQuestions } = useContext(GameContext);
 
-	const updateGame = useMutation(api.games.mutations.updateGame);
-	const updateTeamScore = useMutation(api.games.mutations.updateTeamScore);
-	const addAnsweredQuestion = useMutation(
-		api.games.mutations.addAnsweredQuestion,
-	);
-
-	const handleGiveTeamPoint = (deduct: boolean = false) => {
-		if (!focusedTeam || !focusedTeamId) return;
-
-		if (pointAmount === 0) {
-			alert("Please enter a point amount");
-			return;
-		}
-
-		const adjustedPointAmount =
-			focusedTeam.score + (deduct ? -pointAmount : pointAmount);
-
-		updateTeamScore({
-			teamId: focusedTeamId,
-			score: adjustedPointAmount,
-		});
-	};
-
-	const handleSelectQuestion = (id: Id<"questions">) => {
-		updateGame({
-			gameId: game._id,
-			values: {
-				activeQuestionId: id,
-			},
-		});
-	};
-
-	const handleAnswerQuestion = (id: Id<"questions">) => {
-		addAnsweredQuestion({
-			gameId: game._id,
-			questionId: id,
-		});
-	};
+	const { setActiveQuestion, markQuestionAnswered } = useGameController();
 
 	const focusedTeam = useMemo(() => {
-		if (!focusedTeamId) return null;
-		return teams.find((team) => team._id === focusedTeamId);
+		return teams.find((team) => team._id === focusedTeamId) ?? null;
 	}, [focusedTeamId, teams]);
 
 	const activeQuestion = useMemo(() => {
@@ -96,38 +51,12 @@ export const BoardView = () => {
 	return (
 		<>
 			<View style={styles.container}>
-				<YStack py="md">
-					<XStack gap="md">
-						{teams.map((team, index) => (
-							<Pressable
-								key={team._id}
-								style={[
-									styles.teamCard,
-									{ backgroundColor: theme.colors[teamIndexToColor[index]] },
-								]}
-								onPress={() => setFocusedTeamId(team._id)}
-							>
-								<Image
-									storageId={team.imageId}
-									style={styles.teamImage}
-									width={100}
-								/>
-								<Text key={team._id} style={styles.teamScoreText}>
-									{team.score}
-								</Text>
-							</Pressable>
-						))}
-					</XStack>
-				</YStack>
-				<View>
-					{activeQuestion && (
-						<SelectedQuestionDisplay
-							question={activeQuestion}
-							isAnswered={isCurrentQuestionAnswered}
-							onPress={() => handleAnswerQuestion(activeQuestion._id)}
-						/>
-					)}
-				</View>
+				<TeamScoreTile teams={teams} onTeamSelect={setFocusedTeamId} />
+				<ActiveQuestionDisplay
+					question={activeQuestion}
+					isAnswered={isCurrentQuestionAnswered}
+					onPressQuestion={markQuestionAnswered}
+				/>
 				<ScrollView
 					showsVerticalScrollIndicator={false}
 					contentContainerStyle={styles.contentContainer}
@@ -146,7 +75,7 @@ export const BoardView = () => {
 										question={question}
 										isAnswered={isAnswered}
 										isSelected={isSelected}
-										onPress={() => handleSelectQuestion(question._id)}
+										onPress={() => setActiveQuestion(question._id)}
 									/>
 								);
 							})}
@@ -155,65 +84,13 @@ export const BoardView = () => {
 				</ScrollView>
 			</View>
 
-			<Modal
+			<TeamControlModal
 				visible={!!focusedTeam}
 				onRequestClose={() => setFocusedTeamId(undefined)}
-			>
-				<YStack flex={1} pd="lg" gap="xl">
-					<YStack gap="lg" ai="center">
-						<Image
-							storageId={focusedTeam?.imageId}
-							style={styles.teamModalImage}
-							width={300}
-						/>
-						<YStack ai="center">
-							<Text variant="h3">{focusedTeam?.nickname}</Text>
-							<Text variant="subtitle">Current score</Text>
-							<Text style={styles.teamModalScoreText}>
-								{focusedTeam?.score}
-							</Text>
-						</YStack>
-					</YStack>
-					<View style={styles.teamModalDivider} />
-					<YStack ai="center" gap="md" py="md">
-						<YStack ai="center">
-							<Text variant="h3">Amount</Text>
-							<Text variant="subtitle">Adjust amount to give</Text>
-							<Text style={styles.teamModalScoreText}>{pointAmount}</Text>
-						</YStack>
-						<XStack gap="md">
-							<Button
-								size="sm"
-								onPress={() => setPointAmount((prev) => prev + 50)}
-							>
-								+ 50
-							</Button>
-							<Button
-								size="sm"
-								onPress={() => setPointAmount((prev) => prev - 50)}
-							>
-								- 50
-							</Button>
-						</XStack>
-					</YStack>
-					<YStack gap="lg">
-						<Button
-							variant="success"
-							size="md"
-							onPress={() => handleGiveTeamPoint()}
-						>
-							Give
-						</Button>
-						<Button
-							variant="error"
-							size="md"
-							onPress={() => handleGiveTeamPoint(true)}
-						>
-							Take
-						</Button>
-					</YStack>
-				</YStack>
-			</Modal>
+				team={focusedTeam}
+				pointAmount={pointAmount}
+				onPointAmountChange={setPointAmount}
+			/>
 		</>
 	);
 };
@@ -223,27 +100,7 @@ const styles = StyleSheet.create((th) => ({
 		flex: 1,
 		gap: th.space.md,
 	},
-	teamCard: {
-		flex: 1,
-		padding: th.space.sm,
-		flexDirection: "row",
-		alignItems: "center",
-		backgroundColor: th.colors.backgroundSecondary,
-		borderRadius: th.radius.md,
-	},
-	teamScoreText: {
-		flex: 1,
-		fontSize: 24,
-		lineHeight: 24 * 1.3,
-		textAlign: "center",
-		fontWeight: "700",
-		color: th.colors.white,
-	},
-	teamImage: {
-		width: 45,
-		height: 45,
-		borderRadius: th.radius.md,
-	},
+
 	teamModalDivider: {
 		width: "100%",
 		height: 2,

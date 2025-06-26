@@ -9,26 +9,27 @@ import Animated, {
 } from "react-native-reanimated";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import Text from "@/components/ui/Text";
-import type { Doc } from "@/convex/_generated/dataModel";
+import type { Doc, Id } from "@/convex/_generated/dataModel";
 
-interface QuestionCardProps {
-	question?: Doc<"questions">;
+interface ActiveQuestionDisplayProps {
+	question: Doc<"questions"> | null;
 	isAnswered: boolean;
-	onPress?: () => void;
+	onPressQuestion?: (questionId: Id<"questions">) => void;
 }
 
-export const SelectedQuestionDisplay = ({
+export const ActiveQuestionDisplay = ({
 	question,
 	isAnswered,
-	onPress,
-}: QuestionCardProps) => {
+	onPressQuestion,
+}: ActiveQuestionDisplayProps) => {
 	const { theme } = useUnistyles();
 	const isPressed = useSharedValue<boolean>(false);
 	const opacity = useSharedValue<number>(0);
 	const flipRotation = useSharedValue<number>(0);
 
 	const handlePressComplete = () => {
-		onPress?.();
+		if (!question) return;
+		onPressQuestion?.(question._id);
 	};
 
 	// Animate fade in/out when question changes
