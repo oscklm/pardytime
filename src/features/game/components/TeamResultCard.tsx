@@ -32,21 +32,24 @@ export const TeamResultCard = ({
 		<View style={[styles.card, { backgroundColor: cardColor }]}>
 			{/* Crown for winner */}
 
+			{isTop && (
+				<View style={styles.crownContainer}>
+					<Image source={Crown} style={styles.crown} />
+				</View>
+			)}
+
 			{/* Team image - now much larger and more prominent */}
-			<View style={styles.imageContainer}>
-				{isTop && (
-					<View style={styles.crownContainer}>
-						<Image source={Crown} style={styles.crown} />
-					</View>
-				)}
-				<Image
-					style={styles.teamImage}
-					storageId={team.imageId}
-					width={300}
-					contentFit="cover"
-					contentPosition={"center"}
-				/>
-			</View>
+			{team.imageId && (
+				<View style={styles.imageContainer}>
+					<Image
+						style={styles.teamImage}
+						storageId={team.imageId}
+						width={300}
+						contentFit="cover"
+						contentPosition={"center"}
+					/>
+				</View>
+			)}
 			<View style={styles.teamDetailsContainer}>
 				<Text variant="title" numberOfLines={2} style={styles.teamName}>
 					{team.nickname}
@@ -74,15 +77,17 @@ const styles = StyleSheet.create((th) => ({
 	},
 	crownContainer: {
 		position: "absolute",
-		top: -55,
+		top: -50,
+		left: -15,
+		transform: [{ rotate: "-10deg" }],
 		alignSelf: "center",
 		justifyContent: "center",
 		alignItems: "center",
 		zIndex: 15,
 	},
 	crown: {
-		width: 100,
-		height: 100,
+		width: 85,
+		height: 90,
 	},
 	imageContainer: {
 		variants: {
