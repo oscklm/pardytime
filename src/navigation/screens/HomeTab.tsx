@@ -54,7 +54,7 @@ export function HomeTab() {
 					{
 						id: "game",
 						label: "Start a Game",
-						description: "Create a game to play with ur friends",
+						description: "Start a game to play with your friends",
 						color: "blue",
 						icon: "gamepad",
 						onPress: () => navigation.navigate("CreateGame"),
