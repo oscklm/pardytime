@@ -7,15 +7,14 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useConvexAuth } from "convex/react";
-import { Easing } from "react-native-reanimated";
 import { StyleSheet } from "react-native-unistyles";
 import Button from "@/components/ui/Button";
+import { GameScreen } from "@/features/game/screens/GameScreen";
 import { UniThemeProvider } from "@/styles/theme";
 import { Board } from "./screens/Board";
 import { CreateBoard } from "./screens/CreateBoard";
 import { CreateGame } from "./screens/CreateGame";
 import { CreateTeam } from "./screens/CreateTeam";
-import { Game } from "./screens/Game";
 import { Help } from "./screens/Help";
 import { HomeTab } from "./screens/HomeTab";
 import { NotFound } from "./screens/NotFound";
@@ -38,24 +37,6 @@ const styles = StyleSheet.create((th) => ({
 const BottomTabs = createBottomTabNavigator({
 	screenOptions: {
 		header: (props) => <CustomBottomTabHeader {...props} />,
-		transitionSpec: {
-			animation: "timing",
-			config: {
-				duration: 150,
-				easing: Easing.inOut(Easing.ease),
-			},
-		},
-		tabBarStyle: {
-			paddingTop: 5,
-		},
-		sceneStyleInterpolator: ({ current }) => ({
-			sceneStyle: {
-				opacity: current.progress.interpolate({
-					inputRange: [-1, 0, 1],
-					outputRange: [0, 1, 0],
-				}),
-			},
-		}),
 	},
 	screens: {
 		Home: {
@@ -80,7 +61,7 @@ const BottomTabs = createBottomTabNavigator({
 			screen: ProfileTab,
 			options: {
 				title: "Profile",
-				tabBarLabel: "You",
+				tabBarLabel: "Profile",
 				headerBgColor: "blue",
 				tabBarIcon: ({ color, size }) => (
 					<FontAwesome name="user" size={size} color={color} />
@@ -113,7 +94,7 @@ const RootStack = createNativeStackNavigator({
 			},
 		},
 		Game: {
-			screen: Game,
+			screen: GameScreen,
 			options: {
 				title: "Game",
 			},

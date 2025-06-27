@@ -45,7 +45,7 @@ export function HomeTab() {
 				actions={[
 					{
 						id: "note",
-						label: "Join a game",
+						label: "Join a Game",
 						description: "Scan a QR code to join a game",
 						color: "purple",
 						icon: "qrcode",
@@ -53,7 +53,7 @@ export function HomeTab() {
 					},
 					{
 						id: "game",
-						label: "Create Game",
+						label: "Start a Game",
 						description: "Create a game to play with ur friends",
 						color: "blue",
 						icon: "gamepad",
@@ -61,7 +61,7 @@ export function HomeTab() {
 					},
 					{
 						id: "board",
-						label: "Create Board",
+						label: "Create a Board",
 						description: "Customize your own Jeopardy board",
 						color: "orange",
 						icon: "align-justify",

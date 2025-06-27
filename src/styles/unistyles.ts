@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import { StyleSheet } from "react-native-unistyles";
 import { darkTheme, lightTheme } from "./theme";
-import { BASE_UNIT, radius, space } from "./tokens";
+import { BASE_UNIT, radius, space, typography } from "./tokens";
 import variants from "./variants";
 
 const shared = {
 	gap: (v: number) => v * BASE_UNIT,
 	radius,
+	typography,
 	space,
 	variants,
 };

@@ -11,19 +11,23 @@ import Animated, {
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import Text from "@/components/ui/Text";
 import type { Doc, Id } from "@/convex/_generated/dataModel";
+import { useGameContext } from "../hooks/useGame";
 
 interface ActiveQuestionDisplayProps {
 	question: Doc<"questions"> | null;
 	isAnswered: boolean;
+	disabled?: boolean;
 	onPressQuestion?: (questionId: Id<"questions">) => void;
 }
 
 export const ActiveQuestionDisplay = ({
 	question,
 	isAnswered,
+	disabled,
 	onPressQuestion,
 }: ActiveQuestionDisplayProps) => {
 	const { theme } = useUnistyles();
+	const { isOwner } = useGameContext();
 	const isPressed = useSharedValue<boolean>(false);
 	const opacity = useSharedValue<number>(0);
 	const flipRotation = useSharedValue<number>(0);
@@ -63,6 +67,7 @@ export const ActiveQuestionDisplay = ({
 	}, [isAnswered, flipRotation]);
 
 	const longPress = Gesture.LongPress()
+		.enabled(!disabled)
 		.onBegin(() => {
 			isPressed.value = true;
 		})
@@ -118,13 +123,20 @@ export const ActiveQuestionDisplay = ({
 			<Animated.View style={[styles.container, animatedContainerStyle]}>
 				{/* Front of card - Question */}
 				<Animated.View style={[styles.cardContent, frontCardStyle]}>
-					<Text style={styles.text}>{question.text}</Text>
-					<Text style={styles.valueText}>{question.value}</Text>
+					<Text variant="h4" style={styles.text}>
+						{question.text}
+					</Text>
+					{isOwner && (
+						<Text variant="subtitle" style={styles.answerPreviewText}>
+							{question.answer}
+						</Text>
+					)}
 				</Animated.View>
-
 				{/* Back of card - Answer */}
 				<Animated.View style={[styles.cardContent, backCardStyle]}>
-					<Text style={styles.text}>{question.answer}</Text>
+					<Text variant="h3" style={styles.text}>
+						{question.answer}
+					</Text>
 				</Animated.View>
 			</Animated.View>
 		</GestureDetector>
@@ -138,10 +150,10 @@ const styles = StyleSheet.create((th) => ({
 		alignItems: "center",
 		padding: th.space.lg,
 		gap: th.space.md,
-		backgroundColor: th.colors.gray,
+		backgroundColor: th.colors.blue,
 		borderRadius: th.radius.md,
 		overflow: "hidden",
-		minHeight: 110,
+		minHeight: 125,
 	},
 	placeholderContainer: {
 		flexDirection: "row",
@@ -150,7 +162,7 @@ const styles = StyleSheet.create((th) => ({
 		padding: th.space.lg,
 		backgroundColor: th.colors.gray2,
 		borderRadius: th.radius.md,
-		minHeight: 110,
+		minHeight: 125,
 	},
 	placeholderText: {
 		fontSize: 16,
@@ -166,14 +178,10 @@ const styles = StyleSheet.create((th) => ({
 	},
 	text: {
 		zIndex: 1,
-		fontWeight: "700",
 		textAlign: "center",
 		color: th.colors.white,
 	},
-	valueText: {
-		zIndex: 1,
-		fontWeight: "500",
-		textAlign: "center",
-		color: th.colors.labelSecondary,
+	answerPreviewText: {
+		marginTop: th.space.xs,
 	},
 }));

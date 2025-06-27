@@ -23,16 +23,16 @@ export function GameStatusBadge({
 
 const styles = StyleSheet.create((th) => ({
 	statusLabel: (status: keyof typeof statusToColor) => ({
-		fontSize: 16,
-		lineHeight: 20,
-		fontWeight: "800",
-		backgroundColor: th.colors.backgroundSecondary,
-		borderWidth: 1,
-		borderColor: th.colors.labelQuaternary,
+		fontSize: 14,
+		lineHeight: 14 * 1.3,
+		minWidth: 80,
+		textAlign: "center",
+		fontWeight: "600",
+		color: th.colors[statusToColor[status] as keyof typeof th.colors],
+		backgroundColor: `${th.colors[statusToColor[status] as keyof typeof th.colors]}30`,
 		borderRadius: th.radius.md,
 		padding: th.space.sm,
 		paddingHorizontal: th.space.md,
 		textTransform: "uppercase",
-		color: th.colors[statusToColor[status] as keyof typeof th.colors],
 	}),
 }));

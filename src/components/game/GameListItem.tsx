@@ -30,7 +30,7 @@ export function GameListItem({ game }: { game: GamesWithBoard[number] }) {
 					<GameStatusBadge status={game.status} />
 				</XStack>
 				<YStack py="sm">
-					<Text variant="secondary">{game.board?.description}</Text>
+					<Text variant="subtitle">{game.board?.description}</Text>
 				</YStack>
 			</View>
 		</TouchableWithoutFeedback>
@@ -48,9 +48,9 @@ const styles = StyleSheet.create((th) => ({
 		padding: th.space.lg,
 	},
 	boardLabel: {
-		fontSize: 20,
-		lineHeight: 24,
-		fontWeight: "800",
+		fontSize: 18,
+		lineHeight: 18 * 1.3,
+		fontWeight: "600",
 		textAlign: "center",
 	},
 	face: {

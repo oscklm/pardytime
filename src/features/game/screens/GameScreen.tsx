@@ -15,8 +15,9 @@ type Props = StaticScreenProps<{
 	code: string;
 }>;
 
-export function Game({ route }: Props) {
+export function GameScreen({ route }: Props) {
 	const navigation = useNavigation();
+
 	const {
 		data: game,
 		status: gameStatus,
@@ -48,7 +49,7 @@ export function Game({ route }: Props) {
 			: "skip",
 	);
 
-	const { data: teams } = useQueryWithStatus(
+	const teams = useQuery(
 		api.games.queries.getTeamsByGameId,
 		game ? { gameId: game._id } : "skip",
 	);

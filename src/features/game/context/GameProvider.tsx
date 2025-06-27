@@ -6,6 +6,7 @@ export interface GameState {
 	game: Doc<"games">;
 	teams: Doc<"teams">[];
 	board: BoardEnrichedResult;
+	isOwner: boolean;
 	answeredQuestions: Doc<"answeredQuestions">[];
 }
 

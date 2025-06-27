@@ -18,4 +18,52 @@ const space = {
 	xxl: BASE_UNIT * 4,
 } as const;
 
-export { BASE_UNIT, radius, space };
+const typography = {
+	h1: {
+		fontWeight: "800",
+		fontSize: 32,
+		lineHeight: 32 * 1.5,
+	},
+	h2: {
+		fontWeight: "700",
+		fontSize: 24,
+		lineHeight: 24 * 1.5,
+	},
+	h3: {
+		fontWeight: "700",
+		fontSize: 20,
+		lineHeight: 20 * 1.5,
+	},
+	h4: {
+		fontWeight: "700",
+		fontSize: 18,
+		lineHeight: 18 * 1.5,
+	},
+	title: {
+		fontWeight: "600",
+		fontSize: 18,
+		lineHeight: 18 * 1.4,
+	},
+	subtitle: {
+		fontWeight: "500",
+		fontSize: 16,
+		lineHeight: 16 * 1.4,
+	},
+	body: {
+		fontWeight: "400",
+		fontSize: 14,
+		lineHeight: 14 * 1.3,
+	},
+	caption: {
+		fontWeight: "400",
+		fontSize: 12,
+		lineHeight: 12 * 1.3,
+	},
+	label: {
+		fontWeight: "400",
+		fontSize: 12,
+		lineHeight: 12 * 1.3,
+	},
+} as const;
+
+export { BASE_UNIT, radius, space, typography };

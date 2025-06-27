@@ -13,7 +13,7 @@ const gameSchema = v.object({
 	status: gameStatus,
 	code: v.string(),
 	// Tracks the question currently being presented.
-	activeQuestionId: v.optional(v.id("questions")),
+	activeQuestionId: v.union(v.id("questions"), v.null()),
 	// Tracks which team has control to select the next question.
 });
 

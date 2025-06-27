@@ -1,24 +1,26 @@
-import { useContext, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { ActionModal } from "@/components/ActionModal";
-import { QuestionCard } from "@/components/QuestionCard";
 import Text from "@/components/ui/Text";
+import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import type { Id } from "@/convex/_generated/dataModel";
+import { QuestionCard } from "@/features/game/components/QuestionCard";
 import { ActiveQuestionDisplay } from "../components/ActiveQuestionDisplay";
 import { TeamControlModal } from "../components/TeamControlModal";
 import { TeamScoreTile } from "../components/TeamScoreTile";
-import { GameContext } from "../GameProvider";
+import { useGameContext } from "../hooks/useGame";
 import { useGameController } from "../hooks/useGameController";
 
 export const BoardView = () => {
 	const [pointAmount, setPointAmount] = useState(0);
+
 	const [focusedTeamId, setFocusedTeamId] = useState<Id<"teams"> | undefined>(
 		undefined,
 	);
 
-	const { game, board, teams, answeredQuestions } = useContext(GameContext);
+	const { game, board, teams, answeredQuestions, isOwner } = useGameContext();
 
 	const {
 		setActiveQuestion,
@@ -31,6 +33,18 @@ export const BoardView = () => {
 	const focusedTeam = useMemo(() => {
 		return teams.find((team) => team._id === focusedTeamId) ?? null;
 	}, [focusedTeamId, teams]);
+
+	const highestScoringTeam = useMemo(() => {
+		// If no score are highest, thus all being 0 or none being in plus
+		if (teams.every((team) => team.score === 0)) {
+			return null;
+		}
+
+		return teams.reduce(
+			(max, team) => (team.score > max.score ? team : max),
+			teams[0],
+		);
+	}, [teams]);
 
 	const activeQuestion = useMemo(() => {
 		if (!game.activeQuestionId) return null;
@@ -58,11 +72,22 @@ export const BoardView = () => {
 	return (
 		<>
 			<View style={styles.container}>
-				<TeamScoreTile teams={teams} onTeamSelect={setFocusedTeamId} />
+				<XStack gap="md">
+					{teams.map((team, index) => (
+						<TeamScoreTile
+							team={team}
+							index={index}
+							isHighestScoring={team._id === highestScoringTeam?._id}
+							disabled={!isOwner}
+							onPress={() => setFocusedTeamId(team._id)}
+						/>
+					))}
+				</XStack>
 				<ActiveQuestionDisplay
 					question={activeQuestion}
 					isAnswered={isCurrentQuestionAnswered}
 					onPressQuestion={markQuestionAnswered}
+					disabled={!isOwner}
 				/>
 				<ScrollView
 					showsVerticalScrollIndicator={false}
@@ -82,6 +107,7 @@ export const BoardView = () => {
 										question={question}
 										isAnswered={isAnswered}
 										isSelected={isSelected}
+										disabled={!isOwner}
 										onPress={() => setActiveQuestion(question._id)}
 									/>
 								);
@@ -98,32 +124,34 @@ export const BoardView = () => {
 				pointAmount={pointAmount}
 				onPointAmountChange={setPointAmount}
 			/>
-			<ActionModal
-				icon="hand-sparkles"
-				actions={[
-					{
-						id: "back-to-lobby",
-						label: "Back to lobby",
-						icon: "arrow-left",
-						color: "purple",
-						onPress: () => resetToLobby(),
-					},
-					{
-						id: "end-game",
-						label: "End game",
-						icon: "check",
-						color: "green",
-						onPress: () => endGame(),
-					},
-					{
-						id: "reset-game",
-						label: "Reset game",
-						icon: "redo",
-						color: "blue",
-						onPress: () => resetGame(),
-					},
-				]}
-			/>
+			{isOwner && (
+				<ActionModal
+					icon="hand-sparkles"
+					actions={[
+						{
+							id: "back-to-lobby",
+							label: "Back to lobby",
+							icon: "arrow-left",
+							color: "purple",
+							onPress: () => resetToLobby(),
+						},
+						{
+							id: "end-game",
+							label: "End game",
+							icon: "check",
+							color: "green",
+							onPress: () => endGame(),
+						},
+						{
+							id: "reset-game",
+							label: "Reset game",
+							icon: "redo",
+							color: "blue",
+							onPress: () => resetGame(),
+						},
+					]}
+				/>
+			)}
 		</>
 	);
 };

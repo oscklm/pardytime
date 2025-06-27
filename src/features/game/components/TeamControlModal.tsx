@@ -39,6 +39,8 @@ export const TeamControlModal = ({
 
 		const adjustedPointAmount = team.score + pointAmount;
 		updateTeamScore(team._id, adjustedPointAmount);
+
+		onPointAmountChange(0);
 	};
 
 	const projectedScore = useMemo(() => {
@@ -105,12 +107,12 @@ export const TeamControlModal = ({
 							{pointAmount > 0 && `Score will increase by ${pointAmount}`}
 							{pointAmount < 0 &&
 								`Score will decrease by ${Math.abs(pointAmount)}`}
-							{pointAmount === 0 && `No change to team's score`}
+							{pointAmount === 0 && `Use buttons below to change score`}
 						</Text>
 					</YStack>
 					<XStack gap="md">
 						<Button
-							size="md"
+							size="lg"
 							variant="danger"
 							icon="minus"
 							onPress={() => onPointAmountChange(pointAmount - 50)}
@@ -118,7 +120,7 @@ export const TeamControlModal = ({
 							50
 						</Button>
 						<Button
-							size="md"
+							size="lg"
 							variant="success"
 							icon="plus"
 							onPress={() => onPointAmountChange(pointAmount + 50)}
@@ -126,11 +128,11 @@ export const TeamControlModal = ({
 							50
 						</Button>
 						<Button
-							size="md"
-							icon="trash"
+							size="lg"
+							icon="rotate-left"
 							onPress={() => onPointAmountChange(0)}
 						>
-							Reset
+							Undo
 						</Button>
 					</XStack>
 				</YStack>
@@ -162,7 +164,7 @@ const styles = StyleSheet.create((th) => ({
 		lineHeight: 32 * 1.3,
 		textAlign: "center",
 		fontWeight: "700",
-		color: th.colors.white,
+		color: th.colors.labelPrimary,
 	},
 	currentScoreText: {
 		fontSize: 16,
@@ -170,7 +172,7 @@ const styles = StyleSheet.create((th) => ({
 		textAlign: "center",
 		fontWeight: "500",
 		textDecorationLine: "line-through",
-		color: th.colors.white,
+		color: th.colors.labelPrimary,
 	},
 	teamModalImage: {
 		width: 185,

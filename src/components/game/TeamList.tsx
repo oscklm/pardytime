@@ -15,7 +15,7 @@ interface Props {
 }
 
 const teamIndexToColor = [
-	"blue",
+	"green",
 	"pink",
 	"orange",
 	"purple",

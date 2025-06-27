@@ -212,18 +212,19 @@ const styles = StyleSheet.create((th, rt) => ({
 		position: "absolute",
 		justifyContent: "center",
 		alignItems: "center",
-		bottom: 20,
+		bottom: 0,
+		paddingBottom: rt.insets.bottom,
 		variants: {
 			position: {
 				right: {
-					right: 20,
+					right: 35,
 				},
 				center: {
 					right: 0,
 					left: 0,
 				},
 				left: {
-					left: 20,
+					left: 35,
 				},
 			},
 		},

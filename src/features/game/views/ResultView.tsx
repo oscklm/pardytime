@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { View } from "react-native";
 import { ActionModal } from "@/components/ActionModal";
 import Text from "@/components/ui/Text";
-import { GameContext } from "../GameProvider";
+import { GameContext } from "../context/GameProvider";
 import { useGameController } from "../hooks/useGameController";
 
 export const ResultView = () => {

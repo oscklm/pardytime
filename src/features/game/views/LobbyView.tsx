@@ -7,7 +7,7 @@ import Button from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
-import { GameContext } from "../GameProvider";
+import { GameContext } from "../context/GameProvider";
 import { useGameController } from "../hooks/useGameController";
 
 const MIN_TEAMS_TO_START = 2;

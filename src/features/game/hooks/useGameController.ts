@@ -2,10 +2,10 @@ import { useMutation } from "convex/react";
 import { useContext } from "react";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
-import { GameContext } from "../GameProvider";
+import { GameContext } from "../context/GameProvider";
 
 export const useGameController = () => {
-	const { game } = useContext(GameContext);
+	const { game, answeredQuestions } = useContext(GameContext);
 	const updateGameMutation = useMutation(api.games.mutations.updateGame);
 	const deleteGameMutation = useMutation(api.games.mutations.deleteGame);
 	const resetGameMutation = useMutation(api.games.mutations.resetGame);
@@ -76,7 +76,7 @@ export const useGameController = () => {
 	 * @description Updates the game active question id, which will be displayed on top of the board view
 	 * @param questionId - The id of the question to set as active
 	 */
-	const setActiveQuestion = (questionId: Id<"questions">) => {
+	const setActiveQuestion = (questionId: Id<"questions"> | null) => {
 		updateGameMutation({
 			gameId: game._id,
 			values: {
@@ -102,6 +102,9 @@ export const useGameController = () => {
 	 * @param questionId - The id of the question to add as answered
 	 */
 	const markQuestionAnswered = (questionId: Id<"questions">) => {
+		if (answeredQuestions.some((aq) => aq.questionId === questionId)) {
+			setActiveQuestion(null);
+		}
 		return addAnsweredQuestionMutation({ gameId: game._id, questionId });
 	};
 

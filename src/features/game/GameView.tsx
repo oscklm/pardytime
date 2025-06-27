@@ -1,11 +1,12 @@
 import { CommonActions, useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { ActionSheetIOS } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Text from "@/components/ui/Text";
 import TouchableBounce from "@/components/ui/TouchableBounce";
 import type { Doc } from "@/convex/_generated/dataModel";
-import { GameProvider, type GameState } from "./GameProvider";
+import { useUser } from "@/providers/user-provider";
+import { GameProvider, type GameState } from "./context/GameProvider";
 import { BoardView } from "./views/BoardView";
 import { LobbyView } from "./views/LobbyView";
 import { ResultView } from "./views/ResultView";
@@ -20,6 +21,12 @@ interface GameViewProps extends GameState {}
 
 const GameView = ({ game, board, teams, answeredQuestions }: GameViewProps) => {
 	const navigation = useNavigation();
+
+	const user = useUser();
+
+	const isOwner = useMemo(() => {
+		return game.ownerId === user?._id;
+	}, [game.ownerId, user?._id]);
 
 	const handleQuitGame = () => {
 		ActionSheetIOS.showActionSheetWithOptions(
@@ -66,6 +73,7 @@ const GameView = ({ game, board, teams, answeredQuestions }: GameViewProps) => {
 			board={board}
 			teams={teams}
 			answeredQuestions={answeredQuestions}
+			isOwner={isOwner}
 		>
 			<ViewComponent />
 		</GameProvider>

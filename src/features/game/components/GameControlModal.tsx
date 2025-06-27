@@ -1,11 +1,10 @@
 import { FontAwesome6 } from "@expo/vector-icons";
-import { useContext } from "react";
 import { type ModalProps, Pressable, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { Modal } from "@/components/Modal";
 import Button from "@/components/ui/Button";
 import YStack from "@/components/ui/YStack";
-import { GameContext } from "../GameProvider";
+import { useGameContext } from "../hooks/useGame";
 import { useGameController } from "../hooks/useGameController";
 
 interface TeamControlModalProps extends Omit<ModalProps, "onRequestClose"> {
@@ -16,7 +15,7 @@ export const GameControlModal = ({
 	visible,
 	onRequestClose,
 }: TeamControlModalProps) => {
-	const { game } = useContext(GameContext);
+	const { game } = useGameContext();
 	const { endGame, resetGame, resetToLobby, deleteGame } = useGameController();
 
 	return (

@@ -9,12 +9,13 @@ import Animated, {
 } from "react-native-reanimated";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import type { Doc } from "@/convex/_generated/dataModel";
-import Text from "./ui/Text";
+import Text from "../../../components/ui/Text";
 
 interface QuestionCardProps {
 	question: Doc<"questions">;
 	isSelected: boolean;
 	isAnswered: boolean;
+	disabled?: boolean;
 	onPress?: () => void;
 }
 
@@ -24,6 +25,7 @@ export const QuestionCard = ({
 	question,
 	isSelected,
 	isAnswered,
+	disabled,
 	onPress,
 }: QuestionCardProps) => {
 	const { theme } = useUnistyles();
@@ -37,7 +39,7 @@ export const QuestionCard = ({
 
 	const longPress = Gesture.LongPress()
 		.minDuration(PRESS_DURATION) // 2 seconds
-		.enabled(!isAnswered)
+		.enabled(!disabled)
 		.onBegin(() => {
 			isPressed.value = true;
 			fillProgress.value = withTiming(
@@ -125,5 +127,15 @@ const styles = StyleSheet.create((th) => ({
 		fontWeight: "800",
 		zIndex: 1,
 		textAlign: "center",
+		variants: {
+			isSelected: {
+				true: {},
+			},
+			isAnswered: {
+				true: {
+					textDecorationLine: "line-through",
+				},
+			},
+		},
 	},
 }));

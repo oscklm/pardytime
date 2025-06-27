@@ -1,19 +1,19 @@
-import * as Haptics from "expo-haptics";
-import { Dimensions, Pressable } from "react-native";
+import { useEffect } from "react";
+import { Dimensions, Pressable, View } from "react-native";
+import Animated, {
+	useAnimatedStyle,
+	useSharedValue,
+	withSpring,
+	withTiming,
+} from "react-native-reanimated";
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
+import Crown from "@/assets/icons/crown.png";
 import { Image } from "@/components/ui/Image";
 import Text from "@/components/ui/Text";
-import XStack from "@/components/ui/XStack";
-import YStack from "@/components/ui/YStack";
-import type { Doc, Id } from "@/convex/_generated/dataModel";
-
-interface TeamScoreTileProps {
-	teams: Doc<"teams">[];
-	onTeamSelect: (teamId: Id<"teams">) => void;
-}
+import type { Doc } from "@/convex/_generated/dataModel";
 
 const teamIndexToColor = [
-	"blue",
+	"green",
 	"pink",
 	"orange",
 	"purple",
@@ -25,41 +25,72 @@ const { width } = Dimensions.get("window");
 const getImageHeight = (teamCount: number) => {
 	// Make images take up a certain fraction of available width
 	const base = width / (teamCount * 1.2); // 1.2 is a fudge factor for padding/gap
-	return Math.max(40, Math.min(base, 80)); // Clamp between 40 and 120
+	return Math.max(40, Math.min(base, 75)); // Clamp between 40 and 120
 };
 
-export const TeamScoreTile = ({ teams, onTeamSelect }: TeamScoreTileProps) => {
+interface TeamScoreTileProps {
+	team: Doc<"teams">;
+	index: number;
+	isHighestScoring: boolean;
+	disabled?: boolean;
+	onPress?: () => void;
+}
+
+export const TeamScoreTile = ({
+	team,
+	index,
+	isHighestScoring,
+	disabled,
+	onPress,
+}: TeamScoreTileProps) => {
 	const { theme } = useUnistyles();
-	const imageHeight = getImageHeight(teams.length);
+	const imageHeight = getImageHeight(1);
+
+	const isHighest = useSharedValue(false);
+	const crownScale = useSharedValue(0);
+	const crownRotation = useSharedValue(0);
+
+	useEffect(() => {
+		isHighest.value = isHighestScoring;
+		if (isHighestScoring) {
+			crownScale.value = withSpring(1, { damping: 8 });
+			crownRotation.value = withSpring(20, { damping: 8 });
+		} else {
+			crownScale.value = withTiming(0, { duration: 200 });
+			crownRotation.value = withTiming(0, { duration: 200 });
+		}
+	}, [isHighestScoring]);
+
+	const cardColor = theme.colors[teamIndexToColor[index]];
+
+	const crownAnimatedStyle = useAnimatedStyle(() => ({
+		transform: [
+			{ scale: crownScale.value },
+			{ rotate: `${crownRotation.value}deg` },
+		],
+	}));
 
 	return (
-		<YStack py="md">
-			<XStack gap="md">
-				{teams.map((team, index) => (
-					<Pressable
-						key={team._id}
-						style={[
-							styles.teamCard,
-							{ backgroundColor: theme.colors[teamIndexToColor[index]] },
-						]}
-						onPress={() => {
-							Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-							onTeamSelect(team._id);
-						}}
-					>
-						<Image
-							style={[styles.teamImage, { height: imageHeight }]}
-							storageId={team.imageId}
-							contentFit="cover"
-							width={300}
-						/>
-						<Text key={team._id} style={styles.teamScoreText}>
-							{team.score}
-						</Text>
-					</Pressable>
-				))}
-			</XStack>
-		</YStack>
+		<Pressable
+			style={[styles.teamCard, { backgroundColor: cardColor }]}
+			disabled={disabled}
+			onPress={onPress}
+		>
+			<View>
+				<Animated.View style={[crownAnimatedStyle, styles.crownContainer]}>
+					<Image source={Crown} style={styles.crownImage} />
+				</Animated.View>
+				<Image
+					style={[styles.teamImage, { height: imageHeight }]}
+					storageId={team.imageId}
+					contentFit="cover"
+					width={300}
+				/>
+				<Text key={team._id} style={styles.teamScoreText}>
+					{team.score}
+				</Text>
+			</View>
+		</Pressable>
 	);
 };
 
@@ -71,6 +102,16 @@ const styles = StyleSheet.create((th) => ({
 		backgroundColor: th.colors.backgroundSecondary,
 		borderRadius: th.radius.md,
 	},
+	crownContainer: {
+		position: "absolute",
+		top: -22,
+		right: -12,
+		zIndex: 1,
+	},
+	crownImage: {
+		width: 35,
+		height: 35,
+	},
 	teamScoreText: {
 		fontSize: 16,
 		lineHeight: 16 * 1.3,
@@ -81,6 +122,7 @@ const styles = StyleSheet.create((th) => ({
 	teamImage: {
 		width: "100%",
 		height: 65,
+		backgroundColor: th.colors.black,
 		borderRadius: th.radius.md,
 	},
 }));

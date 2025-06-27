@@ -2,16 +2,21 @@
 
 ### Current tasks
 
-- [x] Add in-app changelogs
+- [] Implement game result screen
+- [] Create board MVF
 
 ### Backlog
 
-- [ ] Image uploads
-
-- [ ] Bunny CDN
+- [] Fix issue with users getting stuck in loading state on create team, when mistyping name and trying again.
 
 ### Archived
 
+- [x] Improve game view UX and UI
+- [x] Improve copy in hometab action modal
+- [x] Repo cleanup and maintenance
+- [x] Bunny CDN
+- [x] Image uploads
+- [x] Add in-app changelogs
 - [x] Bump unistyles
 - [x] Setup convex and auth
 - [x] Setup auth backend logic

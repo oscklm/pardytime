@@ -72,6 +72,12 @@ export function Button<ParamList extends ReactNavigation.RootParamList>(
 	}
 }
 
+const iconSizeMap = {
+	sm: 14,
+	md: 16,
+	lg: 18,
+} as const;
+
 function ButtonLink<ParamList extends ReactNavigation.RootParamList>({
 	screen,
 	params,
@@ -159,7 +165,8 @@ function ButtonBase({
 					{icon && (
 						<FontAwesomeIcon
 							name={icon}
-							size={children ? styles.label.fontSize : iconSize}
+							size={children ? iconSizeMap[size] : iconSize}
+							color={styles.label.color}
 						/>
 					)}
 					{children && <Text style={styles.label}>{children}</Text>}
@@ -283,22 +290,21 @@ const styles = StyleSheet.create((th) => ({
 		borderColor: th.colors.labelPrimary,
 	},
 	label: {
-		fontSize: 16,
-		fontWeight: "700",
 		color: th.colors.labelPrimary,
+		fontWeight: "600",
 		variants: {
 			size: {
 				sm: {
 					fontSize: 14,
-					lineHeight: 14 * 1.3,
+					lineHeight: 14 * 1.4,
 				},
 				md: {
-					fontSize: 15,
-					lineHeight: 15 * 1.3,
+					fontSize: 16,
+					lineHeight: 16 * 1.4,
 				},
 				lg: {
 					fontSize: 18,
-					lineHeight: 18 * 1.3,
+					lineHeight: 18 * 1.4,
 				},
 			},
 			variant: {
@@ -306,11 +312,14 @@ const styles = StyleSheet.create((th) => ({
 					fontWeight: "500",
 					color: th.colors.labelPrimary,
 				},
+				blue: {
+					color: "white",
+				},
 				purple: {
 					color: "white",
 				},
 				outline: {},
-				error: {
+				danger: {
 					color: "white",
 				},
 				success: {

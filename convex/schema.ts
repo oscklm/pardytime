@@ -4,16 +4,21 @@ import { changelogTables } from "./changelogs/schema";
 import { gameTables } from "./games/schema";
 import { userTables } from "./users/schema";
 
-export default defineSchema({
-	// Users
-	...userTables,
+export default defineSchema(
+	{
+		// Users
+		...userTables,
 
-	// Boards
-	...boardTables,
+		// Boards
+		...boardTables,
 
-	// Games
-	...gameTables,
+		// Games
+		...gameTables,
 
-	// Changelogs
-	...changelogTables,
-});
+		// Changelogs
+		...changelogTables,
+	},
+	{
+		schemaValidation: true,
+	},
+);
