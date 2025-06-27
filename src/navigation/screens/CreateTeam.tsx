@@ -52,8 +52,8 @@ export function CreateTeam({ route }: Props) {
 			return;
 		}
 
-		if (nickname.length > 15) {
-			alert("Nickname must be less than 15 characters");
+		if (nickname.length > 16) {
+			alert("Nickname must be less than 16 characters");
 			return;
 		}
 

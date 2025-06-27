@@ -40,15 +40,6 @@ export function GameScreen({ route }: Props) {
 			: "skip",
 	);
 
-	const answeredQuestions = useQuery(
-		api.games.queries.getAnsweredQuestionsByGameId,
-		game?._id
-			? {
-					gameId: game._id,
-				}
-			: "skip",
-	);
-
 	const teams = useQuery(
 		api.games.queries.getTeamsByGameId,
 		game ? { gameId: game._id } : "skip",
@@ -71,13 +62,7 @@ export function GameScreen({ route }: Props) {
 
 	return (
 		<YStack flex={1} gap="xl" pd="lg" insetBottom>
-			<GameView
-				game={game}
-				board={board}
-				teams={teams ?? []}
-				answeredQuestions={answeredQuestions ?? []}
-				isOwner={false}
-			/>
+			<GameView game={game} board={board} teams={teams ?? []} isOwner={false} />
 		</YStack>
 	);
 }

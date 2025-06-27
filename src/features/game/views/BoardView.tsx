@@ -20,7 +20,7 @@ export const BoardView = () => {
 		undefined,
 	);
 
-	const { game, board, teams, answeredQuestions, isOwner } = useGameContext();
+	const { game, board, teams, isOwner } = useGameContext();
 
 	const {
 		setActiveQuestion,
@@ -64,10 +64,9 @@ export const BoardView = () => {
 	}, [game.activeQuestionId]);
 
 	const isCurrentQuestionAnswered = useMemo(() => {
-		return answeredQuestions.some(
-			(aq) => aq.questionId === activeQuestion?._id,
-		);
-	}, [activeQuestion?._id, answeredQuestions]);
+		if (!game.activeQuestionId) return false;
+		return game.answeredQuestions.includes(game.activeQuestionId);
+	}, [game.activeQuestionId, game.answeredQuestions]);
 
 	return (
 		<>
@@ -76,6 +75,7 @@ export const BoardView = () => {
 					{teams.map((team, index) => (
 						<TeamScoreTile
 							team={team}
+							teamCount={teams.length}
 							index={index}
 							isHighestScoring={team._id === highestScoringTeam?._id}
 							disabled={!isOwner}
@@ -98,8 +98,8 @@ export const BoardView = () => {
 							<Text variant="h3">{category.title}</Text>
 							{category.questions.map((question) => {
 								const isSelected = game.activeQuestionId === question._id;
-								const isAnswered = answeredQuestions.some(
-									(aq) => aq.questionId === question._id,
+								const isAnswered = game.answeredQuestions.includes(
+									question._id,
 								);
 								return (
 									<QuestionCard
@@ -132,19 +132,22 @@ export const BoardView = () => {
 							id: "back-to-lobby",
 							label: "Back to lobby",
 							icon: "arrow-left",
+							description: "Go back to manage teams",
 							color: "purple",
 							onPress: () => resetToLobby(),
 						},
 						{
 							id: "end-game",
-							label: "End game",
+							label: "Finish game",
 							icon: "check",
+							description: "End the game and calculate scores",
 							color: "green",
 							onPress: () => endGame(),
 						},
 						{
 							id: "reset-game",
 							label: "Reset game",
+							description: "Reset all scores and questions",
 							icon: "redo",
 							color: "blue",
 							onPress: () => resetGame(),

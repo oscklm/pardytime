@@ -13,12 +13,6 @@ triggers.register("games", async (ctx, change) => {
 			await getManyFrom(ctx.db, "teams", "by_gameId", change.id),
 			(team) => ctx.db.delete(team._id),
 		);
-
-		// Delete all answered questions for this game.
-		await asyncMap(
-			await getManyFrom(ctx.db, "answeredQuestions", "by_gameId", change.id),
-			(answeredQuestion) => ctx.db.delete(answeredQuestion._id),
-		);
 	}
 });
 

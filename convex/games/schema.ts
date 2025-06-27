@@ -15,6 +15,7 @@ const gameSchema = v.object({
 	// Tracks the question currently being presented.
 	activeQuestionId: v.union(v.id("questions"), v.null()),
 	// Tracks which team has control to select the next question.
+	answeredQuestions: v.array(v.id("questions")),
 });
 
 const teamSchema = v.object({
@@ -24,26 +25,12 @@ const teamSchema = v.object({
 	imageId: v.optional(v.id("_storage")),
 });
 
-const answeredQuestionSchema = v.object({
-	gameId: v.id("games"),
-	questionId: v.id("questions"),
-});
-
 const gameTables = {
 	games: defineTable(gameSchema)
 		.index("by_ownerId", ["ownerId"])
 		.index("by_boardId", ["boardId"])
 		.index("by_code", ["code"]),
 	teams: defineTable(teamSchema).index("by_gameId", ["gameId"]),
-	answeredQuestions: defineTable(answeredQuestionSchema).index("by_gameId", [
-		"gameId",
-	]),
 };
 
-export {
-	gameSchema,
-	teamSchema,
-	answeredQuestionSchema,
-	gameTables,
-	gameStatus,
-};
+export { gameSchema, teamSchema, gameTables, gameStatus };

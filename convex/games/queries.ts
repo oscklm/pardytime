@@ -39,20 +39,6 @@ export const getTeamsByGameId = query({
 	},
 });
 
-export const getAnsweredQuestionsByGameId = query({
-	args: {
-		gameId: v.id("games"),
-	},
-	handler: async (ctx, { gameId }) => {
-		const answeredQuestions = await ctx.db
-			.query("answeredQuestions")
-			.withIndex("by_gameId", (q) => q.eq("gameId", gameId))
-			.collect();
-
-		return answeredQuestions;
-	},
-});
-
 export const getByGameCode = query({
 	args: {
 		code: v.string(),

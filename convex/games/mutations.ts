@@ -39,6 +39,7 @@ export const create = mutation({
 			ownerId: args.userId,
 			status: "pending",
 			activeQuestionId: null,
+			answeredQuestions: [],
 			code,
 		});
 
@@ -75,16 +76,6 @@ export const resetGame = mutation({
 			activeQuestionId: undefined,
 		});
 
-		// Delete all answered questions
-		const answeredQuestions = await ctx.db
-			.query("answeredQuestions")
-			.withIndex("by_gameId", (q) => q.eq("gameId", args.gameId))
-			.collect();
-
-		await Promise.all(
-			answeredQuestions.map((question) => ctx.db.delete(question._id)),
-		);
-
 		// Reset all team scores to 0
 		const teams = await ctx.db
 			.query("teams")
@@ -103,9 +94,16 @@ export const addAnsweredQuestion = mutation({
 		questionId: v.id("questions"),
 	},
 	handler: async (ctx, args) => {
-		return ctx.db.insert("answeredQuestions", {
-			gameId: args.gameId,
-			questionId: args.questionId,
+		const game = await ctx.db.get(args.gameId);
+
+		invariant(game, "Game not found");
+
+		if (game.answeredQuestions.includes(args.questionId)) {
+			throw new Error("Question already answered");
+		}
+
+		return ctx.db.patch(args.gameId, {
+			answeredQuestions: [...game.answeredQuestions, args.questionId],
 		});
 	},
 });
@@ -165,14 +163,6 @@ export const deleteOldGames = internalMutation({
 				.withIndex("by_gameId", (q) => q.eq("gameId", game._id))
 				.collect();
 			await Promise.all(teams.map((team) => ctx.db.delete(team._id)));
-
-			const answeredQuestions = await ctx.db
-				.query("answeredQuestions")
-				.withIndex("by_gameId", (q) => q.eq("gameId", game._id))
-				.collect();
-			await Promise.all(
-				answeredQuestions.map((question) => ctx.db.delete(question._id)),
-			);
 
 			await ctx.db.delete(game._id);
 		}

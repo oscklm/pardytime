@@ -7,7 +7,6 @@ export interface GameState {
 	teams: Doc<"teams">[];
 	board: BoardEnrichedResult;
 	isOwner: boolean;
-	answeredQuestions: Doc<"answeredQuestions">[];
 }
 
 export const GameContext = createContext<GameState>({} as GameState);

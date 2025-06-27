@@ -102,7 +102,10 @@ export function CreateGame() {
 				<YStack gap="xs">
 					<XStack gap="md" ai="center">
 						<Icon name="clock" size={20} />
-						<Text>Games are automatically deleted after 24 hours.</Text>
+						<Text>
+							Games are automatically deleted after 24 hours, but you will never
+							loose the boards you save or create.
+						</Text>
 					</XStack>
 				</YStack>
 			</YStack>

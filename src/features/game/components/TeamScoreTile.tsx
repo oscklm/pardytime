@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Dimensions, Pressable, View } from "react-native";
+import { Pressable, View } from "react-native";
 import Animated, {
 	useAnimatedStyle,
 	useSharedValue,
@@ -20,16 +20,16 @@ const teamIndexToColor = [
 	"indigo",
 ] as const;
 
-const { width } = Dimensions.get("window");
-
-const getImageHeight = (teamCount: number) => {
-	// Make images take up a certain fraction of available width
-	const base = width / (teamCount * 1.2); // 1.2 is a fudge factor for padding/gap
-	return Math.max(40, Math.min(base, 75)); // Clamp between 40 and 120
+const teamImageHeightMap = {
+	2: 150,
+	3: 100,
+	4: 75,
+	5: 60,
 };
 
 interface TeamScoreTileProps {
 	team: Doc<"teams">;
+	teamCount: number;
 	index: number;
 	isHighestScoring: boolean;
 	disabled?: boolean;
@@ -38,13 +38,15 @@ interface TeamScoreTileProps {
 
 export const TeamScoreTile = ({
 	team,
+	teamCount,
 	index,
 	isHighestScoring,
 	disabled,
 	onPress,
 }: TeamScoreTileProps) => {
 	const { theme } = useUnistyles();
-	const imageHeight = getImageHeight(1);
+	const imageHeight =
+		teamImageHeightMap[teamCount as keyof typeof teamImageHeightMap];
 
 	const isHighest = useSharedValue(false);
 	const crownScale = useSharedValue(0);

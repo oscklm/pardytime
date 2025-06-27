@@ -62,7 +62,7 @@ export function HomeTab() {
 					{
 						id: "board",
 						label: "Create a Board",
-						description: "Build your own custom Jeopardy board.",
+						description: "Build your own custom Jeopardy board",
 						color: "orange",
 						icon: "align-justify",
 						onPress: () => navigation.navigate("CreateBoard"),
