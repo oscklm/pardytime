@@ -38,6 +38,7 @@ export const create = mutation({
 			boardId,
 			ownerId: args.userId,
 			status: "pending",
+			activeQuestionId: null,
 			code,
 		});
 

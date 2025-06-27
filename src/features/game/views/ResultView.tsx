@@ -1,8 +1,6 @@
 import { useMemo } from "react";
 import { View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
-import Text from "@/components/ui/Text";
-import YStack from "@/components/ui/YStack";
 import { TeamResultCard } from "../components/TeamResultCard";
 import { useGameContext } from "../hooks/useGame";
 
@@ -24,13 +22,11 @@ export const ResultView = () => {
 	}, [teams]);
 
 	return (
-		<View style={{ flex: 1 }}>
-			<YStack ai="center" gap="md">
-				<Text variant="h2">And the winner is...</Text>
-			</YStack>
+		<View style={styles.container}>
 			<View style={styles.teamListContainer}>
 				{sortedTeams.map((team, index) => (
 					<TeamResultCard
+						key={team._id}
 						team={team}
 						index={index}
 						isTop={team._id === highestScoringTeam?._id}
@@ -41,7 +37,12 @@ export const ResultView = () => {
 	);
 };
 
-const styles = StyleSheet.create((th) => ({
+const styles = StyleSheet.create((th, rt) => ({
+	container: {
+		flex: 1,
+		paddingTop: 30,
+		paddingBottom: rt.insets.bottom + 30,
+	},
 	teamListContainer: {
 		flex: 1,
 		paddingHorizontal: th.space.md,
