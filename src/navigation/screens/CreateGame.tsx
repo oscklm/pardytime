@@ -18,8 +18,12 @@ import { useUser } from "@/providers/user-provider";
 export function CreateGame() {
 	// Local state
 	const [isModalVisible, setIsModalVisible] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+
+	// Form state
 	const [boardId, setBoardId] = useState<Id<"boards"> | undefined>(undefined);
 	const [boardLabel, setBoardLabel] = useState<string | undefined>(undefined);
+	const [name, setName] = useState<string | undefined>(undefined);
 
 	// Hooks
 	const navigation = useNavigation();
@@ -35,9 +39,27 @@ export function CreateGame() {
 			return;
 		}
 
+		if (!name) {
+			alert("Please enter a game name");
+			return;
+		}
+
+		if (name.length < 3) {
+			alert("Game name must be at least 3 characters");
+			return;
+		}
+
+		if (name.length > 32) {
+			alert("Game name must be less than 32 characters");
+			return;
+		}
+
+		setIsLoading(true);
+
 		const code = await createGame({
 			userId: user._id,
 			boardId,
+			name,
 		});
 
 		navigation.canGoBack() && navigation.goBack();
@@ -48,6 +70,7 @@ export function CreateGame() {
 				routes: [{ name: "Game", params: { code } }],
 			}),
 		);
+		setIsLoading(false);
 	};
 
 	const handleSelectBoard = (board: Doc<"boards">) => {
@@ -61,15 +84,25 @@ export function CreateGame() {
 			<YStack flex={1} gap="lg" pd="lg">
 				<YStack py="md">
 					<Text variant="h2">Start a game</Text>
-					<Text variant="subtitle">Start a game to play with your friends</Text>
+					<Text variant="subtitle">
+						Games are how you play your boards with your friends.
+					</Text>
 				</YStack>
-
+				<YStack gap="md">
+					<YStack gap="xs">
+						<Text variant="label">Game name</Text>
+					</YStack>
+					<View>
+						<TextInput
+							placeholder="Enter a name for your game"
+							value={name}
+							onChangeText={setName}
+						/>
+					</View>
+				</YStack>
 				<YStack gap="md">
 					<YStack gap="xs">
 						<Text variant="label">Board</Text>
-						<Text variant="description">
-							Select the board you want to play.
-						</Text>
 					</YStack>
 					<View>
 						<TextInput
@@ -96,11 +129,19 @@ export function CreateGame() {
 						</View>
 					</View>
 				</YStack>
-				<Button variant="success" onPress={handleCreateGame}>
-					Create game
-				</Button>
-				<YStack gap="xs">
-					<XStack gap="md" ai="center">
+
+				<YStack py="md">
+					<Button
+						variant="success"
+						onPress={handleCreateGame}
+						disabled={isLoading}
+						isLoading={isLoading}
+					>
+						Create game
+					</Button>
+				</YStack>
+				<YStack>
+					<XStack gap="md" ai="center" style={{ width: 320 }}>
 						<Icon name="clock" size={20} />
 						<Text>
 							Games are automatically deleted after 24 hours, but you will never

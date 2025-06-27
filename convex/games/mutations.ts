@@ -12,6 +12,7 @@ export const create = mutation({
 	args: {
 		userId: v.id("users"),
 		boardId: v.optional(v.id("boards")),
+		name: v.optional(v.string()),
 	},
 	handler: async (ctx, args) => {
 		const boardId = args.boardId ?? (await ctx.db.query("boards").first())?._id;
@@ -41,6 +42,7 @@ export const create = mutation({
 			activeQuestionId: null,
 			answeredQuestions: [],
 			code,
+			name: args.name,
 		});
 
 		return code;

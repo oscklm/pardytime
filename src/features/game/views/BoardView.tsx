@@ -163,7 +163,6 @@ const styles = StyleSheet.create((th) => ({
 		gap: th.space.md,
 	},
 	teamScoreContainer: {
-		flex: 1,
 		flexDirection: "row",
 		gap: th.space.md,
 		marginVertical: th.space.md,

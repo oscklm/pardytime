@@ -146,7 +146,7 @@ const RootStack = createNativeStackNavigator({
 		CreateGame: {
 			screen: CreateGame,
 			options: {
-				title: "Create Game",
+				title: "Start game",
 				presentation: "modal",
 			},
 		},

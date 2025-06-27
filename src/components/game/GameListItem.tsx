@@ -3,6 +3,7 @@ import { TouchableWithoutFeedback, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import Text from "@/components/ui/Text";
 import type { api } from "@/convex/_generated/api";
+import { formatUnixTimestamp } from "@/lib/utils/time";
 import XStack from "../ui/XStack";
 import YStack from "../ui/YStack";
 import { GameStatusBadge } from "./GameStatusBadge";
@@ -22,15 +23,18 @@ export function GameListItem({ game }: { game: GamesWithBoard[number] }) {
 		);
 	};
 
+	const formattedDate = formatUnixTimestamp(game._creationTime);
+
 	return (
 		<TouchableWithoutFeedback onPress={onPress}>
 			<View style={styles.container}>
 				<XStack jc="between" ai="center">
-					<Text style={styles.boardLabel}>{game.board?.title}</Text>
+					<Text style={styles.boardLabel}>{game.name}</Text>
 					<GameStatusBadge status={game.status} />
 				</XStack>
-				<YStack py="sm">
-					<Text variant="subtitle">{game.board?.description}</Text>
+				<YStack gap="xs">
+					<Text variant="subtitle">Created</Text>
+					<Text>{formattedDate}</Text>
 				</YStack>
 			</View>
 		</TouchableWithoutFeedback>

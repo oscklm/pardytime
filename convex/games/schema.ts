@@ -10,6 +10,7 @@ const gameStatus = v.union(
 const gameSchema = v.object({
 	ownerId: v.id("users"),
 	boardId: v.id("boards"),
+	name: v.optional(v.string()),
 	status: gameStatus,
 	code: v.string(),
 	// Tracks the question currently being presented.
