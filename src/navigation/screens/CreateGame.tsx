@@ -1,10 +1,10 @@
-import { FontAwesome6 } from "@expo/vector-icons";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { useMutation, useQuery } from "convex/react";
 import { useState } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import BoardCard from "@/components/BoardCard";
+import { Icon } from "@/components/Icon";
 import { Modal } from "@/components/Modal";
 import { Button } from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
@@ -101,7 +101,7 @@ export function CreateGame() {
 				</Button>
 				<YStack gap="xs">
 					<XStack gap="md" ai="center">
-						<FontAwesome6 name="clock" size={20} color="black" />
+						<Icon name="clock" size={20} />
 						<Text>Games are automatically deleted after 24 hours.</Text>
 					</XStack>
 				</YStack>
