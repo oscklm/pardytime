@@ -2,15 +2,14 @@
 
 ### Current tasks
 
-- [] Implement game result screen
 - [] Create board MVF
 
 ### Backlog
 
-- [] Fix issue with users getting stuck in loading state on create team, when mistyping name and trying again.
-
 ### Archived
 
+- [x] Implement game result screen
+- [x] Fix issue with users getting stuck in loading state on create team, when mistyping name and trying again.
 - [x] Improve game view UX and UI
 - [x] Improve copy in hometab action modal
 - [x] Repo cleanup and maintenance

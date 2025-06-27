@@ -42,7 +42,6 @@ export function CreateTeam({ route }: Props) {
 	};
 
 	const handleCreateTeam = async () => {
-		setIsLoading(true);
 		if (!nickname) {
 			alert("Team name is required");
 			return;
@@ -59,6 +58,8 @@ export function CreateTeam({ route }: Props) {
 		}
 
 		let imageId: Id<"_storage"> | undefined;
+
+		setIsLoading(true);
 
 		if (image) {
 			const uploadUrl = await generateUploadUrl();
