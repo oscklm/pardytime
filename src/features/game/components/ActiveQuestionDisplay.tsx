@@ -153,7 +153,7 @@ const styles = StyleSheet.create((th) => ({
 		backgroundColor: th.colors.blue,
 		borderRadius: th.radius.md,
 		overflow: "hidden",
-		minHeight: 125,
+		minHeight: 115,
 	},
 	placeholderContainer: {
 		flexDirection: "row",
@@ -162,7 +162,7 @@ const styles = StyleSheet.create((th) => ({
 		padding: th.space.lg,
 		backgroundColor: th.colors.gray2,
 		borderRadius: th.radius.md,
-		minHeight: 125,
+		minHeight: 115,
 	},
 	placeholderText: {
 		fontSize: 16,

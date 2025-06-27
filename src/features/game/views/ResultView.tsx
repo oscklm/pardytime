@@ -69,6 +69,7 @@ export const ResultView = () => {
 const styles = StyleSheet.create((th, rt) => ({
 	container: {
 		flex: 1,
+		paddingTop: th.space.md,
 		paddingBottom: rt.insets.bottom + 40,
 	},
 	teamListContainer: {

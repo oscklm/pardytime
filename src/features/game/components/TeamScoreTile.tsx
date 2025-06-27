@@ -21,9 +21,9 @@ const teamIndexToColor = [
 ] as const;
 
 const teamImageHeightMap = {
-	2: 150,
+	2: 120,
 	3: 100,
-	4: 75,
+	4: 80,
 	5: 60,
 };
 

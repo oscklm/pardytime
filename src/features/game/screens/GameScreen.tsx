@@ -61,7 +61,7 @@ export function GameScreen({ route }: Props) {
 	}
 
 	return (
-		<YStack flex={1} gap="xl" pd="lg" insetBottom>
+		<YStack flex={1} pd="md">
 			<GameView game={game} board={board} teams={teams ?? []} isOwner={false} />
 		</YStack>
 	);

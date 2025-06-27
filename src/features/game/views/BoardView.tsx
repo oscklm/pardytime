@@ -3,7 +3,6 @@ import { ScrollView, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
 import { ActionModal } from "@/components/ActionModal";
 import Text from "@/components/ui/Text";
-import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import type { Id } from "@/convex/_generated/dataModel";
 import { QuestionCard } from "@/features/game/components/QuestionCard";
@@ -71,7 +70,7 @@ export const BoardView = () => {
 	return (
 		<>
 			<View style={styles.container}>
-				<XStack gap="md">
+				<View style={styles.teamScoreContainer}>
 					{teams.map((team, index) => (
 						<TeamScoreTile
 							team={team}
@@ -82,7 +81,7 @@ export const BoardView = () => {
 							onPress={() => setFocusedTeamId(team._id)}
 						/>
 					))}
-				</XStack>
+				</View>
 				<ActiveQuestionDisplay
 					question={activeQuestion}
 					isAnswered={isCurrentQuestionAnswered}
@@ -162,6 +161,12 @@ export const BoardView = () => {
 const styles = StyleSheet.create((th) => ({
 	container: {
 		gap: th.space.md,
+	},
+	teamScoreContainer: {
+		flex: 1,
+		flexDirection: "row",
+		gap: th.space.md,
+		marginVertical: th.space.md,
 	},
 	contentContainer: {
 		gap: th.space.lg,

@@ -26,8 +26,6 @@ export const TeamResultCard = ({
 	const cardColor =
 		theme.colors[teamIndexToColor[index % teamIndexToColor.length]];
 
-	styles.useVariants({ isTop });
-
 	return (
 		<View style={[styles.card, { backgroundColor: cardColor }]}>
 			{/* Crown for winner */}
@@ -64,16 +62,9 @@ const styles = StyleSheet.create((th) => ({
 	card: {
 		flex: 1,
 		flexDirection: "row",
+		maxHeight: 135,
 		padding: th.space.md,
 		borderRadius: th.radius.lg,
-		variants: {
-			isTop: {
-				true: {
-					flex: 1.5,
-				},
-				false: {},
-			},
-		},
 	},
 	crownContainer: {
 		position: "absolute",
@@ -90,16 +81,7 @@ const styles = StyleSheet.create((th) => ({
 		height: 90,
 	},
 	imageContainer: {
-		variants: {
-			isTop: {
-				true: {
-					aspectRatio: 1,
-				},
-				false: {
-					aspectRatio: 1.5,
-				},
-			},
-		},
+		flex: 1,
 	},
 	teamImage: {
 		borderRadius: th.radius.lg,
