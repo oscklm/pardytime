@@ -1,3 +1,4 @@
+import { FontAwesome6 } from "@expo/vector-icons";
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { useMutation, useQuery } from "convex/react";
 import { useState } from "react";
@@ -8,6 +9,7 @@ import { Modal } from "@/components/Modal";
 import { Button } from "@/components/ui/Button";
 import Text from "@/components/ui/Text";
 import TextInput from "@/components/ui/TextInput";
+import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import type { Doc, Id } from "@/convex/_generated/dataModel";
@@ -58,15 +60,21 @@ export function CreateGame() {
 		<>
 			<YStack flex={1} gap="lg" pd="lg">
 				<YStack py="md">
-					<Text variant="h2">Create new game</Text>
-					<Text variant="subtitle">Create a game to play with ur friends.</Text>
+					<Text variant="h2">Start a game</Text>
+					<Text variant="subtitle">Start a game to play with your friends</Text>
 				</YStack>
-				<YStack>
-					<Text variant="label">Board</Text>
+
+				<YStack gap="md">
+					<YStack gap="xs">
+						<Text variant="label">Board</Text>
+						<Text variant="description">
+							Select the board you want to play.
+						</Text>
+					</YStack>
 					<View>
 						<TextInput
 							editable={false}
-							placeholder="Click to select "
+							placeholder="Click to select a board"
 							value={boardLabel}
 							onPress={() => setIsModalVisible(true)}
 						/>
@@ -91,6 +99,12 @@ export function CreateGame() {
 				<Button variant="success" onPress={handleCreateGame}>
 					Create game
 				</Button>
+				<YStack gap="xs">
+					<XStack gap="md" ai="center">
+						<FontAwesome6 name="clock" size={20} color="black" />
+						<Text>Games are automatically deleted after 24 hours.</Text>
+					</XStack>
+				</YStack>
 			</YStack>
 			<Modal
 				presentationStyle="formSheet"

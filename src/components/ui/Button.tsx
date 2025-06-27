@@ -166,7 +166,6 @@ function ButtonBase({
 						<FontAwesomeIcon
 							name={icon}
 							size={children ? iconSizeMap[size] : iconSize}
-							color={styles.label.color}
 						/>
 					)}
 					{children && <Text style={styles.label}>{children}</Text>}

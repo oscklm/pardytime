@@ -149,12 +149,12 @@ export const updateTeamScore = mutation({
 
 export const deleteOldGames = internalMutation({
 	handler: async (ctx) => {
-		const twelveHoursAgo = Date.now() - 12 * 60 * 60 * 1000; // 12 hours ago
+		const twentyFourHoursAgo = Date.now() - 24 * 60 * 60 * 1000; // 24 hours ago
 
 		const oldGames = await ctx.db
 			.query("games")
 			.withIndex("by_creation_time", (q) =>
-				q.lt("_creationTime", twelveHoursAgo),
+				q.lt("_creationTime", twentyFourHoursAgo),
 			)
 			.collect();
 

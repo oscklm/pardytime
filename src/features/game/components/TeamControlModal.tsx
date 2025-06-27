@@ -1,7 +1,11 @@
 import { FontAwesome6 } from "@expo/vector-icons";
 import { useMemo } from "react";
 import { type ModalProps, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+import {
+	StyleSheet,
+	useUnistyles,
+	withUnistyles,
+} from "react-native-unistyles";
 import { Modal } from "@/components/Modal";
 import Button from "@/components/ui/Button";
 import { Image } from "@/components/ui/Image";
@@ -18,6 +22,10 @@ interface TeamControlModalProps extends Omit<ModalProps, "onRequestClose"> {
 	onRequestClose: () => void;
 }
 
+const FontAwesome6Icon = withUnistyles(FontAwesome6, (th) => ({
+	color: th.colors.labelPrimary,
+}));
+
 export const TeamControlModal = ({
 	visible,
 	onRequestClose,
@@ -25,6 +33,7 @@ export const TeamControlModal = ({
 	pointAmount,
 	onPointAmountChange,
 }: TeamControlModalProps) => {
+	const { theme } = useUnistyles();
 	const { updateTeamScore } = useGameController();
 
 	const handleGivePoints = () => {
@@ -61,7 +70,7 @@ export const TeamControlModal = ({
 					<YStack ai="center" gap="md">
 						<XStack jc="center" gap="sm" ai="center">
 							<Text style={styles.currentScoreText}>{team?.score}</Text>
-							<FontAwesome6
+							<FontAwesome6Icon
 								name={
 									pointAmount > 0
 										? "arrow-up"
@@ -72,22 +81,22 @@ export const TeamControlModal = ({
 								size={20}
 								color={
 									pointAmount > 0
-										? "limegreen"
+										? theme.colors.green
 										: pointAmount < 0
-											? "crimson"
-											: styles.currentScoreText.color
+											? theme.colors.red
+											: theme.colors.labelPrimary
 								}
 							/>
 							<Text
 								style={[
-									styles.teamModalScoreText,
+									styles.teamModalScoreText(
+										pointAmount > 0
+											? "green"
+											: pointAmount < 0
+												? "red"
+												: "labelPrimary",
+									),
 									{
-										color:
-											pointAmount > 0
-												? "limegreen"
-												: pointAmount < 0
-													? "crimson"
-													: styles.teamModalScoreText.color,
 										fontWeight: "bold",
 										fontSize: 40,
 									},
@@ -96,14 +105,7 @@ export const TeamControlModal = ({
 								{projectedScore}
 							</Text>
 						</XStack>
-						<Text
-							style={{
-								color: "#aaa",
-								fontSize: 14,
-								marginTop: 4,
-								fontStyle: "italic",
-							}}
-						>
+						<Text variant="description">
 							{pointAmount > 0 && `Score will increase by ${pointAmount}`}
 							{pointAmount < 0 &&
 								`Score will decrease by ${Math.abs(pointAmount)}`}
@@ -159,13 +161,13 @@ const styles = StyleSheet.create((th) => ({
 		gap: th.space.md,
 		padding: th.space.lg,
 	},
-	teamModalScoreText: {
+	teamModalScoreText: (color: "green" | "red" | "labelPrimary") => ({
 		fontSize: 32,
 		lineHeight: 32 * 1.3,
 		textAlign: "center",
 		fontWeight: "700",
-		color: th.colors.labelPrimary,
-	},
+		color: th.colors[color],
+	}),
 	currentScoreText: {
 		fontSize: 16,
 		lineHeight: 16 * 1.3,

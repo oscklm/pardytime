@@ -49,6 +49,16 @@ const typography = {
 		fontSize: 16,
 		lineHeight: 16 * 1.4,
 	},
+	label: {
+		fontWeight: "600",
+		fontSize: 15,
+		lineHeight: 15 * 1.3,
+	},
+	description: {
+		fontWeight: "400",
+		fontSize: 15,
+		lineHeight: 15 * 1.3,
+	},
 	body: {
 		fontWeight: "400",
 		fontSize: 14,
@@ -56,13 +66,8 @@ const typography = {
 	},
 	caption: {
 		fontWeight: "400",
-		fontSize: 12,
-		lineHeight: 12 * 1.3,
-	},
-	label: {
-		fontWeight: "400",
-		fontSize: 12,
-		lineHeight: 12 * 1.3,
+		fontSize: 13,
+		lineHeight: 13 * 1.3,
 	},
 } as const;
 
