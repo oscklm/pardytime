@@ -1,39 +1,50 @@
-import { useContext } from "react";
+import { useMemo } from "react";
 import { View } from "react-native";
-import { ActionModal } from "@/components/ActionModal";
+import { StyleSheet } from "react-native-unistyles";
 import Text from "@/components/ui/Text";
-import { GameContext } from "../context/GameProvider";
-import { useGameController } from "../hooks/useGameController";
+import YStack from "@/components/ui/YStack";
+import { TeamResultCard } from "../components/TeamResultCard";
+import { useGameContext } from "../hooks/useGame";
 
 export const ResultView = () => {
-	const { game } = useContext(GameContext);
-	const { resetToLobby, resetGame } = useGameController();
+	const { teams } = useGameContext();
+
+	const highestScoringTeam = useMemo(() => {
+		if (teams.every((team) => team.score === 0)) {
+			return null;
+		}
+		return teams.reduce(
+			(max, team) => (team.score > max.score ? team : max),
+			teams[0],
+		);
+	}, [teams]);
+
+	const sortedTeams = useMemo(() => {
+		return [...teams].sort((a, b) => b.score - a.score);
+	}, [teams]);
 
 	return (
-		<>
-			<View>
-				<Text>The results are in!</Text>
-				<Text>{game._id}</Text>
+		<View style={{ flex: 1 }}>
+			<YStack ai="center" gap="md">
+				<Text variant="h2">And the winner is...</Text>
+			</YStack>
+			<View style={styles.teamListContainer}>
+				{sortedTeams.map((team, index) => (
+					<TeamResultCard
+						team={team}
+						index={index}
+						isTop={team._id === highestScoringTeam?._id}
+					/>
+				))}
 			</View>
-			<ActionModal
-				icon="hand-sparkles"
-				actions={[
-					{
-						id: "back-to-lobby",
-						label: "Back to lobby",
-						icon: "arrow-left",
-						color: "purple",
-						onPress: () => resetToLobby(),
-					},
-					{
-						id: "reset-game",
-						label: "Reset game",
-						icon: "redo",
-						color: "blue",
-						onPress: () => resetGame(),
-					},
-				]}
-			/>
-		</>
+		</View>
 	);
 };
+
+const styles = StyleSheet.create((th) => ({
+	teamListContainer: {
+		flex: 1,
+		paddingHorizontal: th.space.md,
+		gap: th.space.lg,
+	},
+}));

@@ -76,6 +76,7 @@ export function GameScreen({ route }: Props) {
 				board={board}
 				teams={teams ?? []}
 				answeredQuestions={answeredQuestions ?? []}
+				isOwner={false}
 			/>
 		</YStack>
 	);

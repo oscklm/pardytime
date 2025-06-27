@@ -25,8 +25,8 @@ const GameView = ({ game, board, teams, answeredQuestions }: GameViewProps) => {
 	const user = useUser();
 
 	const isOwner = useMemo(() => {
-		return game.ownerId === user?._id;
-	}, [game.ownerId, user?._id]);
+		return game.ownerId === user._id;
+	}, [game.ownerId, user._id]);
 
 	const handleQuitGame = () => {
 		ActionSheetIOS.showActionSheetWithOptions(
@@ -81,7 +81,6 @@ const GameView = ({ game, board, teams, answeredQuestions }: GameViewProps) => {
 };
 
 const styles = StyleSheet.create((th) => ({
-	container: {},
 	headerButton: {
 		paddingHorizontal: th.space.sm,
 	},

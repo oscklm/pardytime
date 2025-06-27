@@ -64,10 +64,10 @@ export function App() {
 	}, []);
 
 	return (
-		<ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-			<ClerkLoaded>
-				<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-					<GestureHandlerRootView style={{ flex: 1 }}>
+		<GestureHandlerRootView style={{ flex: 1 }}>
+			<ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+				<ClerkLoaded>
+					<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
 						<SplashScreenController>
 							<AuthProvider>
 								<Navigation
@@ -78,9 +78,9 @@ export function App() {
 								/>
 							</AuthProvider>
 						</SplashScreenController>
-					</GestureHandlerRootView>
-				</ConvexProviderWithClerk>
-			</ClerkLoaded>
-		</ClerkProvider>
+					</ConvexProviderWithClerk>
+				</ClerkLoaded>
+			</ClerkProvider>
+		</GestureHandlerRootView>
 	);
 }
