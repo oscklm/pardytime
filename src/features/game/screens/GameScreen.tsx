@@ -1,8 +1,5 @@
-import {
-	CommonActions,
-	type StaticScreenProps,
-	useNavigation,
-} from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQuery } from "convex/react";
 import { useEffect } from "react";
 import LoadingView from "@/components/LoadingView";
@@ -10,14 +7,11 @@ import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import { GameView } from "@/features/game/GameView";
 import { useQueryWithStatus } from "@/lib/convex";
+import type { RootStackParamList } from "@/navigation/RootStack";
 
-type Props = StaticScreenProps<{
-	code: string;
-}>;
+type GameScreenProps = NativeStackScreenProps<RootStackParamList, "Game">;
 
-export function GameScreen({ route }: Props) {
-	const navigation = useNavigation();
-
+export function GameScreen({ route, navigation }: GameScreenProps) {
 	const {
 		data: game,
 		status: gameStatus,

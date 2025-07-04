@@ -14,7 +14,7 @@ import {
 	UPDATE_CHECK_TASK_IDENTIFIER,
 } from "@/lib/tasks/updateChecker";
 import SplashScreenController from "./components/splash-screen-controller";
-import { Navigation } from "./navigation";
+import Navigation from "./navigation/RootStack";
 import AuthProvider from "./providers/user-provider";
 
 LogBox.ignoreLogs(["Clerk: Clerk has been loaded with development keys."]);
@@ -70,12 +70,7 @@ export function App() {
 					<ConvexProviderWithClerk client={convex} useAuth={useAuth}>
 						<SplashScreenController>
 							<AuthProvider>
-								<Navigation
-									linking={{
-										enabled: "auto",
-										prefixes: ["jeopardytime://"],
-									}}
-								/>
+								<Navigation />
 							</AuthProvider>
 						</SplashScreenController>
 					</ConvexProviderWithClerk>

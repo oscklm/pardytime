@@ -1,7 +1,4 @@
-import {
-	type StaticScreenProps,
-	useNavigation,
-} from "@react-navigation/native";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQuery } from "convex/react";
 import { useEffect, useMemo } from "react";
 import { FlatList } from "react-native";
@@ -14,13 +11,11 @@ import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
-import type { Id } from "@/convex/_generated/dataModel";
+import type { RootStackParamList } from "@/navigation/RootStack";
 
-type Props = StaticScreenProps<{
-	boardId: Id<"boards">;
-}>;
+type BoardScreenProps = NativeStackScreenProps<RootStackParamList, "Board">;
 
-export function Board({ route }: Props) {
+export function Board({ route, navigation }: BoardScreenProps) {
 	const board = useQuery(api.boards.queries.getByIdEnriched, {
 		boardId: route.params.boardId,
 	});
@@ -33,8 +28,6 @@ export function Board({ route }: Props) {
 				}
 			: "skip",
 	);
-
-	const navigation = useNavigation();
 
 	const totalQuestions = useMemo(() => {
 		if (!board || !board.enriched) return 0;

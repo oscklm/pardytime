@@ -1,7 +1,4 @@
-import {
-	type StaticScreenProps,
-	useNavigation,
-} from "@react-navigation/native";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useMutation } from "convex/react";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
@@ -13,13 +10,14 @@ import TextInput from "@/components/ui/TextInput";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
+import type { RootStackParamList } from "@/navigation/RootStack";
 
-type Props = StaticScreenProps<{
-	gameId: Id<"games">;
-}>;
+type CreateTeamScreenProps = NativeStackScreenProps<
+	RootStackParamList,
+	"CreateTeam"
+>;
 
-export function CreateTeam({ route }: Props) {
-	const navigation = useNavigation();
+export function CreateTeam({ route, navigation }: CreateTeamScreenProps) {
 	const [nickname, setNickname] = useState("");
 	const [image, setImage] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(false);

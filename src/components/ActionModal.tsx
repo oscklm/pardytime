@@ -143,9 +143,13 @@ export const ActionModal: React.FC<ActionModalProps> = ({
 					/>
 				</View>
 				<View style={styles.actionTextContainer}>
-					<Text style={styles.actionLabel}>{action.label}</Text>
+					<Text style={styles.actionLabel} selectable={false}>
+						{action.label}
+					</Text>
 					{action.description && (
-						<Text style={styles.actionDescription}>{action.description}</Text>
+						<Text style={styles.actionDescription} selectable={false}>
+							{action.description}
+						</Text>
 					)}
 				</View>
 			</Pressable>
@@ -194,7 +198,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
 
 				{/* Cancel Button */}
 				<Pressable style={styles.cancelButton} onPress={closeModal}>
-					<Text style={styles.cancelText}>
+					<Text style={styles.cancelText} selectable={false}>
 						<FontAwesome
 							name="chevron-down"
 							size={16}
@@ -227,6 +231,9 @@ const styles = StyleSheet.create((th, rt) => ({
 					left: 35,
 				},
 			},
+		},
+		_web: {
+			bottom: 30,
 		},
 	},
 	fab: {
@@ -263,6 +270,10 @@ const styles = StyleSheet.create((th, rt) => ({
 		padding: th.space.lg,
 		paddingVertical: th.space.lg,
 		gap: th.space.lg,
+		_web: {
+			bottom: 0,
+			paddingBottom: 0,
+		},
 	},
 	header: {
 		padding: th.space.sm,

@@ -1,7 +1,4 @@
-import {
-	type StaticScreenProps,
-	useNavigation,
-} from "@react-navigation/native";
+import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useQuery } from "convex/react";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native-unistyles";
@@ -12,14 +9,11 @@ import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import { formatUnixTimestamp } from "@/lib/utils/time";
+import type { RootStackParamList } from "@/navigation/RootStack";
 
-type Props = StaticScreenProps<{
-	username: string;
-}>;
+type PublicProfileProps = NativeStackScreenProps<RootStackParamList, "Profile">;
 
-export function PublicProfile({ route }: Props) {
-	const navigation = useNavigation();
-
+export function PublicProfile({ route, navigation }: PublicProfileProps) {
 	const user = useQuery(api.users.queries.getByUsername, {
 		username: route.params.username,
 	});

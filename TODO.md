@@ -6,6 +6,9 @@
 
 ### Backlog
 
+- [] Small devices, text appear way to large
+- [] Welcome screen CTA buttons appear beneath bottom inset on small devices
+
 ### Archived
 
 - [x] Implement game result screen

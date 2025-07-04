@@ -1,6 +1,6 @@
 import type { ModalProps } from "react-native";
 import { Drawer } from "vaul";
-import modalStyles from "../layout/modal.module.css";
+import modalStyles from "./layout/modal.module.css";
 
 export function Modal(props: ModalProps) {
 	return (

@@ -39,7 +39,7 @@ export function ProfileTab() {
 					<Button variant="menu" screen="Settings">
 						Settings
 					</Button>
-					<Button variant="menu" screen="Help">
+					<Button variant="menu" screen="HelpStack" params={{ screen: "Menu" }}>
 						Help
 					</Button>
 					<SignOutButton />
