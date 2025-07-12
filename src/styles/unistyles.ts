@@ -27,8 +27,8 @@ const breakpoints = {
 	xs: 0,
 	sm: 300,
 	md: 500,
-	lg: 800,
-	xl: 1200,
+	lg: 700,
+	xl: 900,
 };
 
 type AppBreakpoints = typeof breakpoints;
