@@ -2,7 +2,7 @@ import { type ModalProps, Modal as RNModalBase } from "react-native";
 import { withUnistyles } from "react-native-unistyles";
 
 const RNModal = withUnistyles(RNModalBase, (th) => ({
-  backdropColor: th.colors.backgroundSecondary,
+  backdropColor: th.colors.backgroundPrimary,
 }));
 
 export function Modal(props: ModalProps) {

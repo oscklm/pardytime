@@ -42,6 +42,9 @@ const styles = StyleSheet.create((th) => ({
     backgroundColor: th.colors.backgroundSecondary,
     variants: {
       bg: {
+        secondary: {
+          backgroundColor: th.colors.backgroundSecondary,
+        },
         tertiary: {
           backgroundColor: th.colors.backgroundTertiary,
         },

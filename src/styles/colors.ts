@@ -1,3 +1,5 @@
+import { blue } from "react-native-reanimated/lib/typescript/Colors";
+
 const colors = {
 	// System colors
 	backgroundPrimaryLight: "#E1D8D0",
@@ -65,6 +67,9 @@ const colors = {
 
 	pinkLight: "#FF2D55",
 	pinkDark: "#FF375F",
+
+	blueLight: "#007AFF",
+	blueDark: "#007AFF",
 
 } as const;
 

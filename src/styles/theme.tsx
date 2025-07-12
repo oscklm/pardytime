@@ -23,6 +23,7 @@ export interface UnistylesTheme {
     green: string;
     mint: string;
     pink: string;
+    blue: string;
     black: string;
     white: string;
     gray: string;
@@ -51,6 +52,7 @@ const lightTheme: UnistylesTheme = {
     green: colors.greenLight,
     mint: colors.mintLight,
     pink: colors.pinkLight,
+    blue: colors.blueLight,
     black: colors.black,
     white: colors.white,
     gray: colors.grayLight,
@@ -80,6 +82,7 @@ const darkTheme: UnistylesTheme = {
     pink: colors.pinkDark,
     black: colors.black,
     mint: colors.mintDark,
+    blue: colors.blueDark,
     white: colors.white,
     gray: colors.grayDark,
     gray2: colors.gray2Dark,

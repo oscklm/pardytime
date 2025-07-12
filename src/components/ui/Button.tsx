@@ -185,8 +185,6 @@ const styles = StyleSheet.create((th) => ({
     alignItems: "center",
     borderRadius: th.radius.md,
     gap: th.space.md,
-    borderWidth: 2,
-    borderColor: th.colors.borderTertiary,
     backgroundColor: th.colors.gray4,
     variants: {
       size: {
