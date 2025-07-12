@@ -234,12 +234,6 @@ const styles = StyleSheet.create((th) => ({
           borderColor: undefined,
           borderWidth: 0,
         },
-        purple: {
-          backgroundColor: th.colors.purple,
-        },
-        blue: {
-          backgroundColor: th.colors.blue,
-        },
         danger: {
           backgroundColor: th.colors.red,
         },

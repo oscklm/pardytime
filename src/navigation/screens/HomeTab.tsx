@@ -47,7 +47,7 @@ export function HomeTab() {
             id: "note",
             label: "Join Game",
             description: "Scan a QR code to join a game",
-            color: "purple",
+            color: "green",
             icon: "qrcode",
             onPress: () => navigation.navigate("Scanner"),
           },
@@ -55,7 +55,7 @@ export function HomeTab() {
             id: "game",
             label: "Start Game",
             description: "Start a game to play with your friends",
-            color: "blue",
+            color: "pink",
             icon: "gamepad",
             onPress: () => navigation.navigate("CreateGame"),
           },
@@ -64,7 +64,7 @@ export function HomeTab() {
             label: "Build Board",
             description: "Build your own custom Jeopardy board",
             color: "orange",
-            icon: "align-justify",
+            icon: "pencil-ruler",
             onPress: () => navigation.navigate("CreateBoard"),
           },
         ]}
@@ -74,13 +74,6 @@ export function HomeTab() {
 }
 
 const styles = StyleSheet.create((th, rt) => ({
-  heroSection: {
-    height: 125,
-    paddingTop: rt.insets.top,
-    padding: th.space.lg,
-    gap: th.space.lg,
-    backgroundColor: th.colors.purple,
-  },
   contentContainer: {
     gap: th.space.lg,
     paddingHorizontal: th.space.lg,

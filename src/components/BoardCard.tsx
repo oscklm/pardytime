@@ -3,16 +3,16 @@ import { Card } from "./ui/Card";
 import Text from "./ui/Text";
 
 interface BoardCardProps {
-	board: Doc<"boards">;
+  board: Doc<"boards">;
 }
 
 const BoardCard = ({ board }: BoardCardProps) => {
-	return (
-		<Card bg="tertiary">
-			<Text variant="h3">{board.title}</Text>
-			<Text variant="secondary">{board.description}</Text>
-		</Card>
-	);
+  return (
+    <Card bg="tertiary">
+      <Text variant="h3">{board.title}</Text>
+      <Text>{board.description}</Text>
+    </Card>
+  );
 };
 
 export default BoardCard;

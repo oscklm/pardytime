@@ -165,7 +165,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
               // biome-ignore lint/suspicious/noExplicitAny: <its ok for now>
               name={icon as any}
               size={30}
-              color="rgb(122, 53, 159)"
+              color={`${theme.colors.white}90`}
             />
           </Animated.View>
         </GestureDetector>
@@ -182,15 +182,6 @@ export const ActionModal: React.FC<ActionModalProps> = ({
         <View style={styles.actionButtonContainer}>
           {actions.length > 0 && actions.map(renderActionButton)}
         </View>
-
-        <View
-          style={{
-            height: 0.85,
-            width: "100%",
-            borderRadius: theme.radius.lg,
-            backgroundColor: theme.colors.borderTertiary,
-          }}
-        />
 
         {/* Cancel Button */}
         <Pressable style={styles.cancelButton} onPress={closeModal}>
@@ -238,10 +229,10 @@ const styles = StyleSheet.create((th, rt) => ({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: th.colors.purple,
+    backgroundColor: th.colors.green,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: th.colors.green,
     shadowOffset: { width: 1, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
@@ -252,7 +243,7 @@ const styles = StyleSheet.create((th, rt) => ({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(0, 0, 0, 1)",
+    // backgroundColor: "rgba(0, 0, 0, 1)",
     zIndex: 1000,
   },
   bottomSheet: {
@@ -313,7 +304,7 @@ const styles = StyleSheet.create((th, rt) => ({
     lineHeight: 18,
   },
   cancelButton: {
-    backgroundColor: th.colors.backgroundTertiary,
+    backgroundColor: th.colors.backgroundPrimary,
     borderRadius: th.radius.lg,
     justifyContent: "center",
     alignItems: "center",

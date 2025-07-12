@@ -3,45 +3,45 @@ import React from "react";
 import type { StyleProp, ViewStyle } from "react-native";
 
 import Animated, {
-	Easing,
-	useAnimatedStyle,
-	useSharedValue,
-	withRepeat,
-	withTiming,
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withTiming,
 } from "react-native-reanimated";
 import { StyleSheet } from "react-native-unistyles";
 
 const duration = 1000;
 
 type SkeletonProps = {
-	style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ViewStyle>;
 };
 
 const Skeleton = ({ style }: SkeletonProps) => {
-	const opacity = useSharedValue(1);
+  const opacity = useSharedValue(1);
 
-	React.useEffect(() => {
-		opacity.value = withRepeat(
-			withTiming(0.4, { duration, easing: Easing.linear }),
-			-1,
-			true,
-		);
-	}, []);
+  React.useEffect(() => {
+    opacity.value = withRepeat(
+      withTiming(0.4, { duration, easing: Easing.linear }),
+      -1,
+      true
+    );
+  }, []);
 
-	const animatedStyle = useAnimatedStyle(() => ({
-		opacity: opacity.value,
-	}));
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
 
-	return <Animated.View style={[animatedStyle, styles.container, style]} />;
+  return <Animated.View style={[animatedStyle, styles.container, style]} />;
 };
 
 const styles = StyleSheet.create((th) => ({
-	container: {
-		backgroundColor: th.colors.labelTertiary,
-		borderWidth: 1,
-		borderColor: th.colors.labelQuaternary,
-		borderRadius: th.radius.md,
-	},
+  container: {
+    backgroundColor: th.colors.labelTertiary,
+    borderWidth: 1,
+    borderColor: th.colors.labelTertiary,
+    borderRadius: th.radius.md,
+  },
 }));
 
 export default Skeleton;

@@ -14,7 +14,6 @@ import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
-import type { Id } from "@/convex/_generated/dataModel";
 import { ScreenProps } from "..";
 
 export function Board({ route }: ScreenProps<"Board">) {
@@ -59,7 +58,7 @@ export function Board({ route }: ScreenProps<"Board">) {
 
   return (
     <YStack flex={1}>
-      <YStack gap="md" bg="purple" pd="lg">
+      <YStack gap="md" bg="mint" pd="lg">
         <YStack gap="md">
           <YStack>
             <Text variant="h1">{board?.title}</Text>

@@ -1,17 +1,17 @@
 const colors = {
 	// System colors
-	backgroundPrimaryLight: "#FFFFFF",
-	backgroundPrimaryDark: "#000000",
+	backgroundPrimaryLight: "#E1D8D0",
+	backgroundPrimaryDark: "#312C4B",
 
-	backgroundSecondaryLight: "#F2F2F7",
-	backgroundSecondaryDark: "#1C1C1E",
+	backgroundSecondaryLight: "#FBF1E9",
+	backgroundSecondaryDark: "#2a243fff",
 
 	backgroundTertiaryLight: "#FFFFFF",
 	backgroundTertiaryDark: "#2C2C2E",
 
 	// Label colors
-	labelPrimaryLight: "#000000",
-	labelPrimaryDark: "#FFFFFF",
+	labelPrimaryLight: "#312C4B",
+	labelPrimaryDark: "#FBF1E9",
 
 	labelSecondaryLight: "#3C3C4385",
 	labelSecondaryDark: "#EBEBF585",
@@ -19,7 +19,10 @@ const colors = {
 	labelTertiaryLight: "#3C3C4330",
 	labelTertiaryDark: "#EBEBF530",
 
+	// @deprecated
 	labelQuaternaryLight: "#3C3C4318",
+
+	// @deprecated
 	labelQuaternaryDark: "#EBEBF518",
 
 	// Grays
@@ -45,41 +48,24 @@ const colors = {
 	borderTertiaryDark: "#FFFFFF18",
 
 	// Accent colors
-	redLight: "#FF3B30",
-	redDark: "#FF453A",
+	redLight: "#FC4941",
+	redDark: "#FC4941",
 
-	orangeLight: "#FF9500",
-	orangeDark: "#FF9F0A",
+	orangeLight: "#FE8E3F",
+	orangeDark: "#FE8E3F",
 
-	yellowLight: "#FFCC00",
-	yellowDark: "#FFD60A",
+	yellowLight: "#FFE461",
+	yellowDark: "#FFE461",
 
-	greenLight: "#34C759",
-	greenDark: "#30D158",
+	greenLight: "#1DB485",
+	greenDark: "#1DB485",
 
-	mintLight: "#00C7BE",
-	mintDark: "#63E6E2",
-
-	tealLight: "#30B0C7",
-	tealDark: "#40CBE0",
-
-	cyanLight: "#32ADE6",
-	cyanDark: "#64D2FF",
-
-	blueLight: "#007AFF",
-	blueDark: "#0A84FF",
-
-	indigoLight: "#5856D6",
-	indigoDark: "#5E5CE6",
-
-	purpleLight: "#AF52DE",
-	purpleDark: "#BF5AF2",
+	mintLight: "#AAFFE0",
+	mintDark: "#AAFFE0",
 
 	pinkLight: "#FF2D55",
 	pinkDark: "#FF375F",
 
-	brownLight: "#A2845E",
-	brownDark: "#AC8E68",
 } as const;
 
 export default colors;

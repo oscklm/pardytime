@@ -34,6 +34,7 @@ import { Welcome } from "./screens/Welcome";
 import { CustomBottomTabHeader } from "./ui/CustomBottomTabHeader";
 import { UnistylesRuntime } from "react-native-unistyles";
 import { useMemo } from "react";
+import { Id } from "@/convex/_generated/dataModel";
 
 const styles = StyleSheet.create((th) => ({
   tabBarBadgeStyle: {
@@ -109,11 +110,13 @@ export type RootStackParamList = {
     code: string;
   };
   Board: {
-    boardId: string;
+    boardId: Id<"boards">;
   };
   CreateBoard: undefined;
   CreateGame: undefined;
-  CreateTeam: undefined;
+  CreateTeam: {
+    gameId: Id<"games">;
+  };
   Settings: undefined;
   Scanner: undefined;
   Profile: {
@@ -138,7 +141,6 @@ export function RootStack() {
   return (
     <UniThemeProvider>
       <Stack.Navigator
-        initialRouteName="BottomTabs"
         screenOptions={{
           headerBackButtonMenuEnabled: false,
           headerBackButtonDisplayMode: "minimal",
