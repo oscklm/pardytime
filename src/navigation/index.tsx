@@ -251,7 +251,7 @@ export function RootStack() {
   );
 }
 export const linkingOptions: LinkingOptions<RootStackParamList> = {
-  prefixes: ["jeopardytime://"],
+  prefixes: ["pardytime://"],
   config: {
     screens: {
       BottomTabs: {

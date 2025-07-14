@@ -16,7 +16,7 @@ export const LobbyView = () => {
   const { game, teams } = useContext(GameContext);
   const { startGame } = useGameController();
 
-  const gameLink = `jeopardytime://game?code=${game.code}`;
+  const gameLink = `pardytime://game?code=${game.code}`;
 
   return (
     <>

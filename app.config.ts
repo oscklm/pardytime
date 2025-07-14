@@ -5,37 +5,36 @@ const IS_PREVIEW = process.env.APP_VARIANT === "preview";
 
 const getUniqueIdentifier = () => {
   if (IS_DEV) {
-    return 'com.oneguylabs.jeopardytime.dev';
+    return "com.oneguylabs.pardytime.dev";
   }
 
   if (IS_PREVIEW) {
-    return 'com.oneguylabs.jeopardytime.preview';
+    return "com.oneguylabs.pardytime.preview";
   }
 
-  return 'com.oneguylabs.jeopardytime';
+  return "com.oneguylabs.pardytime";
 };
 
 const getAppName = () => {
   if (IS_DEV) {
-    return 'JeopardyTime (Dev)';
+    return "PardyTime (Dev)";
   }
 
   if (IS_PREVIEW) {
-    return 'JeopardyTime (Preview)';
+    return "PardyTime (Preview)";
   }
 
-  return 'JeopardyTime';
+  return "PardyTime";
 };
-
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: getAppName(),
-  slug: "jeopardytime",
+  slug: "pardytime",
   version: "1.1.8",
   orientation: "portrait",
   icon: "./src/assets/images/icon.png",
-  scheme: "jeopardytime",
+  scheme: "pardytime",
   userInterfaceStyle: "automatic",
   newArchEnabled: true,
   ios: {
@@ -68,8 +67,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-dev-client",
       {
-        launchMode: "most-recent"
-      }
+        launchMode: "most-recent",
+      },
     ],
     [
       "expo-splash-screen",
@@ -84,27 +83,29 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       "expo-camera",
       {
-        cameraPermission: "Allow $(PRODUCT_NAME) to access your camera in order to take photos, videos, and scan QR codes",
-        microphonePermission: "Allow $(PRODUCT_NAME) to access your microphone in order to record audio",
+        cameraPermission:
+          "Allow $(PRODUCT_NAME) to access your camera in order to take photos, videos, and scan QR codes",
+        microphonePermission:
+          "Allow $(PRODUCT_NAME) to access your microphone in order to record audio",
         recordAudioAndroid: true,
       },
     ],
     "expo-web-browser",
-    "react-native-edge-to-edge"
+    "react-native-edge-to-edge",
   ],
   experiments: {
     typedRoutes: true,
   },
+  updates: {
+    url: "https://u.expo.dev/e86332b1-c2bc-4b72-ada9-71891c1a88d0",
+  },
   extra: {
     router: {},
     eas: {
-      projectId: "2e863eba-2833-456a-a488-b737342b1b99",
+      projectId: "e86332b1-c2bc-4b72-ada9-71891c1a88d0",
     },
   },
   runtimeVersion: {
     policy: "appVersion",
-  },
-  updates: {
-    url: "https://u.expo.dev/2e863eba-2833-456a-a488-b737342b1b99",
   },
 });
