@@ -13,8 +13,8 @@ export function Welcome() {
             <Logo />
           </YStack>
           <Text style={styles.subtitle}>
-            Guaranteed fun with your friends and family. Trivia has never been
-            more engaging!
+            Best fun with your friends and family. Trivia has never been more
+            engaging!
           </Text>
         </View>
       </YStack>
