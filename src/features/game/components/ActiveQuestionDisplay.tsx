@@ -113,7 +113,9 @@ export const ActiveQuestionDisplay = ({
   if (!question) {
     return (
       <View style={styles.placeholderContainer}>
-        <Text style={styles.placeholderText}>Hold down on any question</Text>
+        <Text style={styles.placeholderText}>
+          Hold down on any question to select it.
+        </Text>
       </View>
     );
   }
@@ -150,7 +152,7 @@ const styles = StyleSheet.create((th) => ({
     alignItems: "center",
     padding: th.space.lg,
     gap: th.space.md,
-    backgroundColor: th.colors.backgroundSecondary,
+    backgroundColor: th.colors.backgroundTertiary,
     borderRadius: th.radius.md,
     overflow: "hidden",
     minHeight: 115,
@@ -160,7 +162,7 @@ const styles = StyleSheet.create((th) => ({
     justifyContent: "center",
     alignItems: "center",
     padding: th.space.lg,
-    backgroundColor: th.colors.gray2,
+    backgroundColor: th.colors.backgroundTertiary,
     borderRadius: th.radius.md,
     minHeight: 115,
   },
@@ -179,7 +181,7 @@ const styles = StyleSheet.create((th) => ({
   text: {
     zIndex: 1,
     textAlign: "center",
-    color: th.colors.white,
+    color: th.colors.labelPrimary,
   },
   answerPreviewText: {
     marginTop: th.space.xs,

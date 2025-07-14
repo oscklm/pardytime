@@ -14,7 +14,7 @@ interface Props {
   teams: Doc<"teams">[];
 }
 
-const teamIndexToColor = ["green", "blue", "orange", "pink"] as const;
+const teamIndexToColor = ["green", "blue", "orange", "pink", "purple"] as const;
 
 const TeamList = ({ gameId, teams }: Props) => {
   const { theme } = useUnistyles();

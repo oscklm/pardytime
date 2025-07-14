@@ -12,7 +12,7 @@ import { Image } from "@/components/ui/Image";
 import Text from "@/components/ui/Text";
 import type { Doc } from "@/convex/_generated/dataModel";
 
-const teamIndexToColor = ["green", "blue", "orange", "pink"] as const;
+const teamIndexToColor = ["green", "blue", "orange", "pink", "purple"] as const;
 
 const teamImageHeightMap = {
   2: 120,

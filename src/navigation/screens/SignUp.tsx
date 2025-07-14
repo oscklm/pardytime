@@ -129,7 +129,7 @@ const SignUpScreen = () => {
           secureTextEntry
           onChangeText={setPassword}
         />
-        <Button variant="purple" isLoading={loading} onPress={handleSignUp}>
+        <Button isLoading={loading} onPress={handleSignUp}>
           Create account
         </Button>
       </YStack>

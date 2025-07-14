@@ -1,6 +1,5 @@
 import { Logo } from "@/components/Logo";
 import Button from "@/components/ui/Button";
-import { Image } from "@/components/ui/Image";
 import YStack from "@/components/ui/YStack";
 import { Text, View } from "react-native";
 import { StyleSheet } from "react-native-unistyles";
@@ -9,14 +8,10 @@ export function Welcome() {
   return (
     <View style={styles.container}>
       <YStack gap="lg" insetTop>
-        <YStack gap="md" ai="center">
-          <Logo />
-        </YStack>
         <View style={styles.explainer}>
-          <Text style={styles.title}>
-            <Text style={styles.textRed}>Jeopardy</Text>
-            <Text style={styles.textGreen}>Time</Text>
-          </Text>
+          <YStack gap="md" ai="center">
+            <Logo />
+          </YStack>
           <Text style={styles.subtitle}>
             Guaranteed fun with your friends and family. Trivia has never been
             more engaging!
@@ -24,13 +19,9 @@ export function Welcome() {
         </View>
       </YStack>
       <YStack gap="lg" px="xl" jc="center">
-        <Button variant="white" screen="SignIn">
-          Sign in
-        </Button>
-        <Text style={styles.subtitle}>or</Text>
-        <Button variant="white" screen="SignUp">
-          Create account
-        </Button>
+        <Button screen="SignIn">Sign in</Button>
+        <Text style={styles.orText}>or</Text>
+        <Button screen="SignUp">Create account</Button>
       </YStack>
     </View>
   );
@@ -53,7 +44,7 @@ const styles = StyleSheet.create((th, rt) => ({
   explainer: {
     alignSelf: "center",
     gap: th.space.sm,
-    maxWidth: 300,
+    maxWidth: 280,
     marginBottom: th.space.xxl,
   },
   title: {
@@ -71,10 +62,11 @@ const styles = StyleSheet.create((th, rt) => ({
     textAlign: "center",
     color: th.colors.labelSecondary,
   },
-  textRed: {
-    color: th.colors.yellow,
-  },
-  textGreen: {
-    color: th.colors.green,
+  orText: {
+    fontSize: 16,
+    fontWeight: "500",
+    lineHeight: 16 * 1.3,
+    textAlign: "center",
+    color: th.colors.labelSecondary,
   },
 }));

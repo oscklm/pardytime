@@ -4,6 +4,8 @@ import type React from "react";
 import { useCallback } from "react";
 import { Platform, Pressable, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Image } from "./ui/Image";
+import Blob from "@/assets/images/blob.png";
 import Animated, {
   runOnJS,
   useAnimatedStyle,
@@ -15,6 +17,7 @@ import Animated, {
 import { StyleSheet, useUnistyles } from "react-native-unistyles";
 import type { lightTheme } from "@/styles/theme";
 import Text from "./ui/Text";
+import { LogoBlob } from "./LogoBlob";
 
 interface ActionButton {
   id: string;
@@ -161,12 +164,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
       <View style={styles.fabContainer}>
         <GestureDetector gesture={buttonPress}>
           <Animated.View style={[styles.fab, buttonStyle]}>
-            <FontAwesome5
-              // biome-ignore lint/suspicious/noExplicitAny: <its ok for now>
-              name={icon as any}
-              size={30}
-              color={`${theme.colors.white}90`}
-            />
+            <Image source={Blob} style={{ width: 65, height: 65 }} />
           </Animated.View>
         </GestureDetector>
       </View>
@@ -226,16 +224,9 @@ const styles = StyleSheet.create((th, rt) => ({
     },
   },
   fab: {
-    width: 60,
-    height: 60,
     borderRadius: 30,
-    backgroundColor: th.colors.green,
     justifyContent: "center",
     alignItems: "center",
-    shadowColor: th.colors.green,
-    shadowOffset: { width: 1, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
   },
   overlay: {
     position: "absolute",
@@ -258,6 +249,10 @@ const styles = StyleSheet.create((th, rt) => ({
     paddingHorizontal: th.space.lg,
     paddingTop: th.space.lg,
     gap: th.space.lg,
+    _web: {
+      marginLeft: th.space.lg,
+      marginRight: th.space.lg,
+    },
   },
   header: {
     padding: th.space.sm,

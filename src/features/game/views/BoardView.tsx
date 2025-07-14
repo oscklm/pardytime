@@ -67,6 +67,11 @@ export const BoardView = () => {
     return game.answeredQuestions.includes(game.activeQuestionId);
   }, [game.activeQuestionId, game.answeredQuestions]);
 
+  // Compute if any team has a score greater than 0
+  const shouldShowHelp = useMemo(() => {
+    return !!!teams.some((team) => team.score > 0);
+  }, [teams]);
+
   return (
     <>
       <View style={styles.container}>
@@ -82,12 +87,45 @@ export const BoardView = () => {
             />
           ))}
         </View>
-        <ActiveQuestionDisplay
-          question={activeQuestion}
-          isAnswered={isCurrentQuestionAnswered}
-          onPressQuestion={markQuestionAnswered}
-          disabled={!isOwner}
-        />
+        <View>
+          <ActiveQuestionDisplay
+            question={activeQuestion}
+            isAnswered={isCurrentQuestionAnswered}
+            onPressQuestion={markQuestionAnswered}
+            disabled={!isOwner}
+          />
+
+          {shouldShowHelp && (
+            <>
+              {activeQuestion && !isCurrentQuestionAnswered && (
+                <Text
+                  variant="subtitle"
+                  style={{
+                    fontSize: 13,
+                    lineHeight: 16,
+                    marginTop: 8,
+                    textAlign: "center",
+                  }}
+                >
+                  Click on the card above to reveal the answer to everyone.
+                </Text>
+              )}
+              {isCurrentQuestionAnswered && (
+                <Text
+                  variant="subtitle"
+                  style={{
+                    fontSize: 13,
+                    lineHeight: 16,
+                    marginTop: 8,
+                    textAlign: "center",
+                  }}
+                >
+                  Now click on the team you want to award points to.
+                </Text>
+              )}
+            </>
+          )}
+        </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.contentContainer}
@@ -132,7 +170,7 @@ export const BoardView = () => {
               label: "Back to lobby",
               icon: "arrow-left",
               description: "Go back to manage teams",
-              color: "mint",
+              color: "blue",
               onPress: () => resetToLobby(),
             },
             {
@@ -161,6 +199,9 @@ export const BoardView = () => {
 const styles = StyleSheet.create((th) => ({
   container: {
     gap: th.space.md,
+    _web: {
+      padding: th.space.lg,
+    },
   },
   teamScoreContainer: {
     flexDirection: "row",

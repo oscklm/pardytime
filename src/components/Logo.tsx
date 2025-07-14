@@ -1,6 +1,14 @@
 import { Image } from "./ui/Image";
-import JTLogo from "@/assets/images/JT.png";
+import LogoLight from "@/assets/images/logo-light.png";
+import LogoDark from "@/assets/images/logo-dark.png";
+import { useUnistyles } from "react-native-unistyles";
 
 export const Logo = () => {
-  return <Image source={JTLogo} style={{ width: 225, height: 225 }} />;
+  const { rt } = useUnistyles();
+  return (
+    <Image
+      source={rt.colorScheme === "dark" ? LogoLight : LogoDark}
+      style={{ width: 225, height: 225 }}
+    />
+  );
 };

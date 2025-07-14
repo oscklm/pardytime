@@ -10,6 +10,7 @@ export interface UnistylesTheme {
     backgroundPrimary: string;
     backgroundSecondary: string;
     backgroundTertiary: string;
+    buttonPrimary: string;
     labelPrimary: string;
     labelSecondary: string;
     labelTertiary: string;
@@ -21,7 +22,7 @@ export interface UnistylesTheme {
     orange: string;
     yellow: string;
     green: string;
-    mint: string;
+    purple: string;
     pink: string;
     blue: string;
     black: string;
@@ -36,6 +37,7 @@ export interface UnistylesTheme {
 
 const lightTheme: UnistylesTheme = {
   colors: {
+    buttonPrimary: colors.buttonPrimaryLight,
     backgroundPrimary: colors.backgroundPrimaryLight,
     backgroundSecondary: colors.backgroundSecondaryLight,
     backgroundTertiary: colors.backgroundTertiaryLight,
@@ -50,9 +52,9 @@ const lightTheme: UnistylesTheme = {
     orange: colors.orangeLight,
     yellow: colors.yellowLight,
     green: colors.greenLight,
-    mint: colors.mintLight,
     pink: colors.pinkLight,
     blue: colors.blueLight,
+    purple: colors.purpleLight,
     black: colors.black,
     white: colors.white,
     gray: colors.grayLight,
@@ -68,6 +70,7 @@ const darkTheme: UnistylesTheme = {
     backgroundPrimary: colors.backgroundPrimaryDark,
     backgroundSecondary: colors.backgroundSecondaryDark,
     backgroundTertiary: colors.backgroundTertiaryDark,
+    buttonPrimary: colors.buttonPrimaryDark,
     labelPrimary: colors.labelPrimaryDark,
     labelSecondary: colors.labelSecondaryDark,
     labelTertiary: colors.labelTertiaryDark,
@@ -81,7 +84,7 @@ const darkTheme: UnistylesTheme = {
     green: colors.greenDark,
     pink: colors.pinkDark,
     black: colors.black,
-    mint: colors.mintDark,
+    purple: colors.purpleDark,
     blue: colors.blueDark,
     white: colors.white,
     gray: colors.grayDark,

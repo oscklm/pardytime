@@ -1,19 +1,22 @@
-import { blue } from "react-native-reanimated/lib/typescript/Colors";
 
 const colors = {
 	// System colors
-	backgroundPrimaryLight: "#E1D8D0",
-	backgroundPrimaryDark: "#312C4B",
+	backgroundPrimaryLight: "#ffffffff",
+	backgroundPrimaryDark: "#312C4C",
 
-	backgroundSecondaryLight: "#FBF1E9",
-	backgroundSecondaryDark: "#2a243fff",
+	backgroundSecondaryLight: "#F3F3F4",
+	backgroundSecondaryDark: "#463E6C",
 
-	backgroundTertiaryLight: "#FFFFFF",
-	backgroundTertiaryDark: "#2C2C2E",
+	backgroundTertiaryLight: "#D6D6D6",
+	backgroundTertiaryDark: "#584F8A",
+
+	// Button colors
+	buttonPrimaryLight: "#D9D9DC",
+	buttonPrimaryDark: "#463E6C",
 
 	// Label colors
 	labelPrimaryLight: "#312C4B",
-	labelPrimaryDark: "#FBF1E9",
+	labelPrimaryDark: "#ffffffff",
 
 	labelSecondaryLight: "#3C3C4385",
 	labelSecondaryDark: "#EBEBF585",
@@ -50,8 +53,14 @@ const colors = {
 	borderTertiaryDark: "#FFFFFF18",
 
 	// Accent colors
-	redLight: "#FC4941",
+	redLight: "#FC4942",
 	redDark: "#FC4941",
+	
+	greenLight: "#1DB586",
+	greenDark: "#1DB586",
+
+	blueLight: "#429DFC",
+	blueDark: "#429DFC",
 
 	orangeLight: "#FE8E3F",
 	orangeDark: "#FE8E3F",
@@ -59,17 +68,12 @@ const colors = {
 	yellowLight: "#FFE461",
 	yellowDark: "#FFE461",
 
-	greenLight: "#1DB485",
-	greenDark: "#1DB485",
+	purpleLight: "#A642FC",
+	purpleDark: "#A642FC",
 
-	mintLight: "#AAFFE0",
-	mintDark: "#AAFFE0",
+	pinkLight: "#FF97F9",
+	pinkDark: "#FF97F9",
 
-	pinkLight: "#FF2D55",
-	pinkDark: "#FF375F",
-
-	blueLight: "#007AFF",
-	blueDark: "#007AFF",
 
 } as const;
 

@@ -151,8 +151,10 @@ function ButtonBase({
     >
       {variant === "link" ? (
         <>
-          <Text style={styles.label}>{children}</Text>
-          <View style={styles.hairline} />
+          <View>
+            <Text style={styles.label}>{children}</Text>
+            <View style={styles.hairline} />
+          </View>
         </>
       ) : isLoading ? (
         <AnimatedSpinner
@@ -185,7 +187,7 @@ const styles = StyleSheet.create((th) => ({
     alignItems: "center",
     borderRadius: th.radius.md,
     gap: th.space.md,
-    backgroundColor: th.colors.gray4,
+    backgroundColor: th.colors.buttonPrimary,
     variants: {
       size: {
         sm: {
@@ -277,6 +279,7 @@ const styles = StyleSheet.create((th) => ({
   },
   hairline: {
     marginTop: th.space.sm,
+    width: "100%",
     borderWidth: 1,
     borderRadius: th.radius.sm,
     borderColor: th.colors.labelPrimary,
