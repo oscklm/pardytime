@@ -84,7 +84,11 @@
           "convex",
           "convex-helpers",
           "hono",
-          "neverthrow"
+          "neverthrow",
+          "radon-ide",
+          "tiny-invariant",
+          "@clerk/backend",
+          "color"
         ]
       }
     }
