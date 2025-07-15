@@ -10,10 +10,9 @@ const WheelTab: React.FC = () => {
     { name: "Team Green", color: theme.colors.green },
     { name: "Team Yellow", color: theme.colors.yellow },
     { name: "Team Purple", color: theme.colors.purple },
-    { name: "Team Pink", color: theme.colors.pink },
   ];
 
-  return <SpinningWheel teams={teams} hitDetectionMode="onComplete" />;
+  return <SpinningWheel teams={teams} hitDetectionMode="continuous" />;
 };
 
 export default WheelTab;

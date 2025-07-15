@@ -41,8 +41,8 @@ interface SpinningWheelProps {
 const SpinningWheel: React.FC<SpinningWheelProps> = ({
   teams,
   hitDetectionMode = "continuous",
-  randomnessOffset = 0.5, // 30% of segment by default
-  extraSpinsRange = [4, 6], // 3-5 extra spins by default
+  randomnessOffset = 0.5,
+  extraSpinsRange = [5, 6],
 }) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [hitSegmentIndex, setHitSegmentIndex] = useState<number | null>(null);
@@ -173,7 +173,7 @@ const SpinningWheel: React.FC<SpinningWheelProps> = ({
     const finalRotation = extraSpins * 360 + targetRotation; // Total rotation
 
     // Set spin duration based on total spins, so less spins = faster and more spins = slower
-    const spinDuration = Math.max(1000, 3000 - (extraSpins - 3) * 200);
+    const spinDuration = Math.max(9000, 14000 - (extraSpins - 3) * 200);
 
     if (DEBUG_ENABLED) {
       console.log("=== SPIN DEBUG ===");
@@ -191,7 +191,7 @@ const SpinningWheel: React.FC<SpinningWheelProps> = ({
     rotation.value = 0;
 
     // Overshoot and fallback animation
-    const overshootAmount = 10; // degrees
+    const overshootAmount = 20; // degrees
     setTimeout(() => {
       // Phase 1: Spin past the target
       rotation.value = withTiming(
@@ -206,8 +206,8 @@ const SpinningWheel: React.FC<SpinningWheelProps> = ({
             rotation.value = withTiming(
               finalRotation,
               {
-                duration: Math.max(250, Math.floor(spinDuration * 0.15)),
-                easing: Easing.in(Easing.cubic),
+                duration: 500,
+                easing: Easing.in(Easing.bounce),
               },
               (done) => {
                 if (done) {
