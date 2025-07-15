@@ -27,7 +27,6 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
   // Safe guard to ensure fetchedUser could be fetched
   useEffect(() => {
-    console.log(fetchedUser);
     // Allow a grace period of 5 seconds for fetchedUser to appear
     const timer = setTimeout(() => {
       // Something must be wrong with auth at this point

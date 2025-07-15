@@ -35,6 +35,7 @@ import { CustomBottomTabHeader } from "./ui/CustomBottomTabHeader";
 import { UnistylesRuntime } from "react-native-unistyles";
 import { useMemo } from "react";
 import { Id } from "@/convex/_generated/dataModel";
+import WheelTab from "./WheelTab";
 
 const styles = StyleSheet.create((th) => ({
   tabBarBadgeStyle: {
@@ -45,6 +46,7 @@ const styles = StyleSheet.create((th) => ({
 
 type BottomTabsParamList = {
   Home: undefined;
+  Wheel: undefined;
   Profile: undefined;
 };
 
@@ -93,6 +95,18 @@ function BottomTabStack() {
           tabBarLabel: "Profile",
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="user" size={size} color={color} />
+          ),
+          tabBarBadgeStyle: styles.tabBarBadgeStyle,
+        }}
+      />
+      <BottomTab.Screen
+        name="Wheel"
+        component={WheelTab}
+        options={{
+          title: "Wheel",
+          tabBarLabel: "Wheel",
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="gamepad" size={size} color={color} />
           ),
           tabBarBadgeStyle: styles.tabBarBadgeStyle,
         }}

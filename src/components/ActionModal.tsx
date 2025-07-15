@@ -164,7 +164,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
       <View style={styles.fabContainer}>
         <GestureDetector gesture={buttonPress}>
           <Animated.View style={[styles.fab, buttonStyle]}>
-            <Image source={Blob} style={{ width: 65, height: 65 }} />
+            <Image source={Blob} style={{ width: 80, height: 80 }} />
           </Animated.View>
         </GestureDetector>
       </View>
