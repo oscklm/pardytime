@@ -1,4 +1,4 @@
-import SpinningWheel, { Team } from "@/components/WheelOfFortune";
+import SpinningWheel, { Team } from "@/components/SpinningWheel";
 import React from "react";
 import { useUnistyles } from "react-native-unistyles";
 

@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "APP_VARIANT=development expo start --dev-client",
     "android": "expo run:android",
-    "prebuild": "expo prebuild -p ios",
+    "prebuild": "APP_VARIANT=development expo prebuild -p ios",
     "db:dev": "convex dev",
     "db:deploy": "convex deploy",
     "db:dashboard": "convex dashboard",
-    "ios": "expo run:ios",
+    "ios": "APP_VARIANT=development expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit"
