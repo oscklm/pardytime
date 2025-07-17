@@ -14,6 +14,7 @@ import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import type { Doc, Id } from "@/convex/_generated/dataModel";
 import { useUser } from "@/providers/user-provider";
+import { CreateGameForm } from "@/components/forms/CreateGameForm";
 
 export function CreateGame() {
   // Local state
@@ -22,8 +23,9 @@ export function CreateGame() {
 
   // Form state
   const [boardId, setBoardId] = useState<Id<"boards"> | undefined>(undefined);
-  const [boardLabel, setBoardLabel] = useState<string | undefined>(undefined);
-  const [name, setName] = useState<string | undefined>(undefined);
+  const [boardLabel, setBoardLabel] = useState<string>(
+    "Click to select a board"
+  );
 
   // Hooks
   const navigation = useNavigation();
@@ -33,24 +35,9 @@ export function CreateGame() {
   const createGame = useMutation(api.games.mutations.create);
   const boards = useQuery(api.boards.queries.getAll, {});
 
-  const handleCreateGame = async () => {
+  const handleCreateGame = async (data: { name: string }) => {
     if (!boardId) {
       alert("Please select a board");
-      return;
-    }
-
-    if (!name) {
-      alert("Please enter a game name");
-      return;
-    }
-
-    if (name.length < 3) {
-      alert("Game name must be at least 3 characters");
-      return;
-    }
-
-    if (name.length > 32) {
-      alert("Game name must be less than 32 characters");
       return;
     }
 
@@ -59,7 +46,7 @@ export function CreateGame() {
     const code = await createGame({
       userId: user._id,
       boardId,
-      name,
+      name: data.name,
     });
 
     navigation.canGoBack() && navigation.goBack();
@@ -88,58 +75,33 @@ export function CreateGame() {
             join by scanning or entering into their app.
           </Text>
         </YStack>
-        <YStack gap="md">
-          <YStack gap="xs">
-            <Text variant="label">Game name</Text>
-          </YStack>
-          <View>
-            <TextInput
-              placeholder="Enter a name describing your occation"
-              value={name}
-              onChangeText={setName}
-            />
-          </View>
-        </YStack>
-        <YStack gap="md">
-          <YStack gap="xs">
-            <Text variant="label">Board</Text>
-          </YStack>
-          <View>
-            <TextInput
-              editable={false}
-              placeholder="Click to select a board"
-              value={boardLabel}
+        <View>
+          <TextInput
+            editable={false}
+            placeholder="Click to select a board"
+            value={boardLabel}
+            onPress={() => setIsModalVisible(true)}
+          />
+          <View
+            style={{
+              position: "absolute",
+              right: 4,
+              top: 0,
+              bottom: 0,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              variant="icon"
+              icon="edit"
               onPress={() => setIsModalVisible(true)}
             />
-            <View
-              style={{
-                position: "absolute",
-                right: 4,
-                top: 0,
-                bottom: 0,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Button
-                variant="icon"
-                icon="edit"
-                onPress={() => setIsModalVisible(true)}
-              />
-            </View>
           </View>
-        </YStack>
+        </View>
 
-        <YStack py="md">
-          <Button
-            variant="success"
-            onPress={handleCreateGame}
-            disabled={isLoading}
-            isLoading={isLoading}
-          >
-            Start the game
-          </Button>
-        </YStack>
+        <CreateGameForm onSubmit={handleCreateGame} />
+
         <YStack>
           <XStack gap="md" ai="center" style={{ width: 320 }}>
             <Icon name="clock" size={20} />

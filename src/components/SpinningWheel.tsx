@@ -68,11 +68,13 @@ const SpinningWheel: React.FC<Props> = ({
       return targetRotation;
     });
 
-    console.log("Wheel Config:", {
-      segmentCount,
-      segmentAngle: segmentAngle.toFixed(2),
-      rotationMap: rotationMap.map((r) => r.toFixed(1)),
-    });
+    if (DEBUG_ENABLED) {
+      console.log("Wheel Config:", {
+        segmentCount,
+        segmentAngle: segmentAngle.toFixed(2),
+        rotationMap: rotationMap.map((r) => r.toFixed(1)),
+      });
+    }
 
     return {
       segmentCount,
@@ -284,7 +286,9 @@ const SpinningWheel: React.FC<Props> = ({
                 isHit && hitDetectionMode !== "disabled"
                   ? 1.0
                   : hitDetectionMode !== "disabled"
-                    ? 0.25
+                    ? isSpinning
+                      ? 0.65
+                      : 0.4
                     : 1;
 
               return (
@@ -303,7 +307,9 @@ const SpinningWheel: React.FC<Props> = ({
         </Animated.View>
 
         {/* Center circle */}
-        <View style={styles.centerCircle} />
+        <View style={styles.centerCircleContainer}>
+          <View style={styles.centerCircle} />
+        </View>
       </View>
 
       <View style={{ marginTop: 20 }}>
@@ -342,28 +348,33 @@ const styles = StyleSheet.create(() => ({
   pointer: {
     position: "absolute",
     top: -15,
-    left: RADIUS - 10,
+    left: RADIUS - 15,
     width: 0,
     height: 0,
-    borderLeftWidth: 10,
-    borderRightWidth: 10,
-    borderTopWidth: 20,
+    borderLeftWidth: 15,
+    borderRightWidth: 15,
+    borderTopWidth: 30,
     borderLeftColor: "transparent",
     borderRightColor: "transparent",
     borderTopColor: "white",
     zIndex: 10,
   },
-  centerCircle: {
+  centerCircleContainer: {
     position: "absolute",
-    top: RADIUS - 15,
-    left: RADIUS - 15,
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: "white",
-    borderWidth: 2,
-    borderColor: "#333",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     zIndex: 10,
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  centerCircle: {
+    width: 45,
+    height: 45,
+    borderRadius: 999,
+    backgroundColor: "white",
   },
   spinButton: {
     marginTop: 20,

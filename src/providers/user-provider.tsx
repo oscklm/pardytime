@@ -10,6 +10,7 @@ import { api } from "@/convex/_generated/api";
 import type { Doc } from "@/convex/_generated/dataModel";
 import { View } from "react-native";
 import Text from "@/components/ui/Text";
+import { StyleSheet } from "react-native-unistyles";
 
 type AuthData = {
   user: Doc<"users"> | null;
@@ -43,8 +44,8 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
   if (isSignedIn && !fetchedUser) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Signing in...</Text>
+      <View style={styles.loadingView}>
+        <Text variant="h4">Signing in...</Text>
       </View>
     );
   }
@@ -66,3 +67,12 @@ export const useUser = () => {
   }
   return context.user;
 };
+
+const styles = StyleSheet.create((th) => ({
+  loadingView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: th.colors.backgroundPrimary,
+  },
+}));

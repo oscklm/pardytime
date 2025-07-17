@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import { Platform, Pressable, View } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import { Image } from "./ui/Image";
-import BlobImage from "@/assets/images/blob.png";
+import LogoImage from "@/assets/images/logo.png";
 import Animated, {
   runOnJS,
   useAnimatedStyle,
@@ -163,7 +163,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
       <View style={styles.fabContainer}>
         <GestureDetector gesture={buttonPress}>
           <Animated.View style={[styles.fab, buttonStyle]}>
-            <Image source={BlobImage} style={{ width: 70, height: 70 }} />
+            <Image source={LogoImage} style={{ width: 70, height: 70 }} />
           </Animated.View>
         </GestureDetector>
       </View>
