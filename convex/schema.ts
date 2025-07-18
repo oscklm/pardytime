@@ -3,22 +3,26 @@ import { boardTables } from "./boards/schema";
 import { changelogTables } from "./changelogs/schema";
 import { gameTables } from "./games/schema";
 import { userTables } from "./users/schema";
+import { teamTables } from "./teams/schema";
 
 export default defineSchema(
-	{
-		// Users
-		...userTables,
+  {
+    // Users
+    ...userTables,
 
-		// Boards
-		...boardTables,
+    // Boards
+    ...boardTables,
 
-		// Games
-		...gameTables,
+    // Games
+    ...gameTables,
 
-		// Changelogs
-		...changelogTables,
-	},
-	{
-		schemaValidation: true,
-	},
+    // Teams
+    ...teamTables,
+
+    // Changelogs
+    ...changelogTables,
+  },
+  {
+    schemaValidation: true,
+  }
 );

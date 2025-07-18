@@ -1,10 +1,14 @@
 import {
-	customCtx,
-	customMutation,
+  customCtx,
+  customMutation,
+  NoOp,
 } from "convex-helpers/server/customFunctions";
+import { zCustomMutation, zCustomQuery } from "convex-helpers/server/zod";
+
 import {
-	internalMutation as rawInternalMutation,
-	mutation as rawMutation,
+  query,
+  internalMutation as rawInternalMutation,
+  mutation as rawMutation,
 } from "../_generated/server";
 
 import { triggers } from "../triggers";
@@ -13,6 +17,11 @@ import { triggers } from "../triggers";
 export const mutation = customMutation(rawMutation, customCtx(triggers.wrapDB));
 
 export const internalMutation = customMutation(
-	rawInternalMutation,
-	customCtx(triggers.wrapDB),
+  rawInternalMutation,
+  customCtx(triggers.wrapDB)
 );
+
+// Define this once - and customize like you would customQuery
+export const zodQuery = zCustomQuery(query, NoOp);
+
+export const zodMutation = zCustomMutation(mutation, NoOp);

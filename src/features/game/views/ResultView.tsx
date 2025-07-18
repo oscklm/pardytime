@@ -9,7 +9,7 @@ import { useGameContext } from "../hooks/useGame";
 import { useGameController } from "../hooks/useGameController";
 
 export const ResultView = () => {
-  const { resetToLobby, resetGame } = useGameController();
+  const { resetToLobby } = useGameController();
   const { teams } = useGameContext();
 
   const highestScoringTeam = useMemo(() => {
@@ -50,16 +50,16 @@ export const ResultView = () => {
             id: "back-to-lobby",
             label: "Back to lobby",
             icon: "arrow-left",
-            color: "mint",
+            color: "yellow",
             onPress: () => resetToLobby(),
           },
-          {
-            id: "reset-game",
-            label: "Reset game",
-            icon: "redo",
-            color: "orange",
-            onPress: () => resetGame(),
-          },
+          // {
+          //   id: "reset-game",
+          //   label: "Reset game",
+          //   icon: "redo",
+          //   color: "red",
+          //   onPress: () => resetGame(),
+          // },
         ]}
       />
     </>

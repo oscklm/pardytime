@@ -8,17 +8,16 @@ import { Image } from "../ui/Image";
 import Text from "../ui/Text";
 import XStack from "../ui/XStack";
 import YStack from "../ui/YStack";
+import { config } from "@/lib/config";
 
 interface Props {
   gameId: Id<"games">;
   teams: Doc<"teams">[];
 }
 
-const teamIndexToColor = ["green", "blue", "orange", "pink", "purple"] as const;
-
 const TeamList = ({ gameId, teams }: Props) => {
   const { theme } = useUnistyles();
-  const deleteTeam = useMutation(api.games.mutations.deleteTeam);
+  const deleteTeam = useMutation(api.teams.mutations.deleteTeam);
 
   const handleDeleteTeam = async (teamId: Id<"teams">) => {
     ActionSheetIOS.showActionSheetWithOptions(
@@ -65,7 +64,7 @@ const TeamList = ({ gameId, teams }: Props) => {
             <View
               style={[
                 styles.teamCard,
-                { backgroundColor: theme.colors[teamIndexToColor[index]] },
+                { backgroundColor: theme.colors[config.teamColors[index]] },
               ]}
             >
               <View style={styles.deleteButton}>

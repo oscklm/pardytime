@@ -76,27 +76,30 @@ export function CreateGame() {
           </Text>
         </YStack>
         <View>
-          <TextInput
-            editable={false}
-            placeholder="Click to select a board"
-            value={boardLabel}
-            onPress={() => setIsModalVisible(true)}
-          />
-          <View
-            style={{
-              position: "absolute",
-              right: 4,
-              top: 0,
-              bottom: 0,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Button
-              variant="icon"
-              icon="edit"
+          <Text variant="label">Game Name</Text>
+          <View>
+            <TextInput
+              editable={false}
+              placeholder="Click to select a board"
+              value={boardLabel}
               onPress={() => setIsModalVisible(true)}
             />
+            <View
+              style={{
+                position: "absolute",
+                right: 4,
+                top: 0,
+                bottom: 0,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Button
+                variant="icon"
+                icon="edit"
+                onPress={() => setIsModalVisible(true)}
+              />
+            </View>
           </View>
         </View>
 

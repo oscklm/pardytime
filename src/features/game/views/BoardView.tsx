@@ -88,6 +88,19 @@ export const BoardView = () => {
           ))}
         </View>
         <View>
+          {shouldShowHelp && isCurrentQuestionAnswered && (
+            <Text
+              variant="subtitle"
+              style={{
+                fontSize: 13,
+                lineHeight: 16,
+                marginBottom: 8,
+                textAlign: "center",
+              }}
+            >
+              Now click on any team you want to award points ⤴︎
+            </Text>
+          )}
           <ActiveQuestionDisplay
             question={activeQuestion}
             isAnswered={isCurrentQuestionAnswered}
@@ -107,20 +120,8 @@ export const BoardView = () => {
                     textAlign: "center",
                   }}
                 >
-                  Click on the card above to reveal the answer to everyone.
-                </Text>
-              )}
-              {isCurrentQuestionAnswered && (
-                <Text
-                  variant="subtitle"
-                  style={{
-                    fontSize: 13,
-                    lineHeight: 16,
-                    marginTop: 8,
-                    textAlign: "center",
-                  }}
-                >
-                  Now click on the team you want to award points to.
+                  Clicking above will allow everyone to see the correct answer
+                  ⤴︎
                 </Text>
               )}
             </>
@@ -169,8 +170,8 @@ export const BoardView = () => {
               id: "back-to-lobby",
               label: "Back to lobby",
               icon: "arrow-left",
-              description: "Go back to manage teams",
-              color: "blue",
+              description: "Pause game, and go back to lobby",
+              color: "yellow",
               onPress: () => resetToLobby(),
             },
             {
@@ -186,7 +187,7 @@ export const BoardView = () => {
               label: "Reset game",
               description: "Reset all scores and questions",
               icon: "redo",
-              color: "orange",
+              color: "red",
               onPress: () => resetGame(),
             },
           ]}

@@ -56,6 +56,7 @@ const styles = StyleSheet.create((th) => ({
         label: {
           ...th.typography.label,
           color: th.colors.labelPrimary,
+          marginBottom: th.space.md,
         },
         description: {
           ...th.typography.description,

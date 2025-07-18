@@ -11,8 +11,7 @@ import Crown from "@/assets/icons/crown.png";
 import { Image } from "@/components/ui/Image";
 import Text from "@/components/ui/Text";
 import type { Doc } from "@/convex/_generated/dataModel";
-
-const teamIndexToColor = ["green", "blue", "orange", "pink", "purple"] as const;
+import { config } from "@/lib/config";
 
 const teamImageHeightMap = {
   2: 120,
@@ -57,7 +56,7 @@ export const TeamScoreTile = ({
     }
   }, [isHighestScoring]);
 
-  const cardColor = theme.colors[teamIndexToColor[index]];
+  const cardColor = theme.colors[config.teamColors[index]];
 
   const crownAnimatedStyle = useAnimatedStyle(() => ({
     transform: [

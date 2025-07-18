@@ -4,8 +4,7 @@ import Crown from "@/assets/icons/crown.png";
 import { Image } from "@/components/ui/Image";
 import Text from "@/components/ui/Text";
 import type { Doc } from "@/convex/_generated/dataModel";
-
-const teamIndexToColor = ["green", "pink", "orange", "mint"] as const;
+import { config } from "@/lib/config";
 
 export const TeamResultCard = ({
   team,
@@ -18,7 +17,7 @@ export const TeamResultCard = ({
 }) => {
   const { theme } = useUnistyles();
   const cardColor =
-    theme.colors[teamIndexToColor[index % teamIndexToColor.length]];
+    theme.colors[config.teamColors[index % config.teamColors.length]];
 
   return (
     <View style={[styles.card, { backgroundColor: cardColor }]}>

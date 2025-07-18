@@ -59,8 +59,11 @@ const styles = StyleSheet.create((th, rt) => ({
         green: {
           backgroundColor: th.colors.green,
         },
-        mint: {
-          backgroundColor: th.colors.mint,
+        purple: {
+          backgroundColor: th.colors.purple,
+        },
+        pink: {
+          backgroundColor: th.colors.pink,
         },
       } as const,
       insetTop: {

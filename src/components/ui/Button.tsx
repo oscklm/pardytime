@@ -218,6 +218,7 @@ const styles = StyleSheet.create((th) => ({
         },
         outline: {
           borderWidth: 2,
+          borderColor: th.colors.backgroundSecondary,
           backgroundColor: "transparent",
         },
         menu: {
@@ -313,7 +314,9 @@ const styles = StyleSheet.create((th) => ({
         purple: {
           color: "white",
         },
-        outline: {},
+        outline: {
+          color: th.colors.labelPrimary,
+        },
         danger: {
           color: "white",
         },

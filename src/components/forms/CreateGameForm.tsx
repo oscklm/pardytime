@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useAppForm } from ".";
-import { type } from "arktype";
 import { StyleSheet } from "react-native-unistyles";
+import Text from "../ui/Text";
 
 interface Props {
   defaultValues?: {
@@ -15,12 +15,7 @@ export const CreateGameForm = ({ defaultValues, onSubmit }: Props) => {
     defaultValues: {
       name: "",
     },
-    validators: {
-      // Pass a schema or function to validate
-      onChange: type({
-        name: "string >= 3",
-      }),
-    },
+    validators: {},
     onSubmit: ({ value }) => onSubmit?.(value),
   });
 
@@ -29,11 +24,14 @@ export const CreateGameForm = ({ defaultValues, onSubmit }: Props) => {
       <form.AppField
         name="name"
         children={(field) => (
-          <field.TextInput
-            placeholder="Enter game name"
-            value={field.state.value}
-            onChangeText={field.handleChange}
-          />
+          <View>
+            <Text variant="label">Game Name</Text>
+            <field.TextInput
+              placeholder="Enter game name"
+              value={field.state.value}
+              onChangeText={field.handleChange}
+            />
+          </View>
         )}
       />
       {/* Components in `form.AppForm` have access to the form context */}

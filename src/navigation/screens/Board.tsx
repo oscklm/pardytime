@@ -58,7 +58,7 @@ export function Board({ route }: ScreenProps<"Board">) {
 
   return (
     <YStack flex={1}>
-      <YStack gap="md" bg="mint" pd="lg">
+      <YStack gap="md" bg="green" pd="lg">
         <YStack gap="md">
           <YStack>
             <Text variant="h1">{board?.title}</Text>
