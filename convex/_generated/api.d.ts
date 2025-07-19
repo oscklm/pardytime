@@ -25,6 +25,7 @@ import type * as games_queries from "../games/queries.js";
 import type * as http from "../http.js";
 import type * as storage_mutations from "../storage/mutations.js";
 import type * as teams_mutations from "../teams/mutations.js";
+import type * as teams_queries from "../teams/queries.js";
 import type * as triggers from "../triggers.js";
 import type * as types from "../types.js";
 import type * as users_actions from "../users/actions.js";
@@ -55,6 +56,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   "storage/mutations": typeof storage_mutations;
   "teams/mutations": typeof teams_mutations;
+  "teams/queries": typeof teams_queries;
   triggers: typeof triggers;
   types: typeof types;
   "users/actions": typeof users_actions;

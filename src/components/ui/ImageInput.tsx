@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Image, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Alert, Pressable, TouchableOpacity } from "react-native";
 import { Button } from "./Button";
 import Text from "./Text";
 import * as ImagePicker from "expo-image-picker";
@@ -7,8 +7,10 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
 import { StyleSheet } from "react-native-unistyles";
-import LoadingView from "../LoadingView";
 import { AnimatedSpinner } from "../AnimatedSpinner";
+import Icons from "../Icons";
+import TouchableBounce from "./TouchableBounce";
+import { Image } from "./Image";
 
 interface Props {
   value?: Id<"_storage"> | undefined;
@@ -17,110 +19,108 @@ interface Props {
 }
 
 export const ImageInput = ({ value, onChange, disabled }: Props) => {
-  const [imageUri, setImageUri] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const generateUploadUrl = useMutation(
     api.storage.mutations.generateUploadUrl
   );
+
   const deleteImage = useMutation(api.storage.mutations.deleteImage);
 
-  const pickImage = async () => {
-    if (imageUri && value) {
-      Alert.alert(
-        "Overwrite?",
-        "Are you sure you want to overwrite the current image? This will delete the existing one.",
-        [
-          { text: "Cancel", style: "cancel" },
-          {
-            text: "Overwrite",
-            style: "destructive",
-            onPress: async () => {
-              await handlePickAndUpload();
-            },
-          },
-        ]
-      );
-    } else {
-      await handlePickAndUpload();
-    }
+  const uploadImage = async (uri: string) => {
+    const uploadUrl = await generateUploadUrl();
+    const response = await fetch(uploadUrl, {
+      method: "POST",
+      headers: { "Content-Type": "image/jpeg" },
+      body: await (await fetch(uri)).blob(),
+    });
+    const { storageId } = await response.json();
+    onChange(storageId);
   };
 
   const handlePickAndUpload = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
+    await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.2,
-    });
-    if (!result.canceled && result.assets && result.assets.length > 0) {
-      setIsLoading(true);
-      const uri = result.assets[0].uri;
-      setImageUri(uri);
-      const uploadUrl = await generateUploadUrl();
-      const response = await fetch(uploadUrl, {
-        method: "POST",
-        headers: { "Content-Type": "image/jpeg" },
-        body: await (await fetch(uri)).blob(),
+    })
+      .then(async (result) => {
+        if (result.canceled) return;
+        setIsLoading(true);
+
+        // If there's an existing image, we delete it first
+        if (value) {
+          try {
+            await deleteImage({ imageId: value });
+          } catch (error) {
+            Alert.alert("Error", "Failed to upload image. Please try again.");
+            return;
+          }
+        }
+
+        // Upload and update local image
+        const asset = result.assets[0];
+        await uploadImage(asset.uri);
+      })
+      .finally(() => {
+        setTimeout(() => setIsLoading(false), 100);
+      })
+      .catch((error) => {
+        console.error("Error picking image:", error);
+        Alert.alert("Error", "Failed to pick image. Please try again.");
       });
-      const { storageId } = await response.json();
-      onChange(storageId);
-      setIsLoading(false);
-    }
   };
 
-  const handleRemove = async () => {
-    if (value) {
-      setIsLoading(true);
-      await deleteImage({ imageId: value });
-      setImageUri(null);
-      onChange(undefined);
-      setIsLoading(false);
-    }
-  };
+  useEffect(() => {
+    console.log("ImageInput value changed:", value);
+  }, [value]);
+
+  styles.useVariants({
+    hasImage: value && value.length > 0,
+  });
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        {value && imageUri ? (
-          <Image source={{ uri: imageUri }} style={styles.image} />
-        ) : (
-          <View>
-            {isLoading ? (
-              <View style={styles.loadingOverlay}>
-                <AnimatedSpinner />
-              </View>
+      <TouchableBounce
+        sensory="light"
+        onPress={handlePickAndUpload}
+        disabled={disabled}
+      >
+        <View style={styles.imageContainer}>
+          <View style={styles.innerImageContainer}>
+            {value ? (
+              <Image
+                storageId={value}
+                style={styles.image}
+                width={300}
+                onLoad={() => setIsLoading(false)}
+              />
             ) : (
-              <Text variant="subtitle">No image</Text>
+              <View>
+                {isLoading ? (
+                  <View style={styles.loadingOverlay}>
+                    <AnimatedSpinner colored opacity={0.35} />
+                  </View>
+                ) : (
+                  <Text variant="subtitle">No image</Text>
+                )}
+              </View>
             )}
           </View>
-        )}
-      </View>
-      <View style={styles.buttonContainer}>
-        <Button
-          variant="outline"
-          onPress={pickImage}
-          disabled={isLoading || disabled}
-        >
-          {value ? "Change image" : "Pick image"}
-        </Button>
-        {value && (
-          <Button
-            variant="danger"
-            onPress={handleRemove}
-            disabled={isLoading || disabled}
-          >
-            Remove image
-          </Button>
-        )}
-      </View>
+          <View style={styles.editButton}>
+            <Icons name="edit" size={24} color={"white"} />
+          </View>
+        </View>
+      </TouchableBounce>
     </View>
   );
 };
 
 const styles = StyleSheet.create((th) => ({
   container: {
-    flexDirection: "row",
+    position: "relative",
+    alignItems: "center",
     gap: th.space.md,
   },
   imageContainer: {
@@ -133,6 +133,34 @@ const styles = StyleSheet.create((th) => ({
     gap: th.space.md,
     backgroundColor: th.colors.backgroundSecondary,
   },
+  image: {
+    width: "100%",
+    height: "100%",
+  },
+  innerImageContainer: {
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    variants: {
+      hasImage: {
+        true: {
+          borderRadius: th.radius.md,
+        },
+        false: {
+          borderWidth: 2,
+          borderColor: th.colors.backgroundTertiary,
+          borderStyle: "dashed",
+          borderRadius: th.radius.sm,
+        },
+      },
+    },
+  },
+  editButton: {
+    position: "absolute",
+    top: 8,
+    right: 8,
+  },
   loadingOverlay: {
     position: "absolute",
     top: 0,
@@ -142,14 +170,5 @@ const styles = StyleSheet.create((th) => ({
     zIndex: 10,
     alignItems: "center",
     justifyContent: "center",
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-  },
-  buttonContainer: {
-    flex: 1,
-    flexDirection: "column",
-    gap: th.space.md,
   },
 }));

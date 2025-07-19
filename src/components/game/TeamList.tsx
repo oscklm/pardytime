@@ -9,6 +9,7 @@ import Text from "../ui/Text";
 import XStack from "../ui/XStack";
 import YStack from "../ui/YStack";
 import { config } from "@/lib/config";
+import { useNavigation } from "@react-navigation/native";
 
 interface Props {
   gameId: Id<"games">;
@@ -17,23 +18,13 @@ interface Props {
 
 const TeamList = ({ gameId, teams }: Props) => {
   const { theme } = useUnistyles();
+  const navigation = useNavigation();
   const deleteTeam = useMutation(api.teams.mutations.deleteTeam);
 
-  const handleDeleteTeam = async (teamId: Id<"teams">) => {
-    ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: "Are you sure?",
-        message: "You wont be able to undo deleting this team",
-        options: ["Cancel", "Delete"],
-        destructiveButtonIndex: 1,
-        cancelButtonIndex: 0,
-      },
-      (buttonIndex) => {
-        if (buttonIndex === 1) {
-          void deleteTeam({ teamId });
-        }
-      }
-    );
+  const handleEditTeam = async (teamId: Id<"teams">) => {
+    navigation.navigate("EditTeam", {
+      teamId,
+    });
   };
 
   return (
@@ -71,9 +62,9 @@ const TeamList = ({ gameId, teams }: Props) => {
                 <Button
                   variant="icon"
                   size="sm"
-                  iconSize={18}
-                  icon="trash"
-                  onPress={() => handleDeleteTeam(item._id)}
+                  iconSize={14}
+                  icon="edit"
+                  onPress={() => handleEditTeam(item._id)}
                 />
               </View>
               <Image

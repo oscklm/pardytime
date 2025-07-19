@@ -10,7 +10,7 @@ interface Props {
   onSubmit?: (data: { name: string }) => void;
 }
 
-export const CreateGameForm = ({ defaultValues, onSubmit }: Props) => {
+export const GameCreateForm = ({ defaultValues, onSubmit }: Props) => {
   const form = useAppForm({
     defaultValues: {
       name: "",
@@ -37,7 +37,7 @@ export const CreateGameForm = ({ defaultValues, onSubmit }: Props) => {
       {/* Components in `form.AppForm` have access to the form context */}
       <form.AppForm>
         <form.SubmitButton variant="success" onPressIn={form.handleSubmit}>
-          Start Game
+          Submit
         </form.SubmitButton>
       </form.AppForm>
     </View>

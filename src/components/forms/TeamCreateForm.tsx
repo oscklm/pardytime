@@ -5,28 +5,28 @@ import { z } from "zod";
 import { teamSchema } from "@/convex/teams/schema";
 import Text from "../ui/Text";
 
-const createTeamSchema = teamSchema.omit({
-  gameId: true,
-  ownerId: true,
-  score: true,
+const teamCreateSchema = teamSchema.pick({
+  nickname: true,
+  imageId: true,
 });
 
-export type TeamCreationValues = z.infer<typeof createTeamSchema>;
+export type TeamCreateValues = z.infer<typeof teamCreateSchema>;
 
-const defaultValues: TeamCreationValues = {
+const localDefaultValues: TeamCreateValues = {
   nickname: "",
   imageId: undefined,
 };
 
 interface Props {
-  onSubmit?: (data: TeamCreationValues) => void;
+  defaultValues?: TeamCreateValues;
+  onSubmit?: (data: TeamCreateValues) => void;
 }
 
-export const CreateTeamForm = ({ onSubmit }: Props) => {
+export const TeamCreateForm = ({ defaultValues, onSubmit }: Props) => {
   const form = useAppForm({
-    defaultValues: defaultValues,
+    defaultValues: defaultValues || localDefaultValues,
     validators: {
-      onChange: createTeamSchema,
+      onChange: teamCreateSchema,
     },
     onSubmit: ({ value }) => onSubmit?.(value),
   });
@@ -46,22 +46,24 @@ export const CreateTeamForm = ({ onSubmit }: Props) => {
           </View>
         )}
       />
-      <form.AppField
-        name="imageId"
-        children={(field) => (
-          <View>
-            <Text variant="label">Team Image</Text>
-            <field.ImageInput
-              value={field.state.value}
-              onChange={field.handleChange}
-              disabled={form.state.isSubmitting}
-            />
-          </View>
-        )}
-      />
+      <View>
+        <form.AppField
+          name="imageId"
+          children={(field) => (
+            <View>
+              <Text variant="label">Team Image</Text>
+              <field.ImageInput
+                value={field.state.value}
+                onChange={field.handleChange}
+                disabled={form.state.isSubmitting}
+              />
+            </View>
+          )}
+        />
+      </View>
       <form.AppForm>
-        <form.SubmitButton variant="success" onPressIn={form.handleSubmit}>
-          Start Game
+        <form.SubmitButton onPressIn={form.handleSubmit}>
+          {defaultValues ? "Update Team" : "Create Team"}
         </form.SubmitButton>
       </form.AppForm>
     </View>

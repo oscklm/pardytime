@@ -14,7 +14,7 @@ import YStack from "@/components/ui/YStack";
 import { api } from "@/convex/_generated/api";
 import type { Doc, Id } from "@/convex/_generated/dataModel";
 import { useUser } from "@/providers/user-provider";
-import { CreateGameForm } from "@/components/forms/CreateGameForm";
+import { GameCreateForm } from "@/components/forms/GameCreateForm";
 
 export function CreateGame() {
   // Local state
@@ -103,7 +103,7 @@ export function CreateGame() {
           </View>
         </View>
 
-        <CreateGameForm onSubmit={handleCreateGame} />
+        <GameCreateForm onSubmit={handleCreateGame} />
 
         <YStack>
           <XStack gap="md" ai="center" style={{ width: 320 }}>

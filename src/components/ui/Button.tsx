@@ -1,4 +1,3 @@
-import { FontAwesome } from "@expo/vector-icons";
 import { type LinkProps, useLinkProps } from "@react-navigation/native";
 import * as Haptics from "expo-haptics";
 import type * as React from "react";
@@ -16,21 +15,15 @@ import {
   withUnistyles,
 } from "react-native-unistyles";
 import { AnimatedSpinner } from "../AnimatedSpinner";
+import { Icons, type IconName } from "../Icons"; // Import your new Icons component and IconName type
 
-const FontAwesomeIcon = withUnistyles(FontAwesome, (th) => ({
+// Create a styled wrapper for the Icons component
+const StyledIcon = withUnistyles(Icons, (th) => ({
   color: th.colors.labelPrimary,
 }));
 
-type IconGlyphs =
-  | "qrcode"
-  | "plus"
-  | "minus"
-  | "rotate-right"
-  | "rotate-left"
-  | "trash"
-  | "edit"
-  | "chevron-right"
-  | "chevron-left";
+// Use the IconName type directly from your Icons component
+type IconGlyphs = IconName;
 
 interface ButtonBaseProps
   extends Omit<React.ComponentProps<typeof Pressable>, "children" | "style"> {
@@ -86,7 +79,6 @@ function ButtonLink<ParamList extends ReactNavigation.RootParamList>({
   ...rest
 }: ButtonLinkProps<ParamList>) {
   // @ts-expect-error: This is already type-checked by the prop types
-
   const props = useLinkProps({ screen, params, action, href });
 
   return <ButtonBase {...rest} {...props} />;
@@ -158,22 +150,20 @@ function ButtonBase({
         </>
       ) : isLoading ? (
         <AnimatedSpinner
-          variant="flat"
-          tintColor={styles.label.color}
+          colored
+          opacity={0.35}
           style={{ marginLeft: 8, width: 16, height: 16 }}
         />
       ) : (
         <>
           {icon && (
-            <FontAwesomeIcon
+            <StyledIcon
               name={icon}
               size={children ? iconSizeMap[size] : iconSize}
             />
           )}
           {children && <Text style={styles.label}>{children}</Text>}
-          {variant === "menu" && (
-            <FontAwesomeIcon name="chevron-right" size={16} />
-          )}
+          {variant === "menu" && <StyledIcon name="forward" size={16} />}
         </>
       )}
     </Pressable>

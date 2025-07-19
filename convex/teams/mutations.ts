@@ -15,7 +15,7 @@ export const createTeam = zodMutation({
 export const updateTeam = zodMutation({
   args: {
     teamId: zid("teams"),
-    values: teamSchema,
+    values: teamSchema.partial(),
   },
   handler: async (ctx, { teamId, values }) => {
     return ctx.db.patch(teamId, values);

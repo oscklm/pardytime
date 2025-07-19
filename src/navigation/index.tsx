@@ -36,6 +36,7 @@ import { UnistylesRuntime } from "react-native-unistyles";
 import { useMemo } from "react";
 import { Id } from "@/convex/_generated/dataModel";
 import WheelTab from "./WheelTab";
+import { EditTeamScreen } from "./screens/EditTeam";
 
 const styles = StyleSheet.create((th) => ({
   tabBarBadgeStyle: {
@@ -131,6 +132,9 @@ export type RootStackParamList = {
   CreateTeam: {
     gameId: Id<"games">;
   };
+  EditTeam: {
+    teamId: Id<"teams">;
+  };
   Settings: undefined;
   Scanner: undefined;
   Profile: {
@@ -203,6 +207,14 @@ export function RootStack() {
               component={CreateTeam}
               options={{
                 title: "Create Team",
+                presentation: "modal",
+              }}
+            />
+            <Stack.Screen
+              name="EditTeam"
+              component={EditTeamScreen}
+              options={{
+                title: "Edit Team",
                 presentation: "modal",
               }}
             />

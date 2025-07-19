@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { StyleSheet } from "react-native-unistyles";
 import Text from "@/components/ui/Text";
 import YStack from "@/components/ui/YStack";
@@ -10,21 +10,28 @@ import {
   TeamCreateForm,
   TeamCreateValues,
 } from "@/components/forms/TeamCreateForm";
-import { useUser } from "@/providers/user-provider";
 
-export function CreateTeam({ route }: ScreenProps<"CreateTeam">) {
+export function EditTeamScreen({ route }: ScreenProps<"EditTeam">) {
   const navigation = useNavigation();
-  const { _id: userId } = useUser();
 
-  const createTeam = useMutation(api.teams.mutations.createTeam);
+  const currentTeam = useQuery(api.teams.queries.getById, {
+    id: route.params.teamId,
+  });
 
-  const handleCreateTeam = async (values: TeamCreateValues) => {
-    await createTeam({
+  const updateTeam = useMutation(api.teams.mutations.updateTeam);
+
+  const handleUpdateTeam = async (values: TeamCreateValues) => {
+    console.log(currentTeam);
+    if (!currentTeam) {
+      alert("Team not found");
+      return;
+    }
+    await updateTeam({
+      teamId: route.params.teamId,
       values: {
-        gameId: route.params.gameId,
-        ownerId: userId,
+        gameId: currentTeam.gameId,
+        ownerId: currentTeam.ownerId,
         nickname: values.nickname,
-        score: 0,
         imageId: values.imageId,
       },
     });
@@ -33,8 +40,8 @@ export function CreateTeam({ route }: ScreenProps<"CreateTeam">) {
 
   return (
     <YStack flex={1} gap="lg" pd="lg">
-      <Text variant="h2">Create a team</Text>
-      <TeamCreateForm onSubmit={handleCreateTeam} />
+      <Text variant="h2">Edit team</Text>
+      <TeamCreateForm defaultValues={currentTeam} onSubmit={handleUpdateTeam} />
     </YStack>
   );
 }
