@@ -13,19 +13,17 @@ import { useGameContext } from "../hooks/useGame";
 import { useGameController } from "../hooks/useGameController";
 
 export const BoardView = () => {
-  const [pointAmount, setPointAmount] = useState(0);
-
   const [focusedTeamId, setFocusedTeamId] = useState<Id<"teams"> | undefined>(
     undefined
   );
 
-  const { game, board, teams, isOwner } = useGameContext();
+  const { game, board, activeQuestion, teams, isOwner } = useGameContext();
 
   const {
     setActiveQuestion,
-    markQuestionAnswered,
     resetGame,
     resetToLobby,
+    handleTeamAnswered,
     endGame,
   } = useGameController();
 
@@ -45,23 +43,6 @@ export const BoardView = () => {
     );
   }, [teams]);
 
-  const activeQuestion = useMemo(() => {
-    if (!game.activeQuestionId) return null;
-
-    // Find the actual question, not just the category
-    for (const category of board.enriched.categories) {
-      const question = category.questions.find(
-        (q) => q._id === game.activeQuestionId
-      );
-      if (question) {
-        // Update point amount
-        setPointAmount(question.value);
-        return question;
-      }
-    }
-    return null;
-  }, [game.activeQuestionId]);
-
   const isCurrentQuestionAnswered = useMemo(() => {
     if (!game.activeQuestionId) return false;
     return game.answeredQuestions.includes(game.activeQuestionId);
@@ -69,8 +50,8 @@ export const BoardView = () => {
 
   // Compute if any team has a score greater than 0
   const shouldShowHelp = useMemo(() => {
-    return !!!teams.some((team) => team.score > 0);
-  }, [teams]);
+    return !!!teams.some((team) => team.score > 0) && activeQuestion;
+  }, [teams, activeQuestion]);
 
   return (
     <>
@@ -88,7 +69,7 @@ export const BoardView = () => {
           ))}
         </View>
         <View>
-          {shouldShowHelp && isCurrentQuestionAnswered && (
+          {shouldShowHelp && (
             <Text
               variant="subtitle"
               style={{
@@ -98,34 +79,13 @@ export const BoardView = () => {
                 textAlign: "center",
               }}
             >
-              Now click on any team you want to award points ⤴︎
+              Click on any team you want to award points
             </Text>
           )}
           <ActiveQuestionDisplay
             question={activeQuestion}
             isAnswered={isCurrentQuestionAnswered}
-            onPressQuestion={markQuestionAnswered}
-            disabled={!isOwner}
           />
-
-          {shouldShowHelp && (
-            <>
-              {activeQuestion && !isCurrentQuestionAnswered && (
-                <Text
-                  variant="subtitle"
-                  style={{
-                    fontSize: 13,
-                    lineHeight: 16,
-                    marginTop: 8,
-                    textAlign: "center",
-                  }}
-                >
-                  Clicking above will allow everyone to see the correct answer
-                  ⤴︎
-                </Text>
-              )}
-            </>
-          )}
         </View>
         <ScrollView
           showsVerticalScrollIndicator={false}
@@ -159,8 +119,7 @@ export const BoardView = () => {
         visible={!!focusedTeam}
         onRequestClose={() => setFocusedTeamId(undefined)}
         team={focusedTeam}
-        pointAmount={pointAmount}
-        onPointAmountChange={setPointAmount}
+        onAnswerSelected={handleTeamAnswered}
       />
       {isOwner && (
         <ActionModal

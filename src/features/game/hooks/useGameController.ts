@@ -5,13 +5,16 @@ import type { Id } from "@/convex/_generated/dataModel";
 import { GameContext } from "../context/GameProvider";
 
 export const useGameController = () => {
-  const { game } = useContext(GameContext);
+  const { game, activeQuestion, teams } = useContext(GameContext);
+
   const updateGameMutation = useMutation(api.games.mutations.updateGame);
   const deleteGameMutation = useMutation(api.games.mutations.deleteGame);
   const resetGameMutation = useMutation(api.games.mutations.resetGame);
+
   const updateTeamScoreMutation = useMutation(
     api.teams.mutations.updateTeamScore
   );
+
   const addAnsweredQuestionMutation = useMutation(
     api.games.mutations.addAnsweredQuestion
   );
@@ -86,6 +89,29 @@ export const useGameController = () => {
   };
 
   /**
+   * Handle team answered
+   * @description Handles when a team answers a question, which happens in the TeamControlModal
+   * @param teamId - The id of the team that answered
+   * @param pointAmount - The amount of points awarded to the team
+   */
+  const handleTeamAnswered = (
+    answer: boolean,
+    teamId: Id<"teams">,
+    pointAmount: number
+  ) => {
+    const team = teams.find((t) => t._id === teamId);
+    if (!team) return;
+
+    updateTeamScore(teamId, team.score + pointAmount);
+
+    if (activeQuestion && answer) {
+      // Is question answered?
+      if (game.answeredQuestions.includes(activeQuestion._id)) return;
+      markQuestionAnswered(activeQuestion._id);
+    }
+  };
+
+  /**
    * Update the score of a team
    * @description Updates the score of a team
    * @param teamId - The id of the team to update
@@ -114,6 +140,7 @@ export const useGameController = () => {
     resetGame,
     resetToLobby,
     setActiveQuestion,
+    handleTeamAnswered,
     updateTeamScore,
     markQuestionAnswered,
     deleteGame,

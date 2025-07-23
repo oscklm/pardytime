@@ -220,6 +220,9 @@ const styles = StyleSheet.create((th) => ({
           alignItems: "center",
           gap: th.space.sm,
         },
+        blue: {
+          backgroundColor: th.colors.blue,
+        },
         white: {
           backgroundColor: th.colors.white,
           borderColor: undefined,

@@ -1,5 +1,5 @@
 import { FontAwesome6 } from "@expo/vector-icons";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { type ModalProps, View } from "react-native";
 import {
   StyleSheet,
@@ -12,139 +12,139 @@ import { Image } from "@/components/ui/Image";
 import Text from "@/components/ui/Text";
 import XStack from "@/components/ui/XStack";
 import YStack from "@/components/ui/YStack";
-import type { Doc } from "@/convex/_generated/dataModel";
-import { useGameController } from "../hooks/useGameController";
+import type { Doc, Id } from "@/convex/_generated/dataModel";
+import { useGameContext } from "../hooks/useGame";
 
 interface TeamControlModalProps extends Omit<ModalProps, "onRequestClose"> {
   team: Doc<"teams"> | null;
-  pointAmount: number;
-  onPointAmountChange: (amount: number) => void;
+  onAnswerSelected?: (
+    answer: boolean,
+    teamId: Id<"teams">,
+    points: number
+  ) => void;
   onRequestClose: () => void;
 }
 
-const FontAwesome6Icon = withUnistyles(FontAwesome6, (th) => ({
-  color: th.colors.labelPrimary,
-}));
-
 export const TeamControlModal = ({
   visible,
+  onAnswerSelected,
   onRequestClose,
   team,
-  pointAmount,
-  onPointAmountChange,
 }: TeamControlModalProps) => {
-  const { theme } = useUnistyles();
-  const { updateTeamScore } = useGameController();
+  const { activeQuestion } = useGameContext();
 
-  const handleGivePoints = () => {
+  const [answer, setAnswer] = useState<boolean>(false);
+
+  const [points, setPoints] = useState(activeQuestion?.value || 0);
+
+  const handleSaveChanges = () => {
     if (!team) return;
 
-    if (pointAmount === 0) {
-      alert("Please enter a point amount");
-      return;
-    }
+    onAnswerSelected?.(answer, team._id, points);
 
     onRequestClose?.();
-
-    const adjustedPointAmount = team.score + pointAmount;
-    updateTeamScore(team._id, adjustedPointAmount);
-
-    onPointAmountChange(0);
   };
 
-  const projectedScore = useMemo(() => {
-    if (!team) return 0;
-    return team.score + pointAmount;
-  }, [team, pointAmount]);
+  const handleAnswer = (value: boolean) => {
+    setPoints((prev) => (value ? Math.abs(prev) : -Math.abs(prev)));
+    setAnswer(value);
+  };
+
+  const handleResetPoints = () => {
+    setPoints(
+      answer
+        ? activeQuestion?.value || 0
+        : -Math.abs(activeQuestion?.value || 0)
+    );
+  };
 
   return (
     <Modal visible={visible} onRequestClose={onRequestClose}>
       <YStack flex={1} pd="lg" gap="xl">
-        <YStack gap="lg" ai="center">
+        <YStack gap="xl" ai="center">
           <Image
             storageId={team?.imageId}
             style={styles.teamModalImage}
             width={300}
           />
           <Text variant="h2">{team?.nickname}</Text>
+          <View style={styles.teamModalDivider} />
+          <YStack ai="center" gap="lg">
+            <Text variant="title">Select answer</Text>
+            <XStack jc="center" gap="lg" ai="center">
+              <Button
+                size="lg"
+                variant={answer ? undefined : "danger"}
+                onPress={() => handleAnswer(false)}
+              >
+                Wrong
+              </Button>
+              <Button
+                size="lg"
+                variant={answer ? "success" : undefined}
+                onPress={() => handleAnswer(true)}
+              >
+                Correct
+              </Button>
+            </XStack>
+          </YStack>
           <YStack ai="center" gap="md">
-            <XStack jc="center" gap="sm" ai="center">
-              <Text style={styles.currentScoreText}>{team?.score}</Text>
-              <FontAwesome6Icon
-                name={
-                  pointAmount > 0
-                    ? "arrow-up"
-                    : pointAmount < 0
-                      ? "arrow-down"
-                      : "equals"
+            <Text variant="title">New score</Text>
+            <XStack gap="md" ai="center">
+              <Button
+                size="sm"
+                onPress={() =>
+                  setPoints((prev) => (answer ? prev - 50 : prev + 50))
                 }
-                size={20}
-                color={
-                  pointAmount > 0
-                    ? theme.colors.green
-                    : pointAmount < 0
-                      ? theme.colors.red
-                      : theme.colors.labelPrimary
-                }
-              />
+              >
+                -
+              </Button>
               <Text
                 style={[
                   styles.teamModalScoreText(
-                    pointAmount > 0
-                      ? "green"
-                      : pointAmount < 0
-                        ? "red"
-                        : "labelPrimary"
+                    points > 0 ? "green" : points < 0 ? "red" : "labelPrimary"
                   ),
                   {
                     fontWeight: "bold",
-                    fontSize: 40,
+                    fontSize: 45,
+                    lineHeight: 45 * 1.3,
                   },
                 ]}
               >
-                {projectedScore}
+                {points}
               </Text>
+              <Button
+                size="sm"
+                onPress={() =>
+                  setPoints((prev) => (answer ? prev + 50 : prev - 50))
+                }
+              >
+                +
+              </Button>
             </XStack>
-            <Text variant="description">
-              {pointAmount > 0 && `Score will increase by ${pointAmount}`}
-              {pointAmount < 0 &&
-                `Score will decrease by ${Math.abs(pointAmount)}`}
-              {pointAmount === 0 && `Use buttons below to change score`}
-            </Text>
           </YStack>
-          <XStack gap="md">
-            <Button
-              size="lg"
-              variant="danger"
-              icon="minus"
-              onPress={() => onPointAmountChange(pointAmount - 50)}
-            >
-              50
-            </Button>
-            <Button
-              size="lg"
-              variant="success"
-              icon="plus"
-              onPress={() => onPointAmountChange(pointAmount + 50)}
-            >
-              50
-            </Button>
-            <Button
-              size="lg"
-              icon="rotate-left"
-              onPress={() => onPointAmountChange(0)}
-            >
-              Undo
-            </Button>
-          </XStack>
         </YStack>
         <View style={styles.teamModalDivider} />
 
-        <YStack gap="lg">
-          <Button variant="blue" size="md" onPress={handleGivePoints}>
+        <XStack gap="md">
+          <Button
+            style={{ flex: 2 }}
+            variant="blue"
+            size="md"
+            icon="save"
+            onPress={handleSaveChanges}
+          >
             Save changes
           </Button>
-        </YStack>
+          <Button
+            style={{ flex: 1 }}
+            size="md"
+            icon="refresh"
+            onPress={handleResetPoints}
+          >
+            Reset
+          </Button>
+        </XStack>
       </YStack>
     </Modal>
   );

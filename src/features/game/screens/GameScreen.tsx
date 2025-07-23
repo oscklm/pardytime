@@ -62,7 +62,13 @@ export function GameScreen({ route }: ScreenProps) {
 
   return (
     <YStack flex={1} pd="md">
-      <GameView game={game} board={board} teams={teams ?? []} isOwner={false} />
+      <GameView
+        game={game}
+        board={board}
+        activeQuestion={null}
+        teams={teams ?? []}
+        isOwner={false}
+      />
     </YStack>
   );
 }

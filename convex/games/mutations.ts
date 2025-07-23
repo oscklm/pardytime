@@ -76,6 +76,7 @@ export const resetGame = mutation({
     await ctx.db.patch(args.gameId, {
       status: "active",
       activeQuestionId: null,
+      answeredQuestions: [],
     });
 
     // Reset all team scores to 0

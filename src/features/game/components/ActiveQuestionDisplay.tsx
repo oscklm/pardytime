@@ -16,26 +16,16 @@ import { useGameContext } from "../hooks/useGame";
 interface ActiveQuestionDisplayProps {
   question: Doc<"questions"> | null;
   isAnswered: boolean;
-  disabled?: boolean;
-  onPressQuestion?: (questionId: Id<"questions">) => void;
 }
 
 export const ActiveQuestionDisplay = ({
   question,
   isAnswered,
-  disabled,
-  onPressQuestion,
 }: ActiveQuestionDisplayProps) => {
   const { theme } = useUnistyles();
   const { isOwner } = useGameContext();
-  const isPressed = useSharedValue<boolean>(false);
   const opacity = useSharedValue<number>(0);
   const flipRotation = useSharedValue<number>(0);
-
-  const handlePressComplete = () => {
-    if (!question) return;
-    onPressQuestion?.(question._id);
-  };
 
   // Animate fade in/out when question changes
   useEffect(() => {
@@ -66,19 +56,8 @@ export const ActiveQuestionDisplay = ({
     }
   }, [isAnswered, flipRotation]);
 
-  const longPress = Gesture.LongPress()
-    .enabled(!disabled)
-    .onBegin(() => {
-      isPressed.value = true;
-    })
-    .onFinalize(() => {
-      runOnJS(handlePressComplete)();
-      isPressed.value = false;
-    });
-
   const animatedContainerStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
-    transform: [{ scale: withTiming(isPressed.value ? 0.95 : 1) }],
   }));
 
   const frontCardStyle = useAnimatedStyle(() => {
@@ -121,27 +100,25 @@ export const ActiveQuestionDisplay = ({
   }
 
   return (
-    <GestureDetector gesture={longPress}>
-      <Animated.View style={[styles.container, animatedContainerStyle]}>
-        {/* Front of card - Question */}
-        <Animated.View style={[styles.cardContent, frontCardStyle]}>
-          <Text variant="h4" style={styles.text}>
-            {question.text}
-          </Text>
-          {isOwner && (
-            <Text variant="subtitle" style={styles.answerPreviewText}>
-              {question.answer}
-            </Text>
-          )}
-        </Animated.View>
-        {/* Back of card - Answer */}
-        <Animated.View style={[styles.cardContent, backCardStyle]}>
-          <Text variant="h3" style={styles.text}>
+    <Animated.View style={[styles.container, animatedContainerStyle]}>
+      {/* Front of card - Question */}
+      <Animated.View style={[styles.cardContent, frontCardStyle]}>
+        <Text variant="h4" style={styles.text}>
+          {question.text}
+        </Text>
+        {isOwner && (
+          <Text variant="subtitle" style={styles.answerPreviewText}>
             {question.answer}
           </Text>
-        </Animated.View>
+        )}
       </Animated.View>
-    </GestureDetector>
+      {/* Back of card - Answer */}
+      <Animated.View style={[styles.cardContent, backCardStyle]}>
+        <Text variant="h3" style={styles.text}>
+          {question.answer}
+        </Text>
+      </Animated.View>
+    </Animated.View>
   );
 };
 
