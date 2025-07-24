@@ -1,20 +1,20 @@
-import { CommonActions, useNavigation } from "@react-navigation/native";
-import { useMutation, useQuery } from "convex/react";
-import { useState } from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
-import BoardCard from "@/components/BoardCard";
-import { Icon } from "@/components/Icon";
-import { Modal } from "@/components/layout/Modal";
-import { Button } from "@/components/ui/Button";
-import Text from "@/components/ui/Text";
-import TextInput from "@/components/ui/TextInput";
-import XStack from "@/components/ui/XStack";
-import YStack from "@/components/ui/YStack";
-import { api } from "@/convex/_generated/api";
-import type { Doc, Id } from "@/convex/_generated/dataModel";
-import { useUser } from "@/providers/user-provider";
-import { GameCreateForm } from "@/components/forms/GameCreateForm";
+import BoardCard from '@/components/BoardCard';
+import { GameCreateForm } from '@/components/forms/GameCreateForm';
+import { Icon } from '@/components/Icon';
+import { Modal } from '@/components/layout/Modal';
+import { Button } from '@/components/ui/Button';
+import Text from '@/components/ui/Text';
+import TextInput from '@/components/ui/TextInput';
+import XStack from '@/components/ui/XStack';
+import YStack from '@/components/ui/YStack';
+import { api } from '@/convex/_generated/api';
+import type { Doc, Id } from '@/convex/_generated/dataModel';
+import { useUser } from '@/providers/user-provider';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { useMutation, useQuery } from 'convex/react';
+import { useState } from 'react';
+import { FlatList, TouchableOpacity, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
 export function CreateGame() {
   // Local state
@@ -22,9 +22,9 @@ export function CreateGame() {
   const [isLoading, setIsLoading] = useState(false);
 
   // Form state
-  const [boardId, setBoardId] = useState<Id<"boards"> | undefined>(undefined);
+  const [boardId, setBoardId] = useState<Id<'boards'> | undefined>(undefined);
   const [boardLabel, setBoardLabel] = useState<string>(
-    "Click to select a board"
+    'Click to select a board'
   );
 
   // Hooks
@@ -37,11 +37,9 @@ export function CreateGame() {
 
   const handleCreateGame = async (data: { name: string }) => {
     if (!boardId) {
-      alert("Please select a board");
+      alert('Please select a board');
       return;
     }
-
-    setIsLoading(true);
 
     const code = await createGame({
       userId: user._id,
@@ -54,13 +52,13 @@ export function CreateGame() {
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{ name: "Game", params: { code } }],
+        routes: [{ name: 'Game', params: { code } }],
       })
     );
     setIsLoading(false);
   };
 
-  const handleSelectBoard = (board: Doc<"boards">) => {
+  const handleSelectBoard = (board: Doc<'boards'>) => {
     setBoardId(board._id);
     setBoardLabel(board.title);
     setIsModalVisible(false);
@@ -86,12 +84,12 @@ export function CreateGame() {
             />
             <View
               style={{
-                position: "absolute",
+                position: 'absolute',
                 right: 4,
                 top: 0,
                 bottom: 0,
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
               <Button
@@ -103,14 +101,14 @@ export function CreateGame() {
           </View>
         </View>
 
-        <GameCreateForm onSubmit={handleCreateGame} />
+        <GameCreateForm onSubmit={handleCreateGame} isLoading={isLoading} />
 
         <YStack>
           <XStack gap="md" ai="center" style={{ width: 320 }}>
             <Icon name="clock" size={20} />
             <Text>
-              Games are automatically deleted after 24 hours. Don't worry your
-              boards will not be deleted.
+              Games are automatically deleted after 24 hours. Don&apos;t worry
+              your boards will not be deleted.
             </Text>
           </XStack>
         </YStack>

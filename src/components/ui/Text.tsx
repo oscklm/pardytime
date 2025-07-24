@@ -1,9 +1,9 @@
-import { Text as RNText } from "react-native";
+import { Text as RNText } from 'react-native';
 import {
   StyleSheet,
   type UnistylesVariants,
   withUnistyles,
-} from "react-native-unistyles";
+} from 'react-native-unistyles';
 
 type Variants = UnistylesVariants<typeof styles>;
 
@@ -27,7 +27,7 @@ const Text = ({
 
 const styles = StyleSheet.create((th) => ({
   text: {
-    fontWeight: "400",
+    fontWeight: '400',
     color: th.colors.labelPrimary,
     variants: {
       variant: {

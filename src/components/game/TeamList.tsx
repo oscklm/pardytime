@@ -1,28 +1,25 @@
-import { useMutation } from "convex/react";
-import { ActionSheetIOS, FlatList, View } from "react-native";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import { api } from "@/convex/_generated/api";
-import type { Doc, Id } from "@/convex/_generated/dataModel";
-import Button from "../ui/Button";
-import { Image } from "../ui/Image";
-import Text from "../ui/Text";
-import XStack from "../ui/XStack";
-import YStack from "../ui/YStack";
-import { config } from "@/lib/config";
-import { useNavigation } from "@react-navigation/native";
+import type { Doc, Id } from '@/convex/_generated/dataModel';
+import { config } from '@/lib/config';
+import { useNavigation } from '@react-navigation/native';
+import { FlatList, View } from 'react-native';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { Button } from '../ui/Button';
+import { Image } from '../ui/Image';
+import Text from '../ui/Text';
+import XStack from '../ui/XStack';
+import YStack from '../ui/YStack';
 
 interface Props {
-  gameId: Id<"games">;
-  teams: Doc<"teams">[];
+  gameId: Id<'games'>;
+  teams: Doc<'teams'>[];
 }
 
 const TeamList = ({ gameId, teams }: Props) => {
   const { theme } = useUnistyles();
   const navigation = useNavigation();
-  const deleteTeam = useMutation(api.teams.mutations.deleteTeam);
 
-  const handleEditTeam = async (teamId: Id<"teams">) => {
-    navigation.navigate("EditTeam", {
+  const handleEditTeam = async (teamId: Id<'teams'>) => {
+    navigation.navigate('EditTeam', {
       teamId,
     });
   };
@@ -92,7 +89,7 @@ const styles = StyleSheet.create((th) => ({
     borderRadius: th.radius.md,
   },
   deleteButton: {
-    position: "absolute",
+    position: 'absolute',
     right: 8,
     top: 8,
     backgroundColor: th.colors.backgroundPrimary,
@@ -100,8 +97,8 @@ const styles = StyleSheet.create((th) => ({
   },
   teamCard: {
     padding: th.space.lg,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: th.space.lg,
     backgroundColor: th.colors.backgroundSecondary,
     borderRadius: th.radius.md,
@@ -109,7 +106,7 @@ const styles = StyleSheet.create((th) => ({
   nicknameLabel: {
     fontSize: 16,
     lineHeight: 16 * 1.3,
-    fontWeight: "700",
+    fontWeight: '700',
     color: th.colors.white,
   },
 }));

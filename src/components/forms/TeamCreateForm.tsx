@@ -1,9 +1,9 @@
-import { View } from "react-native";
-import { useAppForm } from ".";
-import { StyleSheet } from "react-native-unistyles";
-import { z } from "zod";
-import { teamSchema } from "@/convex/teams/schema";
-import Text from "../ui/Text";
+import { teamSchema } from '@/convex/teams/schema';
+import { View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+import { z } from 'zod';
+import { useAppForm } from '.';
+import Text from '../ui/Text';
 
 const teamCreateSchema = teamSchema.pick({
   nickname: true,
@@ -13,7 +13,7 @@ const teamCreateSchema = teamSchema.pick({
 export type TeamCreateValues = z.infer<typeof teamCreateSchema>;
 
 const localDefaultValues: TeamCreateValues = {
-  nickname: "",
+  nickname: '',
   imageId: undefined,
 };
 
@@ -63,7 +63,7 @@ export const TeamCreateForm = ({ defaultValues, onSubmit }: Props) => {
       </View>
       <form.AppForm>
         <form.SubmitButton onPressIn={form.handleSubmit}>
-          {defaultValues ? "Update Team" : "Create Team"}
+          {defaultValues ? 'Update Team' : 'Create Team'}
         </form.SubmitButton>
       </form.AppForm>
     </View>

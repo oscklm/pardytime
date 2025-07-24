@@ -1,18 +1,17 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation } from '@react-navigation/native';
 
-import { useMutation } from "convex/react";
-import { StyleSheet } from "react-native-unistyles";
-import Text from "@/components/ui/Text";
-import YStack from "@/components/ui/YStack";
-import { api } from "@/convex/_generated/api";
-import { ScreenProps } from "..";
 import {
   TeamCreateForm,
   TeamCreateValues,
-} from "@/components/forms/TeamCreateForm";
-import { useUser } from "@/providers/user-provider";
+} from '@/components/forms/TeamCreateForm';
+import Text from '@/components/ui/Text';
+import YStack from '@/components/ui/YStack';
+import { api } from '@/convex/_generated/api';
+import { useUser } from '@/providers/user-provider';
+import { useMutation } from 'convex/react';
+import { ScreenProps } from '..';
 
-export function CreateTeam({ route }: ScreenProps<"CreateTeam">) {
+export function CreateTeam({ route }: ScreenProps<'CreateTeam'>) {
   const navigation = useNavigation();
   const { _id: userId } = useUser();
 
@@ -38,20 +37,3 @@ export function CreateTeam({ route }: ScreenProps<"CreateTeam">) {
     </YStack>
   );
 }
-
-const styles = StyleSheet.create((th) => ({
-  imageContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    gap: th.space.md,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    borderRadius: th.radius.lg,
-    backgroundColor: th.colors.backgroundSecondary,
-  },
-  boardListContainer: {
-    gap: th.space.md,
-  },
-}));

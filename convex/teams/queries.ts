@@ -1,9 +1,9 @@
-import { zid } from "convex-helpers/server/zod";
-import { zodQuery } from "../utils/functions";
+import { zid } from 'convex-helpers/server/zod';
+import { zodQuery } from '../utils/functions';
 
 export const getById = zodQuery({
   args: {
-    id: zid("teams"),
+    id: zid('teams'),
   },
   handler: async (ctx, { id }) => {
     const team = await ctx.db.get(id);

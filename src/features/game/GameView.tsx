@@ -1,23 +1,23 @@
-import { CommonActions, useNavigation } from "@react-navigation/native";
-import { useEffect, useMemo } from "react";
-import { ActionSheetIOS } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
-import Text from "@/components/ui/Text";
-import TouchableBounce from "@/components/ui/TouchableBounce";
-import type { Doc } from "@/convex/_generated/dataModel";
-import { useUser } from "@/providers/user-provider";
-import { GameProvider, type GameState } from "./context/GameProvider";
-import { BoardView } from "./views/BoardView";
-import { LobbyView } from "./views/LobbyView";
-import { ResultView } from "./views/ResultView";
+import Text from '@/components/ui/Text';
+import TouchableBounce from '@/components/ui/TouchableBounce';
+import type { Doc } from '@/convex/_generated/dataModel';
+import { useUser } from '@/providers/user-provider';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { useCallback, useEffect, useMemo } from 'react';
+import { ActionSheetIOS } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+import { GameProvider, type GameState } from './context/GameProvider';
+import { BoardView } from './views/BoardView';
+import { LobbyView } from './views/LobbyView';
+import { ResultView } from './views/ResultView';
 
-const StatusToViewComponent: Record<Doc<"games">["status"], React.FC> = {
+const StatusToViewComponent: Record<Doc<'games'>['status'], React.FC> = {
   pending: LobbyView,
   active: BoardView,
   completed: ResultView,
 } as const;
 
-interface GameViewProps extends GameState {}
+type GameViewProps = GameState;
 
 const GameView = ({ game, board, teams }: GameViewProps) => {
   const navigation = useNavigation();
@@ -28,11 +28,11 @@ const GameView = ({ game, board, teams }: GameViewProps) => {
     return game.ownerId === user._id;
   }, [game.ownerId, user._id]);
 
-  const handleQuitGame = () => {
+  const handleQuitGame = useCallback(() => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
-        title: "Are you sure u want to leave?",
-        options: ["Cancel", "Leave now"],
+        title: 'Are you sure u want to leave?',
+        options: ['Cancel', 'Leave now'],
         destructiveButtonIndex: 1,
         cancelButtonIndex: 0,
       },
@@ -41,13 +41,13 @@ const GameView = ({ game, board, teams }: GameViewProps) => {
           navigation.dispatch(
             CommonActions.reset({
               index: 0,
-              routes: [{ name: "BottomTabs" }],
+              routes: [{ name: 'BottomTabs' }],
             })
           );
         }
       }
     );
-  };
+  }, [navigation]);
 
   const activeQuestion = useMemo(() => {
     if (!game.activeQuestionId) return null;
@@ -62,7 +62,7 @@ const GameView = ({ game, board, teams }: GameViewProps) => {
       }
     }
     return null;
-  }, [game.activeQuestionId]);
+  }, [board.enriched.categories, game.activeQuestionId]);
 
   useEffect(() => {
     if (game) {
@@ -78,7 +78,7 @@ const GameView = ({ game, board, teams }: GameViewProps) => {
         ),
       });
     }
-  }, [game]);
+  }, [board.title, game, handleQuitGame, navigation]);
 
   const ViewComponent = StatusToViewComponent[game.status];
 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create((th) => ({
   headerButtonText: {
     fontSize: 16,
     lineHeight: 16 * 1.3,
-    fontWeight: "700",
+    fontWeight: '700',
     color: th.colors.labelSecondary,
   },
 }));

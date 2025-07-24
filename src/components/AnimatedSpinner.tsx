@@ -1,15 +1,15 @@
-import type { ImageStyle } from "expo-image";
-import React from "react";
-import type { StyleProp } from "react-native";
+import bwLogo from '@/assets/images/logo-bw.png';
+import logo from '@/assets/images/logo.png';
+import type { ImageStyle } from 'expo-image';
+import React from 'react';
+import type { StyleProp } from 'react-native';
 import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
   withTiming,
-} from "react-native-reanimated";
-import logo from "@/assets/images/logo.png";
-import bwLogo from "@/assets/images/logo-bw.png";
+} from 'react-native-reanimated';
 
 const duration = 1400;
 const easing = Easing.linear;
@@ -31,7 +31,7 @@ const AnimatedSpinner = ({
 
   React.useEffect(() => {
     progress.value = withRepeat(withTiming(1, { duration, easing }), -1);
-  }, []);
+  }, [progress]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ rotate: `${progress.value * 360}deg` }],

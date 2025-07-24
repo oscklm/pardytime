@@ -1,19 +1,19 @@
-import { useMemo, useState } from "react";
-import { ScrollView, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
-import { ActionModal } from "@/components/ActionModal";
-import Text from "@/components/ui/Text";
-import YStack from "@/components/ui/YStack";
-import type { Id } from "@/convex/_generated/dataModel";
-import { QuestionCard } from "@/features/game/components/QuestionCard";
-import { ActiveQuestionDisplay } from "../components/ActiveQuestionDisplay";
-import { TeamControlModal } from "../components/TeamControlModal";
-import { TeamScoreTile } from "../components/TeamScoreTile";
-import { useGameContext } from "../hooks/useGame";
-import { useGameController } from "../hooks/useGameController";
+import { useMemo, useState } from 'react';
+import { ScrollView, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+import { ActionModal } from '@/components/ActionModal';
+import Text from '@/components/ui/Text';
+import YStack from '@/components/ui/YStack';
+import type { Id } from '@/convex/_generated/dataModel';
+import { QuestionCard } from '@/features/game/components/QuestionCard';
+import { ActiveQuestionDisplay } from '../components/ActiveQuestionDisplay';
+import { TeamControlModal } from '../components/TeamControlModal';
+import { TeamScoreTile } from '../components/TeamScoreTile';
+import { useGameContext } from '../hooks/useGame';
+import { useGameController } from '../hooks/useGameController';
 
 export const BoardView = () => {
-  const [focusedTeamId, setFocusedTeamId] = useState<Id<"teams"> | undefined>(
+  const [focusedTeamId, setFocusedTeamId] = useState<Id<'teams'> | undefined>(
     undefined
   );
 
@@ -59,6 +59,7 @@ export const BoardView = () => {
         <View style={styles.teamScoreContainer}>
           {teams.map((team, index) => (
             <TeamScoreTile
+              key={team._id}
               team={team}
               teamCount={teams.length}
               index={index}
@@ -76,7 +77,7 @@ export const BoardView = () => {
                 fontSize: 13,
                 lineHeight: 16,
                 marginBottom: 8,
-                textAlign: "center",
+                textAlign: 'center',
               }}
             >
               Click on any team you want to award points
@@ -126,27 +127,27 @@ export const BoardView = () => {
           icon="hand-sparkles"
           actions={[
             {
-              id: "back-to-lobby",
-              label: "Back to lobby",
-              icon: "arrow-left",
-              description: "Pause game, and go back to lobby",
-              color: "yellow",
+              id: 'back-to-lobby',
+              label: 'Back to lobby',
+              icon: 'arrow-left',
+              description: 'Pause game, and go back to lobby',
+              color: 'yellow',
               onPress: () => resetToLobby(),
             },
             {
-              id: "end-game",
-              label: "Finish game",
-              icon: "check",
-              description: "End the game and calculate scores",
-              color: "green",
+              id: 'end-game',
+              label: 'Finish game',
+              icon: 'check',
+              description: 'End the game and calculate scores',
+              color: 'green',
               onPress: () => endGame(),
             },
             {
-              id: "reset-game",
-              label: "Reset game",
-              description: "Reset all scores and questions",
-              icon: "redo",
-              color: "red",
+              id: 'reset-game',
+              label: 'Reset game',
+              description: 'Reset all scores and questions',
+              icon: 'redo',
+              color: 'red',
               onPress: () => resetGame(),
             },
           ]}
@@ -164,7 +165,7 @@ const styles = StyleSheet.create((th) => ({
     },
   },
   teamScoreContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: th.space.md,
     marginVertical: th.space.md,
   },

@@ -1,19 +1,19 @@
-import { useAuth } from "@clerk/clerk-expo";
-import { useQuery } from "convex/react";
+import Text from '@/components/ui/Text';
+import { api } from '@/convex/_generated/api';
+import type { Doc } from '@/convex/_generated/dataModel';
+import { useAuth } from '@clerk/clerk-expo';
+import { useQuery } from 'convex/react';
 import {
   createContext,
   type PropsWithChildren,
   useContext,
   useEffect,
-} from "react";
-import { api } from "@/convex/_generated/api";
-import type { Doc } from "@/convex/_generated/dataModel";
-import { View } from "react-native";
-import Text from "@/components/ui/Text";
-import { StyleSheet } from "react-native-unistyles";
+} from 'react';
+import { View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
 type AuthData = {
-  user: Doc<"users"> | null;
+  user: Doc<'users'> | null;
 };
 
 const AuthContext = createContext<AuthData>({} as AuthData);
@@ -23,7 +23,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 
   const fetchedUser = useQuery(
     api.users.queries.getByClerkId,
-    userId ? { clerkId: userId } : "skip"
+    userId ? { clerkId: userId } : 'skip'
   );
 
   // Safe guard to ensure fetchedUser could be fetched
@@ -33,14 +33,14 @@ export default function AuthProvider({ children }: PropsWithChildren) {
       // Something must be wrong with auth at this point
       if (!fetchedUser && isSignedIn) {
         signOut();
-        alert("Authentication failure. Please try again in a few minutes.");
+        alert('Authentication failure. Please try again in a few minutes.');
       }
     }, 3500);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [userId, fetchedUser]);
+  }, [userId, fetchedUser, isSignedIn, signOut]);
 
   if (isSignedIn && !fetchedUser) {
     return (
@@ -60,10 +60,10 @@ export default function AuthProvider({ children }: PropsWithChildren) {
 export const useUser = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useUser must be used within an AuthProvider");
+    throw new Error('useUser must be used within an AuthProvider');
   }
   if (!context.user) {
-    throw new Error("User not found");
+    throw new Error('User not found');
   }
   return context.user;
 };
@@ -71,8 +71,8 @@ export const useUser = () => {
 const styles = StyleSheet.create((th) => ({
   loadingView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: th.colors.backgroundPrimary,
   },
 }));

@@ -1,6 +1,6 @@
-import { Text, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
-import { AnimatedSpinner } from "./AnimatedSpinner";
+import { Text, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+import { AnimatedSpinner } from './AnimatedSpinner';
 
 interface LoadingViewProps {
   message?: string;
@@ -19,8 +19,8 @@ const styles = StyleSheet.create((th, rt) => ({
   container: {
     flex: 1,
     paddingTop: rt.insets.top,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     gap: th.space.md,
     backgroundColor: th.colors.backgroundPrimary,
   },

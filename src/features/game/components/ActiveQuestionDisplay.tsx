@@ -1,20 +1,18 @@
-import { useEffect } from "react";
-import { View } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Text from '@/components/ui/Text';
+import type { Doc } from '@/convex/_generated/dataModel';
+import { useEffect } from 'react';
+import { View } from 'react-native';
 import Animated, {
   interpolate,
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from "react-native-reanimated";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import Text from "@/components/ui/Text";
-import type { Doc, Id } from "@/convex/_generated/dataModel";
-import { useGameContext } from "../hooks/useGame";
+} from 'react-native-reanimated';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { useGameContext } from '../hooks/useGame';
 
 interface ActiveQuestionDisplayProps {
-  question: Doc<"questions"> | null;
+  question: Doc<'questions'> | null;
   isAnswered: boolean;
 }
 
@@ -34,7 +32,7 @@ export const ActiveQuestionDisplay = ({
     } else {
       opacity.value = withTiming(0, { duration: 300 });
     }
-  }, [question?._id, opacity]);
+  }, [question, opacity]);
 
   // Reset flip animation when question changes, then animate based on isAnswered
   useEffect(() => {
@@ -45,7 +43,7 @@ export const ActiveQuestionDisplay = ({
     if (isAnswered) {
       flipRotation.value = withTiming(180, { duration: 600 });
     }
-  }, [question?._id, flipRotation]);
+  }, [question, flipRotation, isAnswered]);
 
   // Separate effect for when only isAnswered changes (same question)
   useEffect(() => {
@@ -67,7 +65,7 @@ export const ActiveQuestionDisplay = ({
     return {
       transform: [{ rotateY: `${rotateY}deg` }],
       opacity,
-      backfaceVisibility: "hidden",
+      backfaceVisibility: 'hidden',
     };
   });
 
@@ -76,7 +74,7 @@ export const ActiveQuestionDisplay = ({
     const opacity = interpolate(flipRotation.value, [0, 90, 180], [0, 0, 1]);
 
     return {
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       left: 0,
       right: 0,
@@ -84,7 +82,7 @@ export const ActiveQuestionDisplay = ({
       backgroundColor: theme.colors.green,
       transform: [{ rotateY: `${rotateY}deg` }],
       opacity,
-      backfaceVisibility: "hidden",
+      backfaceVisibility: 'hidden',
     };
   });
 
@@ -124,20 +122,20 @@ export const ActiveQuestionDisplay = ({
 
 const styles = StyleSheet.create((th) => ({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: th.space.lg,
     gap: th.space.md,
     backgroundColor: th.colors.backgroundTertiary,
     borderRadius: th.radius.md,
-    overflow: "hidden",
+    overflow: 'hidden',
     minHeight: 115,
   },
   placeholderContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: th.space.lg,
     backgroundColor: th.colors.backgroundTertiary,
     borderRadius: th.radius.md,
@@ -146,18 +144,18 @@ const styles = StyleSheet.create((th) => ({
   placeholderText: {
     fontSize: 16,
     lineHeight: 16 * 1.3,
-    fontWeight: "700",
-    textAlign: "center",
+    fontWeight: '700',
+    textAlign: 'center',
     color: th.colors.labelSecondary,
   },
   cardContent: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   text: {
     zIndex: 1,
-    textAlign: "center",
+    textAlign: 'center',
     color: th.colors.labelPrimary,
   },
   answerPreviewText: {

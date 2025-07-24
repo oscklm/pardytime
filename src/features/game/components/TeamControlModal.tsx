@@ -1,25 +1,20 @@
-import { FontAwesome6 } from "@expo/vector-icons";
-import { useEffect, useMemo, useState } from "react";
-import { type ModalProps, View } from "react-native";
-import {
-  StyleSheet,
-  useUnistyles,
-  withUnistyles,
-} from "react-native-unistyles";
-import { Modal } from "@/components/layout/Modal";
-import Button from "@/components/ui/Button";
-import { Image } from "@/components/ui/Image";
-import Text from "@/components/ui/Text";
-import XStack from "@/components/ui/XStack";
-import YStack from "@/components/ui/YStack";
-import type { Doc, Id } from "@/convex/_generated/dataModel";
-import { useGameContext } from "../hooks/useGame";
+import { Modal } from '@/components/layout/Modal';
+import { Button } from '@/components/ui/Button';
+import { Image } from '@/components/ui/Image';
+import Text from '@/components/ui/Text';
+import XStack from '@/components/ui/XStack';
+import YStack from '@/components/ui/YStack';
+import type { Doc, Id } from '@/convex/_generated/dataModel';
+import { useState } from 'react';
+import { type ModalProps, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+import { useGameContext } from '../hooks/useGame';
 
-interface TeamControlModalProps extends Omit<ModalProps, "onRequestClose"> {
-  team: Doc<"teams"> | null;
+interface TeamControlModalProps extends Omit<ModalProps, 'onRequestClose'> {
+  team: Doc<'teams'> | null;
   onAnswerSelected?: (
     answer: boolean,
-    teamId: Id<"teams">,
+    teamId: Id<'teams'>,
     points: number
   ) => void;
   onRequestClose: () => void;
@@ -74,14 +69,14 @@ export const TeamControlModal = ({
             <XStack jc="center" gap="lg" ai="center">
               <Button
                 size="lg"
-                variant={answer ? undefined : "danger"}
+                variant={answer ? undefined : 'danger'}
                 onPress={() => handleAnswer(false)}
               >
                 Wrong
               </Button>
               <Button
                 size="lg"
-                variant={answer ? "success" : undefined}
+                variant={answer ? 'success' : undefined}
                 onPress={() => handleAnswer(true)}
               >
                 Correct
@@ -102,10 +97,10 @@ export const TeamControlModal = ({
               <Text
                 style={[
                   styles.teamModalScoreText(
-                    points > 0 ? "green" : points < 0 ? "red" : "labelPrimary"
+                    points > 0 ? 'green' : points < 0 ? 'red' : 'labelPrimary'
                   ),
                   {
-                    fontWeight: "bold",
+                    fontWeight: 'bold',
                     fontSize: 45,
                     lineHeight: 45 * 1.3,
                   },
@@ -152,7 +147,7 @@ export const TeamControlModal = ({
 
 const styles = StyleSheet.create((th) => ({
   teamModalDivider: {
-    width: "100%",
+    width: '100%',
     height: 2,
     backgroundColor: th.colors.borderTertiary,
   },
@@ -161,19 +156,19 @@ const styles = StyleSheet.create((th) => ({
     gap: th.space.md,
     padding: th.space.lg,
   },
-  teamModalScoreText: (color: "green" | "red" | "labelPrimary") => ({
+  teamModalScoreText: (color: 'green' | 'red' | 'labelPrimary') => ({
     fontSize: 32,
     lineHeight: 32 * 1.3,
-    textAlign: "center",
-    fontWeight: "700",
+    textAlign: 'center',
+    fontWeight: '700',
     color: th.colors[color],
   }),
   currentScoreText: {
     fontSize: 16,
     lineHeight: 16 * 1.3,
-    textAlign: "center",
-    fontWeight: "500",
-    textDecorationLine: "line-through",
+    textAlign: 'center',
+    fontWeight: '500',
+    textDecorationLine: 'line-through',
     color: th.colors.labelPrimary,
   },
   teamModalImage: {

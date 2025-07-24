@@ -1,19 +1,15 @@
-import {
-  CommonActions,
-  type StaticScreenProps,
-  useNavigation,
-} from "@react-navigation/native";
-import { useQuery } from "convex/react";
-import { useEffect } from "react";
-import LoadingView from "@/components/LoadingView";
-import YStack from "@/components/ui/YStack";
-import { api } from "@/convex/_generated/api";
-import { GameView } from "@/features/game/GameView";
-import { useQueryWithStatus } from "@/lib/convex";
-import { RootStackParamList } from "@/navigation";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import LoadingView from '@/components/LoadingView';
+import YStack from '@/components/ui/YStack';
+import { api } from '@/convex/_generated/api';
+import { GameView } from '@/features/game/GameView';
+import { useQueryWithStatus } from '@/lib/convex';
+import { RootStackParamList } from '@/navigation';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { useQuery } from 'convex/react';
+import { useEffect } from 'react';
 
-type ScreenProps = NativeStackScreenProps<RootStackParamList, "Game">;
+type ScreenProps = NativeStackScreenProps<RootStackParamList, 'Game'>;
 
 export function GameScreen({ route }: ScreenProps) {
   const navigation = useNavigation();
@@ -28,7 +24,7 @@ export function GameScreen({ route }: ScreenProps) {
       ? {
           code: route.params.code,
         }
-      : "skip"
+      : 'skip'
   );
 
   const board = useQuery(
@@ -37,24 +33,24 @@ export function GameScreen({ route }: ScreenProps) {
       ? {
           boardId: game.boardId,
         }
-      : "skip"
+      : 'skip'
   );
 
   const teams = useQuery(
     api.games.queries.getTeamsByGameId,
-    game ? { gameId: game._id } : "skip"
+    game ? { gameId: game._id } : 'skip'
   );
 
   useEffect(() => {
-    if (gameStatus === "error" && gameError) {
+    if (gameStatus === 'error' && gameError) {
       navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: "BottomTabs" }],
+          routes: [{ name: 'BottomTabs' }],
         })
       );
     }
-  }, [gameStatus, gameError]);
+  }, [gameStatus, gameError, navigation]);
 
   if (!game || !board) {
     return <LoadingView />;

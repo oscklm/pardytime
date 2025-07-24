@@ -1,9 +1,9 @@
-import type { Doc } from "@/convex/_generated/dataModel";
-import { Card } from "./ui/Card";
-import Text from "./ui/Text";
+import type { Doc } from '@/convex/_generated/dataModel';
+import { Card } from './ui/Card';
+import Text from './ui/Text';
 
 interface BoardCardProps {
-  board: Doc<"boards">;
+  board: Doc<'boards'>;
 }
 
 const BoardCard = ({ board }: BoardCardProps) => {

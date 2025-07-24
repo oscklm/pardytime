@@ -1,6 +1,6 @@
-import { useQueries } from "convex/react";
-import { makeUseQueryWithStatus } from "convex-helpers/react";
+import { useQueries } from 'convex/react';
+import { makeUseQueryWithStatus } from 'convex-helpers/react';
 // Do this once somewhere, name it whatever you want.
 export const useQueryWithStatus = makeUseQueryWithStatus(useQueries);
 
-export type QueryStatus = ReturnType<typeof useQueryWithStatus>["status"];
+export type QueryStatus = ReturnType<typeof useQueryWithStatus>['status'];

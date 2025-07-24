@@ -1,12 +1,12 @@
-import { useConvexAuth } from "convex/react";
-import LoadingView from "./LoadingView";
+import { useConvexAuth } from 'convex/react';
+import LoadingView from './LoadingView';
 
 export const AuthLoaded = ({ children }: React.PropsWithChildren<unknown>) => {
-	const { isLoading } = useConvexAuth();
+  const { isLoading } = useConvexAuth();
 
-	if (isLoading) {
-		return <LoadingView />;
-	}
+  if (isLoading) {
+    return <LoadingView />;
+  }
 
-	return children;
+  return children;
 };

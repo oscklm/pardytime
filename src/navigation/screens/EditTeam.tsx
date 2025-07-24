@@ -1,17 +1,15 @@
-import { useNavigation } from "@react-navigation/native";
-
-import { useMutation, useQuery } from "convex/react";
-import { StyleSheet } from "react-native-unistyles";
-import Text from "@/components/ui/Text";
-import YStack from "@/components/ui/YStack";
-import { api } from "@/convex/_generated/api";
-import { ScreenProps } from "..";
 import {
   TeamCreateForm,
   TeamCreateValues,
-} from "@/components/forms/TeamCreateForm";
+} from '@/components/forms/TeamCreateForm';
+import Text from '@/components/ui/Text';
+import YStack from '@/components/ui/YStack';
+import { api } from '@/convex/_generated/api';
+import { useNavigation } from '@react-navigation/native';
+import { useMutation, useQuery } from 'convex/react';
+import { ScreenProps } from '..';
 
-export function EditTeamScreen({ route }: ScreenProps<"EditTeam">) {
+export function EditTeamScreen({ route }: ScreenProps<'EditTeam'>) {
   const navigation = useNavigation();
 
   const currentTeam = useQuery(api.teams.queries.getById, {
@@ -23,7 +21,7 @@ export function EditTeamScreen({ route }: ScreenProps<"EditTeam">) {
   const handleUpdateTeam = async (values: TeamCreateValues) => {
     console.log(currentTeam);
     if (!currentTeam) {
-      alert("Team not found");
+      alert('Team not found');
       return;
     }
     await updateTeam({
@@ -45,20 +43,3 @@ export function EditTeamScreen({ route }: ScreenProps<"EditTeam">) {
     </YStack>
   );
 }
-
-const styles = StyleSheet.create((th) => ({
-  imageContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    gap: th.space.md,
-  },
-  image: {
-    width: 200,
-    height: 200,
-    borderRadius: th.radius.lg,
-    backgroundColor: th.colors.backgroundSecondary,
-  },
-  boardListContainer: {
-    gap: th.space.md,
-  },
-}));

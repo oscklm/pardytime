@@ -1,18 +1,18 @@
-import * as Haptics from "expo-haptics";
-import { View } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import * as Haptics from 'expo-haptics';
+import { View } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from "react-native-reanimated";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import type { Doc } from "@/convex/_generated/dataModel";
-import Text from "../../../components/ui/Text";
+} from 'react-native-reanimated';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import type { Doc } from '@/convex/_generated/dataModel';
+import Text from '../../../components/ui/Text';
 
 interface QuestionCardProps {
-  question: Doc<"questions">;
+  question: Doc<'questions'>;
   isSelected: boolean;
   isAnswered: boolean;
   disabled?: boolean;
@@ -65,7 +65,7 @@ export const QuestionCard = ({
     });
 
   const animatedFillStyle = useAnimatedStyle(() => ({
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -90,14 +90,14 @@ export const QuestionCard = ({
 
 const styles = StyleSheet.create((th) => ({
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     padding: th.space.lg,
     gap: th.space.md,
     backgroundColor: th.colors.backgroundSecondary,
     borderRadius: th.radius.md,
-    overflow: "hidden",
+    overflow: 'hidden',
     variants: {
       isSelected: {
         true: {},
@@ -112,7 +112,7 @@ const styles = StyleSheet.create((th) => ({
     },
   },
   innerBorder: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -124,16 +124,16 @@ const styles = StyleSheet.create((th) => ({
   },
   text: {
     flex: 1,
-    fontWeight: "800",
+    fontWeight: '800',
     zIndex: 1,
-    textAlign: "center",
+    textAlign: 'center',
     variants: {
       isSelected: {
         true: {},
       },
       isAnswered: {
         true: {
-          textDecorationLine: "line-through",
+          textDecorationLine: 'line-through',
         },
       },
     },

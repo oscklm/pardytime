@@ -1,17 +1,17 @@
-import { useEffect } from "react";
-import { Pressable, View } from "react-native";
+import Crown from '@/assets/icons/crown.png';
+import { Image } from '@/components/ui/Image';
+import Text from '@/components/ui/Text';
+import type { Doc } from '@/convex/_generated/dataModel';
+import { config } from '@/lib/config';
+import { useEffect } from 'react';
+import { Pressable, View } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
-} from "react-native-reanimated";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import Crown from "@/assets/icons/crown.png";
-import { Image } from "@/components/ui/Image";
-import Text from "@/components/ui/Text";
-import type { Doc } from "@/convex/_generated/dataModel";
-import { config } from "@/lib/config";
+} from 'react-native-reanimated';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 
 const teamImageHeightMap = {
   2: 120,
@@ -21,7 +21,7 @@ const teamImageHeightMap = {
 };
 
 interface TeamScoreTileProps {
-  team: Doc<"teams">;
+  team: Doc<'teams'>;
   teamCount: number;
   index: number;
   isHighestScoring: boolean;
@@ -54,7 +54,7 @@ export const TeamScoreTile = ({
       crownScale.value = withTiming(0, { duration: 200 });
       crownRotation.value = withTiming(0, { duration: 200 });
     }
-  }, [isHighestScoring]);
+  }, [crownRotation, crownScale, isHighest, isHighestScoring]);
 
   const cardColor = theme.colors[config.teamColors[index]];
 
@@ -93,12 +93,12 @@ const styles = StyleSheet.create((th) => ({
   teamCard: {
     flex: 1,
     padding: th.space.sm,
-    flexDirection: "column",
+    flexDirection: 'column',
     backgroundColor: th.colors.backgroundSecondary,
     borderRadius: th.radius.md,
   },
   crownContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: -22,
     right: -12,
     zIndex: 1,
@@ -110,12 +110,12 @@ const styles = StyleSheet.create((th) => ({
   teamScoreText: {
     fontSize: 16,
     lineHeight: 16 * 1.3,
-    textAlign: "center",
-    fontWeight: "800",
+    textAlign: 'center',
+    fontWeight: '800',
     color: th.colors.white,
   },
   teamImage: {
-    width: "100%",
+    width: '100%',
     height: 65,
     backgroundColor: th.colors.black,
     borderRadius: th.radius.md,

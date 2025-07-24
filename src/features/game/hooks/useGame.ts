@@ -1,12 +1,12 @@
-import { useContext } from "react";
-import { GameContext } from "../context/GameProvider";
+import { useContext } from 'react';
+import { GameContext } from '../context/GameProvider';
 
 export const useGameContext = () => {
-	const ctx = useContext(GameContext);
+  const ctx = useContext(GameContext);
 
-	if (!ctx) {
-		throw new Error("useGame must be used within a GameProvider");
-	}
+  if (!ctx) {
+    throw new Error('useGame must be used within a GameProvider');
+  }
 
-	return ctx;
+  return ctx;
 };

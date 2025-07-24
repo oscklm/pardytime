@@ -1,22 +1,19 @@
-import {
-  type StaticScreenProps,
-  useNavigation,
-} from "@react-navigation/native";
-import { useQuery } from "convex/react";
-import { useEffect, useMemo } from "react";
-import { FlatList } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
-import { AnimatedSpinner } from "@/components/AnimatedSpinner";
-import Badge from "@/components/Badge";
-import { QuestionPreviewCard } from "@/components/questions/QuestionPreviewCard";
-import UserBadge from "@/components/UserBadge";
-import Text from "@/components/ui/Text";
-import XStack from "@/components/ui/XStack";
-import YStack from "@/components/ui/YStack";
-import { api } from "@/convex/_generated/api";
-import { ScreenProps } from "..";
+import { AnimatedSpinner } from '@/components/AnimatedSpinner';
+import Badge from '@/components/Badge';
+import { QuestionPreviewCard } from '@/components/questions/QuestionPreviewCard';
+import Text from '@/components/ui/Text';
+import XStack from '@/components/ui/XStack';
+import YStack from '@/components/ui/YStack';
+import UserBadge from '@/components/UserBadge';
+import { api } from '@/convex/_generated/api';
+import { useNavigation } from '@react-navigation/native';
+import { useQuery } from 'convex/react';
+import { useEffect, useMemo } from 'react';
+import { FlatList } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+import { ScreenProps } from '..';
 
-export function Board({ route }: ScreenProps<"Board">) {
+export function Board({ route }: ScreenProps<'Board'>) {
   const board = useQuery(api.boards.queries.getByIdEnriched, {
     boardId: route.params.boardId,
   });
@@ -27,7 +24,7 @@ export function Board({ route }: ScreenProps<"Board">) {
       ? {
           id: board.ownerId,
         }
-      : "skip"
+      : 'skip'
   );
 
   const navigation = useNavigation();
@@ -44,7 +41,7 @@ export function Board({ route }: ScreenProps<"Board">) {
     navigation.setOptions({
       title: board?.title,
     });
-  }, [board]);
+  }, [board, navigation]);
 
   if (!board) {
     return (

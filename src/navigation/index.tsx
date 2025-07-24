@@ -1,42 +1,34 @@
-import { FontAwesome } from "@expo/vector-icons";
-import {
-  BottomTabOptionsArgs,
-  createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
-import { HeaderButton, Text } from "@react-navigation/elements";
-import {
-  createStaticNavigation,
-  LinkingOptions,
-  type StaticParamList,
-} from "@react-navigation/native";
+import { Id } from '@/convex/_generated/dataModel';
+import { GameScreen } from '@/features/game/screens/GameScreen';
+import { UniThemeProvider } from '@/styles/theme';
+import { FontAwesome } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { HeaderButton, Text } from '@react-navigation/elements';
+import { LinkingOptions } from '@react-navigation/native';
 import {
   createNativeStackNavigator,
   NativeStackScreenProps,
-} from "@react-navigation/native-stack";
-import { useConvexAuth } from "convex/react";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import { GameScreen } from "@/features/game/screens/GameScreen";
-import { UniThemeProvider } from "@/styles/theme";
-import { Board } from "./screens/Board";
-import { CreateBoard } from "./screens/CreateBoard";
-import { CreateGame } from "./screens/CreateGame";
-import { CreateTeam } from "./screens/CreateTeam";
-import { Help } from "./screens/Help";
-import { HomeTab } from "./screens/HomeTab";
-import { NotFound } from "./screens/NotFound";
-import { ProfileTab } from "./screens/ProfileTab";
-import { PublicProfile } from "./screens/PublicProfile";
-import { Scanner } from "./screens/Scanner";
-import { Settings } from "./screens/Settings";
-import SignIn from "./screens/SignIn";
-import SignUp from "./screens/SignUp";
-import { Welcome } from "./screens/Welcome";
-import { CustomBottomTabHeader } from "./ui/CustomBottomTabHeader";
-import { UnistylesRuntime } from "react-native-unistyles";
-import { useMemo } from "react";
-import { Id } from "@/convex/_generated/dataModel";
-import WheelTab from "./WheelTab";
-import { EditTeamScreen } from "./screens/EditTeam";
+} from '@react-navigation/native-stack';
+import { useConvexAuth } from 'convex/react';
+import { useMemo } from 'react';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import WheelTab from './WheelTab';
+import { Board } from './screens/Board';
+import { CreateBoard } from './screens/CreateBoard';
+import { CreateGame } from './screens/CreateGame';
+import { CreateTeam } from './screens/CreateTeam';
+import { EditTeamScreen } from './screens/EditTeam';
+import { Help } from './screens/Help';
+import { HomeTab } from './screens/HomeTab';
+import { NotFound } from './screens/NotFound';
+import { ProfileTab } from './screens/ProfileTab';
+import { PublicProfile } from './screens/PublicProfile';
+import { Scanner } from './screens/Scanner';
+import { Settings } from './screens/Settings';
+import SignIn from './screens/SignIn';
+import SignUp from './screens/SignUp';
+import { Welcome } from './screens/Welcome';
+import { CustomBottomTabHeader } from './ui/CustomBottomTabHeader';
 
 const styles = StyleSheet.create((th) => ({
   tabBarBadgeStyle: {
@@ -57,16 +49,16 @@ function BottomTabStack() {
   const { rt } = useUnistyles();
 
   const isLargeScreen = useMemo(
-    () => /^(xs|sm|md|lg)$/.test(rt.breakpoint ?? "sm"),
+    () => /^(xs|sm|md|lg)$/.test(rt.breakpoint ?? 'sm'),
     [rt.breakpoint]
   );
 
   const tabBarPosition = useMemo(
-    () => (isLargeScreen ? "bottom" : "left"),
+    () => (isLargeScreen ? 'bottom' : 'left'),
     [isLargeScreen]
   );
   const tabBarLabelPosition = useMemo(
-    () => (isLargeScreen ? "below-icon" : "beside-icon"),
+    () => (isLargeScreen ? 'below-icon' : 'beside-icon'),
     [isLargeScreen]
   );
 
@@ -82,7 +74,7 @@ function BottomTabStack() {
         name="Home"
         component={HomeTab}
         options={{
-          title: "Home",
+          title: 'Home',
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="home" size={size} color={color} />
           ),
@@ -92,8 +84,8 @@ function BottomTabStack() {
         name="Profile"
         component={ProfileTab}
         options={{
-          title: "Profile",
-          tabBarLabel: "Profile",
+          title: 'Profile',
+          tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="user" size={size} color={color} />
           ),
@@ -104,8 +96,8 @@ function BottomTabStack() {
         name="Wheel"
         component={WheelTab}
         options={{
-          title: "Wheel",
-          tabBarLabel: "Wheel",
+          title: 'Wheel',
+          tabBarLabel: 'Wheel',
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="gamepad" size={size} color={color} />
           ),
@@ -125,15 +117,15 @@ export type RootStackParamList = {
     code: string;
   };
   Board: {
-    boardId: Id<"boards">;
+    boardId: Id<'boards'>;
   };
   CreateBoard: undefined;
   CreateGame: undefined;
   CreateTeam: {
-    gameId: Id<"games">;
+    gameId: Id<'games'>;
   };
   EditTeam: {
-    teamId: Id<"teams">;
+    teamId: Id<'teams'>;
   };
   Settings: undefined;
   Scanner: undefined;
@@ -161,7 +153,7 @@ export function RootStack() {
       <Stack.Navigator
         screenOptions={{
           headerBackButtonMenuEnabled: false,
-          headerBackButtonDisplayMode: "minimal",
+          headerBackButtonDisplayMode: 'minimal',
         }}
       >
         {isAuthenticated ? (
@@ -174,14 +166,14 @@ export function RootStack() {
             <Stack.Screen
               name="Game"
               component={GameScreen}
-              options={{ title: "Game" }}
+              options={{ title: 'Game' }}
             />
             <Stack.Screen
               name="Profile"
               component={PublicProfile}
               options={{
-                title: "Profile",
-                presentation: "modal",
+                title: 'Profile',
+                presentation: 'modal',
               }}
               initialParams={{}}
             />
@@ -190,39 +182,39 @@ export function RootStack() {
               name="CreateBoard"
               component={CreateBoard}
               options={{
-                title: "Create Board",
-                presentation: "modal",
+                title: 'Create Board',
+                presentation: 'modal',
               }}
             />
             <Stack.Screen
               name="CreateGame"
               component={CreateGame}
               options={{
-                title: "Start game",
-                presentation: "modal",
+                title: 'Start game',
+                presentation: 'modal',
               }}
             />
             <Stack.Screen
               name="CreateTeam"
               component={CreateTeam}
               options={{
-                title: "Create Team",
-                presentation: "modal",
+                title: 'Create Team',
+                presentation: 'modal',
               }}
             />
             <Stack.Screen
               name="EditTeam"
               component={EditTeamScreen}
               options={{
-                title: "Edit Team",
-                presentation: "modal",
+                title: 'Edit Team',
+                presentation: 'modal',
               }}
             />
             <Stack.Screen
               name="Settings"
               component={Settings}
               options={({ navigation }) => ({
-                presentation: "modal",
+                presentation: 'modal',
                 headerRight: () => (
                   <HeaderButton onPress={navigation.goBack}>
                     <Text>Close</Text>
@@ -234,15 +226,15 @@ export function RootStack() {
               name="Scanner"
               component={Scanner}
               options={{
-                title: "Scanner",
-                presentation: "modal",
+                title: 'Scanner',
+                presentation: 'modal',
                 headerShown: false,
               }}
             />
             <Stack.Screen
               name="Help"
               component={Help}
-              options={{ title: "Help" }}
+              options={{ title: 'Help' }}
             />
           </>
         ) : (
@@ -251,60 +243,61 @@ export function RootStack() {
               name="Welcome"
               component={Welcome}
               options={{
-                title: "Welcome",
+                title: 'Welcome',
                 headerShown: false,
               }}
             />
             <Stack.Screen
               name="SignIn"
               component={SignIn}
-              options={{ title: "Sign in" }}
+              options={{ title: 'Sign in' }}
             />
             <Stack.Screen
               name="SignUp"
               component={SignUp}
-              options={{ title: "Sign up" }}
+              options={{ title: 'Sign up' }}
             />
           </>
         )}
         <Stack.Screen
           name="NotFound"
           component={NotFound}
-          options={{ title: "404" }}
+          options={{ title: '404' }}
         />
       </Stack.Navigator>
     </UniThemeProvider>
   );
 }
 export const linkingOptions: LinkingOptions<RootStackParamList> = {
-  prefixes: ["pardytime://"],
+  prefixes: ['pardytime://'],
   config: {
     screens: {
       BottomTabs: {
         screens: {
-          Home: "home",
-          Profile: "profile",
+          Home: 'home',
+          Profile: 'profile',
         },
       },
-      Board: "board/:boardId",
-      CreateBoard: "create-board",
-      CreateGame: "create-game",
-      CreateTeam: "create-team",
-      Game: "game/:code",
-      Profile: "profile/:username",
-      SignIn: "sign-in",
-      SignUp: "sign-up",
-      Welcome: "welcome",
-      Help: "help",
-      Settings: "settings",
-      Scanner: "scanner",
-      NotFound: "*",
+      Board: 'board/:boardId',
+      CreateBoard: 'create-board',
+      CreateGame: 'create-game',
+      CreateTeam: 'create-team',
+      Game: 'game/:code',
+      Profile: 'profile/:username',
+      SignIn: 'sign-in',
+      SignUp: 'sign-up',
+      Welcome: 'welcome',
+      Help: 'help',
+      Settings: 'settings',
+      Scanner: 'scanner',
+      NotFound: '*',
     },
   },
 };
 
 declare global {
   namespace ReactNavigation {
+    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     interface RootParamList extends RootStackParamList {}
   }
 }

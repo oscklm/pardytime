@@ -1,21 +1,21 @@
-import { type LinkProps, useLinkProps } from "@react-navigation/native";
-import * as Haptics from "expo-haptics";
-import type * as React from "react";
-import { useCallback } from "react";
+import { type LinkProps, useLinkProps } from '@react-navigation/native';
+import * as Haptics from 'expo-haptics';
+import type * as React from 'react';
+import { useCallback } from 'react';
 import {
   Pressable,
   type StyleProp,
   Text,
   View,
   type ViewStyle,
-} from "react-native";
+} from 'react-native';
 import {
   StyleSheet,
   type UnistylesVariants,
   withUnistyles,
-} from "react-native-unistyles";
-import { AnimatedSpinner } from "../AnimatedSpinner";
-import { Icons, type IconName } from "../Icons"; // Import your new Icons component and IconName type
+} from 'react-native-unistyles';
+import { AnimatedSpinner } from '../AnimatedSpinner';
+import { Icons, type IconName } from '../Icons'; // Import your new Icons component and IconName type
 
 // Create a styled wrapper for the Icons component
 const StyledIcon = withUnistyles(Icons, (th) => ({
@@ -26,39 +26,39 @@ const StyledIcon = withUnistyles(Icons, (th) => ({
 type IconGlyphs = IconName;
 
 interface ButtonBaseProps
-  extends Omit<React.ComponentProps<typeof Pressable>, "children" | "style"> {
+  extends Omit<React.ComponentProps<typeof Pressable>, 'children' | 'style'> {
   /** Enables haptic feedback on press down. */
-  variant?: UnistylesVariants<typeof styles>["variant"];
-  size?: UnistylesVariants<typeof styles>["size"];
-  inverted?: UnistylesVariants<typeof styles>["inverted"];
+  variant?: UnistylesVariants<typeof styles>['variant'];
+  size?: UnistylesVariants<typeof styles>['size'];
+  inverted?: UnistylesVariants<typeof styles>['inverted'];
   icon?: IconGlyphs;
   iconSize?: number;
-  isLoading?: UnistylesVariants<typeof styles>["isLoading"];
+  isLoading?: UnistylesVariants<typeof styles>['isLoading'];
   style?: StyleProp<ViewStyle>;
   sensory?:
     | boolean
-    | "success"
-    | "error"
-    | "warning"
-    | "light"
-    | "medium"
-    | "heavy";
+    | 'success'
+    | 'error'
+    | 'warning'
+    | 'light'
+    | 'medium'
+    | 'heavy';
   children?: React.ReactNode;
 }
 
 type ButtonLinkProps<ParamList extends ReactNavigation.RootParamList> =
-  LinkProps<ParamList> & Omit<ButtonBaseProps, "onPress">;
+  LinkProps<ParamList> & Omit<ButtonBaseProps, 'onPress'>;
 
-export function Button<ParamList extends ReactNavigation.RootParamList>(
+function Button<ParamList extends ReactNavigation.RootParamList>(
   props: ButtonLinkProps<ParamList>
 ): React.JSX.Element;
 
-export function Button(props: ButtonBaseProps): React.JSX.Element;
+function Button(props: ButtonBaseProps): React.JSX.Element;
 
-export function Button<ParamList extends ReactNavigation.RootParamList>(
+function Button<ParamList extends ReactNavigation.RootParamList>(
   props: ButtonBaseProps | ButtonLinkProps<ParamList>
 ) {
-  if ("screen" in props || "action" in props) {
+  if ('screen' in props || 'action' in props) {
     return <ButtonLink {...props} />;
   } else {
     return <ButtonBase {...props} />;
@@ -88,7 +88,7 @@ function ButtonBase({
   // Unistyles variants
   icon,
   variant,
-  size = "md",
+  size = 'md',
   isLoading,
   inverted,
   iconSize = 24,
@@ -105,23 +105,23 @@ function ButtonBase({
     if (!sensory) return;
     if (sensory === true) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } else if (sensory === "success") {
+    } else if (sensory === 'success') {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    } else if (sensory === "error") {
+    } else if (sensory === 'error') {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-    } else if (sensory === "warning") {
+    } else if (sensory === 'warning') {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
-    } else if (sensory === "light") {
+    } else if (sensory === 'light') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    } else if (sensory === "medium") {
+    } else if (sensory === 'medium') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-    } else if (sensory === "heavy") {
+    } else if (sensory === 'heavy') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     }
   }, [sensory]);
 
   // Resolve whether the button displays an icon only
-  const resolvedVariant = children ? variant : "icon";
+  const resolvedVariant = children ? variant : 'icon';
 
   styles.useVariants({
     variant: resolvedVariant,
@@ -141,7 +141,7 @@ function ButtonBase({
       }}
       {...rest}
     >
-      {variant === "link" ? (
+      {variant === 'link' ? (
         <>
           <View>
             <Text style={styles.label}>{children}</Text>
@@ -163,7 +163,7 @@ function ButtonBase({
             />
           )}
           {children && <Text style={styles.label}>{children}</Text>}
-          {variant === "menu" && <StyledIcon name="forward" size={16} />}
+          {variant === 'menu' && <StyledIcon name="forward" size={16} />}
         </>
       )}
     </Pressable>
@@ -172,9 +172,9 @@ function ButtonBase({
 
 const styles = StyleSheet.create((th) => ({
   button: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: th.radius.md,
     gap: th.space.md,
     backgroundColor: th.colors.buttonPrimary,
@@ -199,25 +199,25 @@ const styles = StyleSheet.create((th) => ({
       variant: {
         icon: {
           borderWidth: 0,
-          backgroundColor: "transparent",
+          backgroundColor: 'transparent',
         },
         link: {
-          backgroundColor: "transparent",
-          alignSelf: "center",
+          backgroundColor: 'transparent',
+          alignSelf: 'center',
           borderWidth: 0,
         },
         outline: {
           borderWidth: 2,
           borderColor: th.colors.backgroundSecondary,
-          backgroundColor: "transparent",
+          backgroundColor: 'transparent',
         },
         menu: {
-          flexDirection: "row",
+          flexDirection: 'row',
           borderWidth: 0,
           paddingHorizontal: th.space.xs,
-          justifyContent: "space-between",
-          backgroundColor: "transparent",
-          alignItems: "center",
+          justifyContent: 'space-between',
+          backgroundColor: 'transparent',
+          alignItems: 'center',
           gap: th.space.sm,
         },
         blue: {
@@ -259,7 +259,7 @@ const styles = StyleSheet.create((th) => ({
     },
     compoundVariants: [
       {
-        variant: "link",
+        variant: 'link',
         hovered: true,
         styles: {
           backgroundColor: undefined,
@@ -273,14 +273,14 @@ const styles = StyleSheet.create((th) => ({
   },
   hairline: {
     marginTop: th.space.sm,
-    width: "100%",
+    width: '100%',
     borderWidth: 1,
     borderRadius: th.radius.sm,
     borderColor: th.colors.labelPrimary,
   },
   label: {
     color: th.colors.labelPrimary,
-    fontWeight: "600",
+    fontWeight: '600',
     variants: {
       size: {
         sm: {
@@ -298,26 +298,26 @@ const styles = StyleSheet.create((th) => ({
       },
       variant: {
         link: {
-          fontWeight: "500",
+          fontWeight: '500',
           color: th.colors.labelPrimary,
         },
         blue: {
-          color: "white",
+          color: 'white',
         },
         purple: {
-          color: "white",
+          color: 'white',
         },
         outline: {
           color: th.colors.labelPrimary,
         },
         danger: {
-          color: "white",
+          color: 'white',
         },
         success: {
-          color: "white",
+          color: 'white',
         },
         warning: {
-          color: "white",
+          color: 'white',
         },
         white: {
           color: th.colors.black,
@@ -339,7 +339,7 @@ const styles = StyleSheet.create((th) => ({
     },
   },
   underline: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
@@ -349,4 +349,4 @@ const styles = StyleSheet.create((th) => ({
   },
 }));
 
-export default Button;
+export { Button };

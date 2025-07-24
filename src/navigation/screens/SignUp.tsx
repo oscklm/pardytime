@@ -1,20 +1,20 @@
-import { useSignUp } from "@clerk/clerk-expo";
-import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import Button from "@/components/ui/Button";
-import Text from "@/components/ui/Text";
-import TextInput from "@/components/ui/TextInput";
-import YStack from "@/components/ui/YStack";
+import { Button } from '@/components/ui/Button';
+import Text from '@/components/ui/Text';
+import TextInput from '@/components/ui/TextInput';
+import YStack from '@/components/ui/YStack';
+import { useSignUp } from '@clerk/clerk-expo';
+import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 
 const SignUpScreen = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
 
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [pendingVerification, setPendingVerification] = useState(false);
-  const [verificationCode, setVerificationCode] = useState("");
+  const [verificationCode, setVerificationCode] = useState('');
 
   const navigation = useNavigation();
 
@@ -31,7 +31,7 @@ const SignUpScreen = () => {
       });
 
       // Send verification email
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+      await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
 
       // Show verification form
       setPendingVerification(true);
@@ -55,12 +55,12 @@ const SignUpScreen = () => {
       });
 
       // If verification successful, set session and redirect
-      if (signUpAttempt.status === "complete") {
+      if (signUpAttempt.status === 'complete') {
         await setActive({ session: signUpAttempt.createdSessionId });
-        navigation.navigate("BottomTabs");
+        navigation.navigate('BottomTabs');
       } else {
-        if (signUpAttempt.status === "missing_requirements") {
-          alert("Please complete all required fields.");
+        if (signUpAttempt.status === 'missing_requirements') {
+          alert('Please complete all required fields.');
         }
         alert(`Verification status: ${signUpAttempt.status}`);
       }

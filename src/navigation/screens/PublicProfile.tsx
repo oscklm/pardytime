@@ -1,20 +1,17 @@
-import {
-  type StaticScreenProps,
-  useNavigation,
-} from "@react-navigation/native";
-import { useQuery } from "convex/react";
-import { useEffect } from "react";
-import { StyleSheet } from "react-native-unistyles";
-import LoadingView from "@/components/LoadingView";
-import { Card } from "@/components/ui/Card";
-import { Image } from "@/components/ui/Image";
-import Text from "@/components/ui/Text";
-import YStack from "@/components/ui/YStack";
-import { api } from "@/convex/_generated/api";
-import { formatUnixTimestamp } from "@/lib/utils/time";
-import { ScreenProps } from "..";
+import LoadingView from '@/components/LoadingView';
+import { Card } from '@/components/ui/Card';
+import { Image } from '@/components/ui/Image';
+import Text from '@/components/ui/Text';
+import YStack from '@/components/ui/YStack';
+import { api } from '@/convex/_generated/api';
+import { formatUnixTimestamp } from '@/lib/utils/time';
+import { useNavigation } from '@react-navigation/native';
+import { useQuery } from 'convex/react';
+import { useEffect } from 'react';
+import { StyleSheet } from 'react-native-unistyles';
+import { ScreenProps } from '..';
 
-export function PublicProfile({ route }: ScreenProps<"Profile">) {
+export function PublicProfile({ route }: ScreenProps<'Profile'>) {
   const navigation = useNavigation();
 
   const user = useQuery(api.users.queries.getByUsername, {
@@ -25,7 +22,7 @@ export function PublicProfile({ route }: ScreenProps<"Profile">) {
     navigation.setOptions({
       title: route.params.username,
     });
-  }, [route.params.username]);
+  }, [navigation, route.params.username]);
 
   if (!user) {
     return <LoadingView />;

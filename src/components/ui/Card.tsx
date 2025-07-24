@@ -1,5 +1,5 @@
-import { View } from "react-native";
-import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
+import { View } from 'react-native';
+import { StyleSheet, type UnistylesVariants } from 'react-native-unistyles';
 
 type Variants = UnistylesVariants<typeof styles>;
 
@@ -36,7 +36,7 @@ const CardContent = ({
 
 const styles = StyleSheet.create((th) => ({
   card: {
-    flexDirection: "column",
+    flexDirection: 'column',
     borderRadius: th.radius.md,
     padding: th.space.lg,
     backgroundColor: th.colors.backgroundSecondary,

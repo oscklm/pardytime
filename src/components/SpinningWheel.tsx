@@ -1,18 +1,18 @@
-import React, { useState, useMemo, useRef } from "react";
-import { View, Text } from "react-native";
+import { BlurMask, Canvas, Path, Skia } from '@shopify/react-native-skia';
+import React, { useCallback, useMemo, useState } from 'react';
+import { Text, View } from 'react-native';
 import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  runOnJS,
   Easing,
+  runOnJS,
   useAnimatedReaction,
-} from "react-native-reanimated";
-import { BlurMask, Canvas, Path, Skia } from "@shopify/react-native-skia";
-import Button from "./ui/Button";
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import { Button } from './ui/Button';
 
-import * as Haptics from "expo-haptics";
-import { StyleSheet } from "react-native-unistyles";
+import * as Haptics from 'expo-haptics';
+import { StyleSheet } from 'react-native-unistyles';
 
 const WHEEL_SIZE = 300;
 const RADIUS = WHEEL_SIZE / 2;
@@ -35,7 +35,7 @@ interface WheelConfig {
 interface Props {
   teams: Team[];
   // New prop to control hit detection behavior
-  hitDetectionMode?: "continuous" | "onComplete" | "disabled";
+  hitDetectionMode?: 'continuous' | 'onComplete' | 'disabled';
   // Randomness offset as percentage of segment (0-1)
   randomnessOffset?: number;
   // Range of extra spins [min, max]
@@ -44,7 +44,7 @@ interface Props {
 
 const SpinningWheel: React.FC<Props> = ({
   teams,
-  hitDetectionMode = "continuous",
+  hitDetectionMode = 'continuous',
   randomnessOffset = 0.5,
   extraSpinsRange = [8, 12],
 }) => {
@@ -69,7 +69,7 @@ const SpinningWheel: React.FC<Props> = ({
     });
 
     if (DEBUG_ENABLED) {
-      console.log("Wheel Config:", {
+      console.log('Wheel Config:', {
         segmentCount,
         segmentAngle: segmentAngle.toFixed(2),
         rotationMap: rotationMap.map((r) => r.toFixed(1)),
@@ -85,36 +85,39 @@ const SpinningWheel: React.FC<Props> = ({
     };
   }, [teams]);
 
-  const createSegmentPath = (index: number): any => {
-    const path = Skia.Path.Make();
+  const createSegmentPath = useCallback(
+    (index: number): any => {
+      const path = Skia.Path.Make();
 
-    const startAngle = index * wheelConfig.segmentAngle;
-    const startRad = (startAngle * Math.PI) / 180;
+      const startAngle = index * wheelConfig.segmentAngle;
+      const startRad = (startAngle * Math.PI) / 180;
 
-    const startX = RADIUS + RADIUS * Math.cos(startRad);
-    const startY = RADIUS + RADIUS * Math.sin(startRad);
+      const startX = RADIUS + RADIUS * Math.cos(startRad);
+      const startY = RADIUS + RADIUS * Math.sin(startRad);
 
-    path.moveTo(RADIUS, RADIUS);
-    path.lineTo(startX, startY);
+      path.moveTo(RADIUS, RADIUS);
+      path.lineTo(startX, startY);
 
-    const sweepAngle = wheelConfig.segmentAngle;
-    const useCenter = false;
+      const sweepAngle = wheelConfig.segmentAngle;
+      const useCenter = false;
 
-    path.arcToOval(
-      { x: 0, y: 0, width: WHEEL_SIZE, height: WHEEL_SIZE },
-      startAngle,
-      sweepAngle,
-      useCenter
-    );
+      path.arcToOval(
+        { x: 0, y: 0, width: WHEEL_SIZE, height: WHEEL_SIZE },
+        startAngle,
+        sweepAngle,
+        useCenter
+      );
 
-    path.close();
+      path.close();
 
-    return path;
-  };
+      return path;
+    },
+    [wheelConfig.segmentAngle]
+  );
 
   const segmentPaths = useMemo(() => {
     return teams.map((_, index) => createSegmentPath(index));
-  }, [teams, wheelConfig]);
+  }, [createSegmentPath, teams]);
 
   // Hit detection function
   const detectHitSegment = (currentRotation: number) => {
@@ -129,10 +132,10 @@ const SpinningWheel: React.FC<Props> = ({
 
   // Update hit detection - now respects the mode
   const updateHitDetection = (rotationValue: number) => {
-    if (hitDetectionMode === "disabled") return;
+    if (hitDetectionMode === 'disabled') return;
 
     // Only update during spin if mode is continuous
-    if (hitDetectionMode === "continuous" || !isSpinning) {
+    if (hitDetectionMode === 'continuous' || !isSpinning) {
       const hitIndex = detectHitSegment(rotationValue);
       if (hitIndex !== hitSegmentIndex) {
         setHitSegmentIndex(hitIndex);
@@ -146,7 +149,7 @@ const SpinningWheel: React.FC<Props> = ({
     setIsSpinning(false);
 
     // If mode is 'onComplete', update hit detection now
-    if (hitDetectionMode === "onComplete") {
+    if (hitDetectionMode === 'onComplete') {
       const hitIndex = detectHitSegment(rotation.value);
       setHitSegmentIndex(hitIndex);
     }
@@ -159,7 +162,7 @@ const SpinningWheel: React.FC<Props> = ({
       if (!targetRotation) return;
 
       if (rotationValue >= targetRotation * 0.8) {
-        if (hitDetectionMode !== "disabled") {
+        if (hitDetectionMode !== 'disabled') {
           runOnJS(updateHitDetection)(rotation.value);
         }
       }
@@ -182,7 +185,7 @@ const SpinningWheel: React.FC<Props> = ({
     setIsSpinning(true);
 
     // Clear hit detection during spin if mode is 'onComplete'
-    if (hitDetectionMode === "onComplete") {
+    if (hitDetectionMode === 'onComplete') {
       setHitSegmentIndex(null);
     }
 
@@ -213,15 +216,15 @@ const SpinningWheel: React.FC<Props> = ({
     const spinDuration = Math.max(9000, 12000 - (extraSpins - 3) * 200);
 
     if (DEBUG_ENABLED) {
-      console.log("=== SPIN DEBUG ===");
+      console.log('=== SPIN DEBUG ===');
       console.log(
-        "Target team:",
+        'Target team:',
         targetTeam.name,
         `(index: ${targetTeamIndex})`
       );
-      console.log("Base rotation:", baseRotation, "°");
-      console.log("Random offset:", randomOffset.toFixed(1), "°");
-      console.log("Final rotation:", targetRotation, "°");
+      console.log('Base rotation:', baseRotation, '°');
+      console.log('Random offset:', randomOffset.toFixed(1), '°');
+      console.log('Final rotation:', targetRotation, '°');
     }
 
     rotation.value = 0;
@@ -267,12 +270,12 @@ const SpinningWheel: React.FC<Props> = ({
     <View style={styles.wheelContainer}>
       {DEBUG_ENABLED && (
         <Text style={{ marginBottom: 20, fontSize: 16 }}>
-          Teams: {wheelConfig.segmentCount} | Angle:{" "}
+          Teams: {wheelConfig.segmentCount} | Angle:{' '}
           {wheelConfig.segmentAngle.toFixed(1)}° | Mode: {hitDetectionMode}
         </Text>
       )}
 
-      <View style={{ position: "relative" }}>
+      <View style={{ position: 'relative' }}>
         {/* Pointer */}
         <View style={styles.pointer} />
 
@@ -283,9 +286,9 @@ const SpinningWheel: React.FC<Props> = ({
               const isHit = hitSegmentIndex === index;
 
               const opacity =
-                isHit && hitDetectionMode !== "disabled"
+                isHit && hitDetectionMode !== 'disabled'
                   ? 1.0
-                  : hitDetectionMode !== "disabled"
+                  : hitDetectionMode !== 'disabled'
                     ? isSpinning
                       ? 0.65
                       : 0.4
@@ -320,18 +323,18 @@ const SpinningWheel: React.FC<Props> = ({
 
       {/* Debug info */}
       {DEBUG_ENABLED && (
-        <View style={{ marginTop: 20, alignItems: "center" }}>
-          <Text style={{ fontSize: 14, fontWeight: "bold", marginBottom: 5 }}>
-            Current Hit:{" "}
+        <View style={{ marginTop: 20, alignItems: 'center' }}>
+          <Text style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 5 }}>
+            Current Hit:{' '}
             {hitSegmentIndex !== null
               ? wheelConfig.teams[hitSegmentIndex]?.name
-              : "None"}
+              : 'None'}
           </Text>
           <Text style={{ fontSize: 14 }}>
-            Will land on:{" "}
+            Will land on:{' '}
             {willHitSegmentIndex !== null
               ? wheelConfig.teams[willHitSegmentIndex]?.name
-              : "None"}
+              : 'None'}
           </Text>
         </View>
       )}
@@ -342,11 +345,11 @@ const SpinningWheel: React.FC<Props> = ({
 const styles = StyleSheet.create(() => ({
   wheelContainer: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   pointer: {
-    position: "absolute",
+    position: 'absolute',
     top: -15,
     left: RADIUS - 15,
     width: 0,
@@ -354,34 +357,34 @@ const styles = StyleSheet.create(() => ({
     borderLeftWidth: 15,
     borderRightWidth: 15,
     borderTopWidth: 30,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderTopColor: "white",
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: 'white',
     zIndex: 10,
   },
   centerCircleContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
     zIndex: 10,
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   centerCircle: {
     width: 45,
     height: 45,
     borderRadius: 999,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   spinButton: {
     marginTop: 20,
   },
   debugInfo: {
     marginTop: 20,
-    alignItems: "center",
+    alignItems: 'center',
   },
 }));
 

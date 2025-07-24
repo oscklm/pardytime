@@ -1,5 +1,5 @@
-import { View } from "react-native";
-import { StyleSheet, type UnistylesVariants } from "react-native-unistyles";
+import { View } from 'react-native';
+import { StyleSheet, type UnistylesVariants } from 'react-native-unistyles';
 
 interface Props
   extends React.ComponentPropsWithoutRef<typeof View>,

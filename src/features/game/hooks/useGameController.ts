@@ -1,8 +1,8 @@
-import { useMutation } from "convex/react";
-import { useContext } from "react";
-import { api } from "@/convex/_generated/api";
-import type { Id } from "@/convex/_generated/dataModel";
-import { GameContext } from "../context/GameProvider";
+import { useMutation } from 'convex/react';
+import { useContext } from 'react';
+import { api } from '@/convex/_generated/api';
+import type { Id } from '@/convex/_generated/dataModel';
+import { GameContext } from '../context/GameProvider';
 
 export const useGameController = () => {
   const { game, activeQuestion, teams } = useContext(GameContext);
@@ -27,7 +27,7 @@ export const useGameController = () => {
     updateGameMutation({
       gameId: game._id,
       values: {
-        status: "active",
+        status: 'active',
       },
     });
   };
@@ -56,7 +56,7 @@ export const useGameController = () => {
     updateGameMutation({
       gameId: game._id,
       values: {
-        status: "pending",
+        status: 'pending',
       },
     });
   };
@@ -69,7 +69,7 @@ export const useGameController = () => {
     updateGameMutation({
       gameId: game._id,
       values: {
-        status: "completed",
+        status: 'completed',
       },
     });
   };
@@ -79,7 +79,7 @@ export const useGameController = () => {
    * @description Updates the game active question id, which will be displayed on top of the board view
    * @param questionId - The id of the question to set as active
    */
-  const setActiveQuestion = (questionId: Id<"questions"> | null) => {
+  const setActiveQuestion = (questionId: Id<'questions'> | null) => {
     updateGameMutation({
       gameId: game._id,
       values: {
@@ -96,7 +96,7 @@ export const useGameController = () => {
    */
   const handleTeamAnswered = (
     answer: boolean,
-    teamId: Id<"teams">,
+    teamId: Id<'teams'>,
     pointAmount: number
   ) => {
     const team = teams.find((t) => t._id === teamId);
@@ -117,7 +117,7 @@ export const useGameController = () => {
    * @param teamId - The id of the team to update
    * @param score - The new score for the team
    */
-  const updateTeamScore = (teamId: Id<"teams">, score: number) => {
+  const updateTeamScore = (teamId: Id<'teams'>, score: number) => {
     return updateTeamScoreMutation({ teamId, score });
   };
 
@@ -127,7 +127,7 @@ export const useGameController = () => {
    * @param gameId - The id of the game to add the answered question to
    * @param questionId - The id of the question to add as answered
    */
-  const markQuestionAnswered = (questionId: Id<"questions">) => {
+  const markQuestionAnswered = (questionId: Id<'questions'>) => {
     if (game.answeredQuestions.includes(questionId)) {
       setActiveQuestion(null);
     }

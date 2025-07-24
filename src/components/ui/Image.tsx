@@ -1,5 +1,5 @@
-import { Image as ExpoImage } from "expo-image";
-import { withUnistyles } from "react-native-unistyles";
+import { Image as ExpoImage } from 'expo-image';
+import { withUnistyles } from 'react-native-unistyles';
 
 interface Props extends React.ComponentPropsWithoutRef<typeof ExpoImage> {
   storageId?: string;
@@ -21,9 +21,9 @@ const Image = ({
   source,
   ...props
 }: Props) => {
-  const widthParam = width ? `&width=${width}` : "";
-  const heightParam = height ? `&height=${height}` : "";
-  const qualityParam = quality ? `&quality=${quality}` : "";
+  const widthParam = width ? `&width=${width}` : '';
+  const heightParam = height ? `&height=${height}` : '';
+  const qualityParam = quality ? `&quality=${quality}` : '';
 
   // Construct the URL
   const href = `https://${BUNNY_CDN_PULLZONE}.b-cdn.net/${storageId}?optimizer=image${widthParam}${heightParam}${qualityParam}`;

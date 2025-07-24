@@ -1,9 +1,9 @@
 import {
   DefaultTheme,
   ThemeProvider as NavigationThemeProvider,
-} from "@react-navigation/native";
-import { withUnistyles } from "react-native-unistyles";
-import colors from "./colors";
+} from '@react-navigation/native';
+import { withUnistyles } from 'react-native-unistyles';
+import colors from './colors';
 
 export interface UnistylesTheme {
   colors: {
@@ -97,7 +97,7 @@ const darkTheme: UnistylesTheme = {
 
 const UniThemeProvider = withUnistyles(NavigationThemeProvider, (_th, rt) => ({
   value:
-    rt.colorScheme === "dark"
+    rt.colorScheme === 'dark'
       ? {
           dark: true,
           colors: {
@@ -105,7 +105,7 @@ const UniThemeProvider = withUnistyles(NavigationThemeProvider, (_th, rt) => ({
             background: colors.backgroundPrimaryDark,
             card: colors.backgroundSecondaryDark,
             text: colors.labelPrimaryDark,
-            border: "transparent",
+            border: 'transparent',
             notification: colors.yellowDark,
           },
           fonts: DefaultTheme.fonts,
@@ -117,7 +117,7 @@ const UniThemeProvider = withUnistyles(NavigationThemeProvider, (_th, rt) => ({
             background: colors.backgroundPrimaryLight,
             card: colors.backgroundSecondaryLight,
             text: colors.labelPrimaryLight,
-            border: "transparent",
+            border: 'transparent',
             notification: colors.yellowLight,
           },
           fonts: DefaultTheme.fonts,

@@ -1,14 +1,14 @@
-import { useContext } from "react";
-import { View } from "react-native";
-import QRCode from "react-native-qrcode-svg";
-import { StyleSheet } from "react-native-unistyles";
-import TeamList from "@/components/game/TeamList";
-import Button from "@/components/ui/Button";
-import Text from "@/components/ui/Text";
-import XStack from "@/components/ui/XStack";
-import YStack from "@/components/ui/YStack";
-import { GameContext } from "../context/GameProvider";
-import { useGameController } from "../hooks/useGameController";
+import TeamList from '@/components/game/TeamList';
+import { Button } from '@/components/ui/Button';
+import Text from '@/components/ui/Text';
+import XStack from '@/components/ui/XStack';
+import YStack from '@/components/ui/YStack';
+import { useContext } from 'react';
+import { View } from 'react-native';
+import QRCode from 'react-native-qrcode-svg';
+import { StyleSheet } from 'react-native-unistyles';
+import { GameContext } from '../context/GameProvider';
+import { useGameController } from '../hooks/useGameController';
 
 const MIN_TEAMS_TO_START = 2;
 
@@ -59,7 +59,7 @@ const styles = StyleSheet.create((th, rt) => ({
   },
   codeContainer: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
     backgroundColor: th.colors.backgroundSecondary,
     borderRadius: th.radius.md,
     padding: th.space.lg,
@@ -70,11 +70,11 @@ const styles = StyleSheet.create((th, rt) => ({
   codeLabel: {
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: "600",
+    fontWeight: '600',
     letterSpacing: 0.5,
-    width: "100%",
-    textAlign: "center",
+    width: '100%',
+    textAlign: 'center',
     color: th.colors.labelPrimary,
-    textTransform: "uppercase",
+    textTransform: 'uppercase',
   },
 }));

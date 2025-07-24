@@ -12,7 +12,12 @@
     "ios": "APP_VARIANT=development expo run:ios",
     "web": "expo start --web",
     "lint": "expo lint",
-    "typecheck": "tsc --noEmit"
+    "lint:fix": "expo lint --fix",
+    "lint:check": "expo lint --check",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss}'",
+    "format:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,css,scss}'",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "husky"
   },
   "dependencies": {
     "@clerk/backend": "^2.0.0",
@@ -77,6 +82,13 @@
     "@babel/core": "^7.25.2",
     "@clerk/types": "^4.60.0",
     "@types/react": "~19.0.10",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~9.2.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.3",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.6.2",
     "typescript": "~5.8.3"
   },
   "expo": {
@@ -95,6 +107,15 @@
         ]
       }
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "yarn expo lint --fix",
+      "yarn dlx prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "yarn dlx prettier --write"
+    ]
   },
   "private": true,
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"

@@ -1,8 +1,8 @@
-import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
-import TextInput from "../ui/TextInput";
-import Button from "../ui/Button";
-import Text from "../ui/Text";
-import { ImageInput } from "../ui/ImageInput";
+import { createFormHook, createFormHookContexts } from '@tanstack/react-form';
+import { Button } from '../ui/Button';
+import { ImageInput } from '../ui/ImageInput';
+import Text from '../ui/Text';
+import TextInput from '../ui/TextInput';
 
 export const { fieldContext, formContext, useFieldContext } =
   createFormHookContexts();

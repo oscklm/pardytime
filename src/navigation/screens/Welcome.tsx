@@ -1,8 +1,8 @@
-import { Logo } from "@/components/Logo";
-import Button from "@/components/ui/Button";
-import YStack from "@/components/ui/YStack";
-import { Text, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+import { Logo } from '@/components/Logo';
+import { Button } from '@/components/ui/Button';
+import YStack from '@/components/ui/YStack';
+import { Text, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
 export function Welcome() {
   return (
@@ -42,7 +42,7 @@ const styles = StyleSheet.create((th, rt) => ({
     backgroundColor: th.colors.backgroundSecondary,
   },
   explainer: {
-    alignSelf: "center",
+    alignSelf: 'center',
     gap: th.space.sm,
     maxWidth: 280,
     marginBottom: th.space.xxl,
@@ -51,22 +51,22 @@ const styles = StyleSheet.create((th, rt) => ({
     fontSize: 36,
     lineHeight: 36 * 1.3,
     letterSpacing: 0.5,
-    fontWeight: "800",
-    textAlign: "center",
+    fontWeight: '800',
+    textAlign: 'center',
     color: th.colors.labelPrimary,
   },
   subtitle: {
     fontSize: 22,
-    fontWeight: "700",
+    fontWeight: '700',
     lineHeight: 22 * 1.3,
-    textAlign: "center",
+    textAlign: 'center',
     color: th.colors.labelSecondary,
   },
   orText: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: '500',
     lineHeight: 16 * 1.3,
-    textAlign: "center",
+    textAlign: 'center',
     color: th.colors.labelSecondary,
   },
 }));

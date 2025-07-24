@@ -1,19 +1,24 @@
-import { View } from "react-native";
-import { useAppForm } from ".";
-import { StyleSheet } from "react-native-unistyles";
-import Text from "../ui/Text";
+import { View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+import { useAppForm } from '.';
+import Text from '../ui/Text';
 
 interface Props {
+  isLoading?: boolean;
   defaultValues?: {
     name?: string;
   };
   onSubmit?: (data: { name: string }) => void;
 }
 
-export const GameCreateForm = ({ defaultValues, onSubmit }: Props) => {
+export const GameCreateForm = ({
+  defaultValues,
+  isLoading,
+  onSubmit,
+}: Props) => {
   const form = useAppForm({
     defaultValues: {
-      name: "",
+      name: '',
     },
     validators: {},
     onSubmit: ({ value }) => onSubmit?.(value),
@@ -34,9 +39,12 @@ export const GameCreateForm = ({ defaultValues, onSubmit }: Props) => {
           </View>
         )}
       />
-      {/* Components in `form.AppForm` have access to the form context */}
       <form.AppForm>
-        <form.SubmitButton variant="success" onPressIn={form.handleSubmit}>
+        <form.SubmitButton
+          variant="success"
+          onPressIn={form.handleSubmit}
+          disabled={isLoading}
+        >
           Submit
         </form.SubmitButton>
       </form.AppForm>

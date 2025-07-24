@@ -2,18 +2,18 @@
 import type {
   BottomTabHeaderProps,
   BottomTabNavigationOptions,
-} from "@react-navigation/bottom-tabs";
-import { Text, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
+} from '@react-navigation/bottom-tabs';
+import { Text, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 
 export interface CustomBottomTabNavigationOptions
   extends BottomTabNavigationOptions {
   hideTitle?: boolean;
-  headerBgColor?: "purple" | "blue" | "green" | "yellow" | "red" | "orange";
+  headerBgColor?: 'purple' | 'blue' | 'green' | 'yellow' | 'red' | 'orange';
 }
 
 interface CustomBottomTabHeaderProps
-  extends Omit<BottomTabHeaderProps, "options"> {
+  extends Omit<BottomTabHeaderProps, 'options'> {
   options: CustomBottomTabNavigationOptions;
 }
 
@@ -38,9 +38,9 @@ const styles = StyleSheet.create((th, rt) => ({
     paddingTop: rt.insets.top,
     paddingHorizontal: th.space.lg,
     paddingBottom: th.space.lg,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     height: 125,
     variants: {
       bgColor: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create((th, rt) => ({
   titleLabel: {
     fontSize: 34,
     lineHeight: 38,
-    fontWeight: "900",
+    fontWeight: '900',
     color: th.colors.labelPrimary,
     variants: {
       bgColor: {

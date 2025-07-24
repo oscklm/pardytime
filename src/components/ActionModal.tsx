@@ -1,11 +1,11 @@
-import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
-import * as Haptics from "expo-haptics";
-import type React from "react";
-import { useCallback } from "react";
-import { Platform, Pressable, View } from "react-native";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
-import { Image } from "./ui/Image";
-import LogoImage from "@/assets/images/logo.png";
+import LogoImage from '@/assets/images/logo.png';
+import type { lightTheme } from '@/styles/theme';
+import { FontAwesome, FontAwesome5 } from '@expo/vector-icons';
+import * as Haptics from 'expo-haptics';
+import type React from 'react';
+import { useCallback } from 'react';
+import { Pressable, View } from 'react-native';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
   useAnimatedStyle,
@@ -13,10 +13,10 @@ import Animated, {
   useSharedValue,
   withSpring,
   withTiming,
-} from "react-native-reanimated";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import type { lightTheme } from "@/styles/theme";
-import Text from "./ui/Text";
+} from 'react-native-reanimated';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { Image } from './ui/Image';
+import Text from './ui/Text';
 
 interface ActionButton {
   id: string;
@@ -30,14 +30,14 @@ interface ActionButton {
 interface ActionModalProps {
   onCreatePress?: (actionType: string) => void;
   icon?: string;
-  position?: "right" | "center" | "left";
-  actions?: Array<ActionButton>;
+  position?: 'right' | 'center' | 'left';
+  actions?: ActionButton[];
 }
 
 export const ActionModal: React.FC<ActionModalProps> = ({
   actions = [],
-  icon = "plus",
-  position = "right",
+  icon = 'plus',
+  position = 'right',
 }) => {
   const { theme } = useUnistyles();
   const isOpen = useSharedValue<boolean>(false);
@@ -46,7 +46,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
 
   // Use derived value for computed values based on shared values
   const pointerEvents = useDerivedValue(() => {
-    return isOpen.value ? "auto" : "none";
+    return isOpen.value ? 'auto' : 'none';
   });
 
   const openModal = useCallback(() => {
@@ -56,7 +56,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
       stiffness: 300,
     });
     backgroundOpacity.value = withTiming(0.4, { duration: 200 });
-  }, []);
+  }, [backgroundOpacity, isOpen, translateY]);
 
   const closeModal = useCallback(() => {
     translateY.value = withSpring(400, {
@@ -65,7 +65,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
     });
     backgroundOpacity.value = withTiming(0, { duration: 200 });
     isOpen.value = false;
-  }, []);
+  }, [backgroundOpacity, isOpen, translateY]);
 
   const toggleModal = useCallback(() => {
     if (isOpen.value) {
@@ -73,7 +73,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
     } else {
       openModal();
     }
-  }, [openModal, closeModal]);
+  }, [isOpen.value, closeModal, openModal]);
 
   // Handle tap on background to close modal
   const backgroundTap = Gesture.Tap().onEnd(() => {
@@ -105,7 +105,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
         }),
       },
       {
-        rotate: withTiming(isOpen.value ? "45deg" : "0deg", {
+        rotate: withTiming(isOpen.value ? '45deg' : '0deg', {
           duration: 200,
         }),
       },
@@ -152,7 +152,7 @@ export const ActionModal: React.FC<ActionModalProps> = ({
         </View>
       </Pressable>
     ),
-    [closeModal]
+    [closeModal, theme.colors]
   );
 
   styles.useVariants({ position });
@@ -199,9 +199,9 @@ export const ActionModal: React.FC<ActionModalProps> = ({
 
 const styles = StyleSheet.create((th, rt) => ({
   fabContainer: {
-    position: "absolute",
-    justifyContent: "center",
-    alignItems: "center",
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'center',
     bottom: 0,
     paddingBottom: rt.insets.bottom,
     variants: {
@@ -224,11 +224,11 @@ const styles = StyleSheet.create((th, rt) => ({
   },
   fab: {
     borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   overlay: {
-    position: "absolute",
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -237,7 +237,7 @@ const styles = StyleSheet.create((th, rt) => ({
     zIndex: 1000,
   },
   bottomSheet: {
-    position: "absolute",
+    position: 'absolute',
     bottom: -50, // To compensate for overshoot of the bounce animation
     left: 0,
     right: 0,
@@ -259,19 +259,19 @@ const styles = StyleSheet.create((th, rt) => ({
   title: {
     fontSize: 22,
     lineHeight: 22 * 1.5,
-    fontWeight: "700",
+    fontWeight: '700',
     color: th.colors.labelPrimary,
-    textAlign: "center",
+    textAlign: 'center',
   },
   actionButtonContainer: {
-    flexDirection: "column",
+    flexDirection: 'column',
     gap: th.space.md,
   },
   actionButton: {
-    flexDirection: "row",
+    flexDirection: 'row',
     backgroundColor: th.colors.backgroundSecondary,
     borderRadius: th.radius.lg,
-    alignItems: "center",
+    alignItems: 'center',
     padding: th.space.md,
     gap: th.space.lg,
   },
@@ -279,16 +279,16 @@ const styles = StyleSheet.create((th, rt) => ({
     width: 45,
     height: 45,
     borderRadius: 22,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   actionTextContainer: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   actionLabel: {
     fontSize: 16,
-    fontWeight: "500",
+    fontWeight: '500',
     color: th.colors.labelPrimary,
     marginBottom: 2,
   },
@@ -300,13 +300,13 @@ const styles = StyleSheet.create((th, rt) => ({
   cancelButton: {
     backgroundColor: th.colors.backgroundPrimary,
     borderRadius: th.radius.lg,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: th.space.md,
   },
   cancelText: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: '600',
     color: th.colors.labelSecondary,
   },
 }));

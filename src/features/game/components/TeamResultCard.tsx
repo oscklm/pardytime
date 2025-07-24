@@ -1,17 +1,17 @@
-import { View } from "react-native";
-import { StyleSheet, useUnistyles } from "react-native-unistyles";
-import Crown from "@/assets/icons/crown.png";
-import { Image } from "@/components/ui/Image";
-import Text from "@/components/ui/Text";
-import type { Doc } from "@/convex/_generated/dataModel";
-import { config } from "@/lib/config";
+import { View } from 'react-native';
+import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import Crown from '@/assets/icons/crown.png';
+import { Image } from '@/components/ui/Image';
+import Text from '@/components/ui/Text';
+import type { Doc } from '@/convex/_generated/dataModel';
+import { config } from '@/lib/config';
 
 export const TeamResultCard = ({
   team,
   index,
   isTop,
 }: {
-  team: Doc<"teams">;
+  team: Doc<'teams'>;
   index: number;
   isTop: boolean;
 }) => {
@@ -37,7 +37,7 @@ export const TeamResultCard = ({
             storageId={team.imageId}
             width={300}
             contentFit="cover"
-            contentPosition={"center"}
+            contentPosition={'center'}
           />
         </View>
       )}
@@ -54,19 +54,19 @@ export const TeamResultCard = ({
 const styles = StyleSheet.create((th) => ({
   card: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     maxHeight: 135,
     padding: th.space.md,
     borderRadius: th.radius.lg,
   },
   crownContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: -50,
     left: -15,
-    transform: [{ rotate: "-10deg" }],
-    alignSelf: "center",
-    justifyContent: "center",
-    alignItems: "center",
+    transform: [{ rotate: '-10deg' }],
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
     zIndex: 15,
   },
   crown: {
@@ -78,17 +78,17 @@ const styles = StyleSheet.create((th) => ({
   },
   teamImage: {
     borderRadius: th.radius.lg,
-    overflow: "hidden",
-    width: "100%",
-    height: "100%",
+    overflow: 'hidden',
+    width: '100%',
+    height: '100%',
   },
   teamName: {
-    textAlign: "center",
+    textAlign: 'center',
   },
   teamDetailsContainer: {
     flex: 1,
     padding: th.space.md,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));

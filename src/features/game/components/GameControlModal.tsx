@@ -1,13 +1,13 @@
-import { FontAwesome6 } from "@expo/vector-icons";
-import { type ModalProps, Pressable, View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
-import { Modal } from "@/components/layout/Modal";
-import Button from "@/components/ui/Button";
-import YStack from "@/components/ui/YStack";
-import { useGameContext } from "../hooks/useGame";
-import { useGameController } from "../hooks/useGameController";
+import { Modal } from '@/components/layout/Modal';
+import { Button } from '@/components/ui/Button';
+import YStack from '@/components/ui/YStack';
+import { FontAwesome6 } from '@expo/vector-icons';
+import { type ModalProps, Pressable, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+import { useGameContext } from '../hooks/useGame';
+import { useGameController } from '../hooks/useGameController';
 
-interface TeamControlModalProps extends Omit<ModalProps, "onRequestClose"> {
+interface TeamControlModalProps extends Omit<ModalProps, 'onRequestClose'> {
   onRequestClose: () => void;
 }
 
@@ -31,7 +31,7 @@ export const GameControlModal = ({
       </View>
       <YStack style={styles.container} gap="xl">
         <YStack gap="lg">
-          {game.status === "active" && (
+          {game.status === 'active' && (
             <>
               <Button
                 variant="blue"
@@ -55,7 +55,7 @@ export const GameControlModal = ({
               </Button>
             </>
           )}
-          {(game.status === "completed" || game.status === "active") && (
+          {(game.status === 'completed' || game.status === 'active') && (
             <Button
               variant="blue"
               size="md"
@@ -86,7 +86,7 @@ const styles = StyleSheet.create((th, rt) => ({
   closeButtonContainer: {
     marginTop: th.space.md,
     paddingHorizontal: th.space.lg,
-    alignItems: "flex-end",
+    alignItems: 'flex-end',
   },
   closeButton: {
     color: th.colors.labelPrimary,

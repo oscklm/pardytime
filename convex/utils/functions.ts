@@ -2,16 +2,16 @@ import {
   customCtx,
   customMutation,
   NoOp,
-} from "convex-helpers/server/customFunctions";
-import { zCustomMutation, zCustomQuery } from "convex-helpers/server/zod";
+} from 'convex-helpers/server/customFunctions';
+import { zCustomMutation, zCustomQuery } from 'convex-helpers/server/zod';
 
 import {
   query,
   internalMutation as rawInternalMutation,
   mutation as rawMutation,
-} from "../_generated/server";
+} from '../_generated/server';
 
-import { triggers } from "../triggers";
+import { triggers } from '../triggers';
 
 // Use `mutation` to define all mutations, and the triggers will get called.
 export const mutation = customMutation(rawMutation, customCtx(triggers.wrapDB));

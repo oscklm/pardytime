@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from 'react';
 
-import type { StyleProp, ViewStyle } from "react-native";
+import type { StyleProp, ViewStyle } from 'react-native';
 
 import Animated, {
   Easing,
@@ -8,8 +8,8 @@ import Animated, {
   useSharedValue,
   withRepeat,
   withTiming,
-} from "react-native-reanimated";
-import { StyleSheet } from "react-native-unistyles";
+} from 'react-native-reanimated';
+import { StyleSheet } from 'react-native-unistyles';
 
 const duration = 1000;
 
@@ -20,13 +20,13 @@ type SkeletonProps = {
 const Skeleton = ({ style }: SkeletonProps) => {
   const opacity = useSharedValue(1);
 
-  React.useEffect(() => {
+  useEffect(() => {
     opacity.value = withRepeat(
       withTiming(0.4, { duration, easing: Easing.linear }),
       -1,
       true
     );
-  }, []);
+  }, [opacity]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,

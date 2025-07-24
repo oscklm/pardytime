@@ -1,12 +1,12 @@
-import { useMemo } from "react";
-import { View } from "react-native";
-import { StyleSheet } from "react-native-unistyles";
-import { ActionModal } from "@/components/ActionModal";
-import Text from "@/components/ui/Text";
-import YStack from "@/components/ui/YStack";
-import { TeamResultCard } from "../components/TeamResultCard";
-import { useGameContext } from "../hooks/useGame";
-import { useGameController } from "../hooks/useGameController";
+import { useMemo } from 'react';
+import { View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
+import { ActionModal } from '@/components/ActionModal';
+import Text from '@/components/ui/Text';
+import YStack from '@/components/ui/YStack';
+import { TeamResultCard } from '../components/TeamResultCard';
+import { useGameContext } from '../hooks/useGame';
+import { useGameController } from '../hooks/useGameController';
 
 export const ResultView = () => {
   const { resetToLobby } = useGameController();
@@ -47,10 +47,10 @@ export const ResultView = () => {
         icon="hand-sparkles"
         actions={[
           {
-            id: "back-to-lobby",
-            label: "Back to lobby",
-            icon: "arrow-left",
-            color: "yellow",
+            id: 'back-to-lobby',
+            label: 'Back to lobby',
+            icon: 'arrow-left',
+            color: 'yellow',
             onPress: () => resetToLobby(),
           },
           // {

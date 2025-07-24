@@ -1,29 +1,29 @@
-import { defineTable } from "convex/server";
-import { v } from "convex/values";
+import { defineTable } from 'convex/server';
+import { v } from 'convex/values';
 
 const userSchema = v.object({
-	clerkId: v.string(),
-	username: v.string(),
-	firstName: v.union(v.string(), v.null()),
-	lastName: v.union(v.string(), v.null()),
-	imageUrl: v.string(),
-	emailAddresses: v.array(
-		v.object({
-			emailAddress: v.string(), // Email address string
-			verified: v.boolean(), // Verification status
-		}),
-	),
-	publicMetadata: v.any(), // UserPublicMetadata
-	privateMetadata: v.any(), // UserPrivateMetadata
-	unsafeMetadata: v.any(), // UserUnsafeMetadata
-	banned: v.boolean(),
-	locked: v.boolean(),
+  clerkId: v.string(),
+  username: v.string(),
+  firstName: v.union(v.string(), v.null()),
+  lastName: v.union(v.string(), v.null()),
+  imageUrl: v.string(),
+  emailAddresses: v.array(
+    v.object({
+      emailAddress: v.string(), // Email address string
+      verified: v.boolean(), // Verification status
+    })
+  ),
+  publicMetadata: v.any(), // UserPublicMetadata
+  privateMetadata: v.any(), // UserPrivateMetadata
+  unsafeMetadata: v.any(), // UserUnsafeMetadata
+  banned: v.boolean(),
+  locked: v.boolean(),
 });
 
 const userTables = {
-	users: defineTable(userSchema)
-		.index("by_clerkId", ["clerkId"])
-		.index("by_username", ["username"]),
+  users: defineTable(userSchema)
+    .index('by_clerkId', ['clerkId'])
+    .index('by_username', ['username']),
 };
 
 export { userSchema, userTables };
