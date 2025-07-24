@@ -111,10 +111,10 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "yarn expo lint --fix",
-      "yarn dlx prettier --write"
+      "yarn prettier --write"
     ],
     "*.{json,md,yml,yaml}": [
-      "yarn dlx prettier --write"
+      "yarn prettier --write"
     ]
   },
   "private": true,
