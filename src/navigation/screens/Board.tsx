@@ -11,9 +11,9 @@ import { useQuery } from 'convex/react';
 import { useEffect, useMemo } from 'react';
 import { FlatList } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
-import { ScreenProps } from '..';
+import { StackScreenProps } from '..';
 
-export function Board({ route }: ScreenProps<'Board'>) {
+export function Board({ route }: StackScreenProps<'Board'>) {
   const board = useQuery(api.boards.queries.getByIdEnriched, {
     boardId: route.params.boardId,
   });

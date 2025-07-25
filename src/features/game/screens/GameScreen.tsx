@@ -4,7 +4,7 @@ import { api } from '@/convex/_generated/api';
 import { GameView } from '@/features/game/GameView';
 import { useQueryWithStatus } from '@/lib/convex';
 import { RootStackParamList } from '@/navigation';
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useQuery } from 'convex/react';
 import { useEffect } from 'react';
@@ -43,12 +43,10 @@ export function GameScreen({ route }: ScreenProps) {
 
   useEffect(() => {
     if (gameStatus === 'error' && gameError) {
-      navigation.dispatch(
-        CommonActions.reset({
-          index: 0,
-          routes: [{ name: 'BottomTabs' }],
-        })
-      );
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'BottomTabs' }],
+      });
     }
   }, [gameStatus, gameError, navigation]);
 

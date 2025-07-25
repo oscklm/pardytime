@@ -2,7 +2,7 @@ import Text from '@/components/ui/Text';
 import TouchableBounce from '@/components/ui/TouchableBounce';
 import type { Doc } from '@/convex/_generated/dataModel';
 import { useUser } from '@/providers/user-provider';
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useMemo } from 'react';
 import { ActionSheetIOS } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
@@ -38,12 +38,10 @@ const GameView = ({ game, board, teams }: GameViewProps) => {
       },
       (buttonIndex) => {
         if (buttonIndex === 1) {
-          navigation.dispatch(
-            CommonActions.reset({
-              index: 0,
-              routes: [{ name: 'BottomTabs' }],
-            })
-          );
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'BottomTabs' }],
+          });
         }
       }
     );

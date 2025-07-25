@@ -1,4 +1,5 @@
 import { Id } from '@/convex/_generated/dataModel';
+import { BoardEditorScreen } from '@/features/board-editor/screens/BoardEditorScreen';
 import { GameScreen } from '@/features/game/screens/GameScreen';
 import { UniThemeProvider } from '@/styles/theme';
 import { FontAwesome } from '@expo/vector-icons';
@@ -14,7 +15,6 @@ import { useMemo } from 'react';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
 import WheelTab from './WheelTab';
 import { Board } from './screens/Board';
-import { CreateBoard } from './screens/CreateBoard';
 import { CreateGame } from './screens/CreateGame';
 import { CreateTeam } from './screens/CreateTeam';
 import { EditTeamScreen } from './screens/EditTeam';
@@ -119,6 +119,9 @@ export type RootStackParamList = {
   Board: {
     boardId: Id<'boards'>;
   };
+  BoardEditor: {
+    boardId?: Id<'boards'>;
+  };
   CreateBoard: undefined;
   CreateGame: undefined;
   CreateTeam: {
@@ -139,10 +142,10 @@ export type RootStackParamList = {
   NotFound: undefined;
 };
 
-export type BottomScreenProps<T extends keyof BottomTabsParamList> =
+export type TabScreenProps<T extends keyof BottomTabsParamList> =
   NativeStackScreenProps<BottomTabsParamList, T>;
 
-export type ScreenProps<T extends keyof RootStackParamList> =
+export type StackScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, T>;
 
 export function RootStack() {
@@ -179,11 +182,12 @@ export function RootStack() {
             />
             <Stack.Screen name="Board" component={Board} />
             <Stack.Screen
-              name="CreateBoard"
-              component={CreateBoard}
+              name="BoardEditor"
+              component={BoardEditorScreen}
               options={{
-                title: 'Create Board',
-                presentation: 'modal',
+                title: 'Board Editor',
+                headerShown: false,
+                gestureEnabled: false,
               }}
             />
             <Stack.Screen

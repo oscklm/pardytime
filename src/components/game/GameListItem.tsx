@@ -1,9 +1,9 @@
-import { CommonActions, useNavigation } from '@react-navigation/native';
-import { TouchableWithoutFeedback, View } from 'react-native';
-import { StyleSheet } from 'react-native-unistyles';
 import Text from '@/components/ui/Text';
 import type { api } from '@/convex/_generated/api';
 import { formatUnixTimestamp } from '@/lib/utils/time';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet } from 'react-native-unistyles';
 import XStack from '../ui/XStack';
 import YStack from '../ui/YStack';
 import { GameStatusBadge } from './GameStatusBadge';
@@ -15,12 +15,10 @@ export function GameListItem({ game }: { game: GamesWithBoard[number] }) {
   const { code } = game;
 
   const onPress = () => {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: 'Game', params: { code } }],
-      })
-    );
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Game', params: { code } }],
+    });
   };
 
   const formattedDate = formatUnixTimestamp(game._creationTime);

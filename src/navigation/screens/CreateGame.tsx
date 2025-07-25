@@ -10,7 +10,7 @@ import YStack from '@/components/ui/YStack';
 import { api } from '@/convex/_generated/api';
 import type { Doc, Id } from '@/convex/_generated/dataModel';
 import { useUser } from '@/providers/user-provider';
-import { CommonActions, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery } from 'convex/react';
 import { useState } from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
@@ -18,6 +18,8 @@ import { StyleSheet } from 'react-native-unistyles';
 
 export function CreateGame() {
   // Local state
+
+  // TODO: something
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -49,12 +51,10 @@ export function CreateGame() {
 
     navigation.canGoBack() && navigation.goBack();
 
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: 'Game', params: { code } }],
-      })
-    );
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Game', params: { code } }],
+    });
     setIsLoading(false);
   };
 

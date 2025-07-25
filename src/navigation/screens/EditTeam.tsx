@@ -7,9 +7,9 @@ import YStack from '@/components/ui/YStack';
 import { api } from '@/convex/_generated/api';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery } from 'convex/react';
-import { ScreenProps } from '..';
+import { StackScreenProps } from '..';
 
-export function EditTeamScreen({ route }: ScreenProps<'EditTeam'>) {
+export function EditTeamScreen({ route }: StackScreenProps<'EditTeam'>) {
   const navigation = useNavigation();
 
   const currentTeam = useQuery(api.teams.queries.getById, {

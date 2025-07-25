@@ -15,7 +15,7 @@ import {
   withUnistyles,
 } from 'react-native-unistyles';
 import { AnimatedSpinner } from '../AnimatedSpinner';
-import { Icons, type IconName } from '../Icons'; // Import your new Icons component and IconName type
+import { type IconName, Icons } from '../Icons'; // Import your new Icons component and IconName type
 
 // Create a styled wrapper for the Icons component
 const StyledIcon = withUnistyles(Icons, (th) => ({
@@ -103,6 +103,7 @@ function ButtonBase({
 }: ButtonBaseProps) {
   const onSensory = useCallback(() => {
     if (!sensory) return;
+
     if (sensory === true) {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     } else if (sensory === 'success') {
@@ -120,11 +121,8 @@ function ButtonBase({
     }
   }, [sensory]);
 
-  // Resolve whether the button displays an icon only
-  const resolvedVariant = children ? variant : 'icon';
-
   styles.useVariants({
-    variant: resolvedVariant,
+    variant,
     isLoading,
     inverted,
     size,
@@ -199,7 +197,6 @@ const styles = StyleSheet.create((th) => ({
       variant: {
         icon: {
           borderWidth: 0,
-          backgroundColor: 'transparent',
         },
         link: {
           backgroundColor: 'transparent',

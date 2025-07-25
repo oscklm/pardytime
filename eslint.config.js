@@ -14,13 +14,7 @@ module.exports = defineConfig([
           allowFunctions: true,
         },
       ],
-      'prettier/prettier': [
-        'error',
-        {
-          singleQuote: true,
-          trailingComma: 'es5',
-        },
-      ],
+      'prettier/prettier': 'warn',
     },
   },
 ]);

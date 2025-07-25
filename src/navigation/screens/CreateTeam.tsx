@@ -7,11 +7,11 @@ import {
 import Text from '@/components/ui/Text';
 import YStack from '@/components/ui/YStack';
 import { api } from '@/convex/_generated/api';
+import { StackScreenProps } from '@/navigation';
 import { useUser } from '@/providers/user-provider';
 import { useMutation } from 'convex/react';
-import { ScreenProps } from '..';
 
-export function CreateTeam({ route }: ScreenProps<'CreateTeam'>) {
+export function CreateTeam({ route }: StackScreenProps<'CreateTeam'>) {
   const navigation = useNavigation();
   const { _id: userId } = useUser();
 

@@ -9,9 +9,9 @@ import { useNavigation } from '@react-navigation/native';
 import { useQuery } from 'convex/react';
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native-unistyles';
-import { ScreenProps } from '..';
+import { StackScreenProps } from '..';
 
-export function PublicProfile({ route }: ScreenProps<'Profile'>) {
+export function PublicProfile({ route }: StackScreenProps<'Profile'>) {
   const navigation = useNavigation();
 
   const user = useQuery(api.users.queries.getByUsername, {
