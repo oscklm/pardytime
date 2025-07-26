@@ -12,9 +12,10 @@ import { ConvexProviderWithClerk } from 'convex/react-clerk';
 import { Asset } from 'expo-asset';
 import * as SplashScreen from 'expo-splash-screen';
 import * as TaskManager from 'expo-task-manager';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { LogBox } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import SplashScreenController from './components/splash-screen-controller';
 import { linkingOptions, RootStack } from './navigation';
 import AuthProvider from './providers/user-provider';
@@ -66,20 +67,22 @@ export function App() {
   }, []);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
-        <ClerkLoaded>
-          <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
-            <SplashScreenController>
-              <AuthProvider>
-                <NavigationContainer linking={linkingOptions}>
-                  <RootStack />
-                </NavigationContainer>
-              </AuthProvider>
-            </SplashScreenController>
-          </ConvexProviderWithClerk>
-        </ClerkLoaded>
-      </ClerkProvider>
+    <GestureHandlerRootView>
+      <KeyboardProvider>
+        <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+          <ClerkLoaded>
+            <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+              <SplashScreenController>
+                <AuthProvider>
+                  <NavigationContainer linking={linkingOptions}>
+                    <RootStack />
+                  </NavigationContainer>
+                </AuthProvider>
+              </SplashScreenController>
+            </ConvexProviderWithClerk>
+          </ClerkLoaded>
+        </ClerkProvider>
+      </KeyboardProvider>
     </GestureHandlerRootView>
   );
 }

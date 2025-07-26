@@ -1,17 +1,24 @@
+import { Modal } from '@/components/modal/Modal';
 import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import Text from '@/components/ui/Text';
+import TextInput from '@/components/ui/TextInput';
+import TouchableBounce from '@/components/ui/TouchableBounce';
 import YStack from '@/components/ui/YStack';
 import { usePreventRemoveScreen } from '@/hooks/usePreventRemoveScreen';
 import { StackScreenProps } from '@/navigation';
 import React, { FC, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
-import { Modal } from '../Modal';
 
 export const BoardEditorScreen: FC<StackScreenProps<'BoardEditor'>> = ({
   navigation,
   route,
 }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [question, setQuestion] = useState<string>('');
+  const [answer, setAnswer] = useState<string>('');
+
   const handlePressExit = () => {
     navigation.reset({
       index: 0,
@@ -23,8 +30,7 @@ export const BoardEditorScreen: FC<StackScreenProps<'BoardEditor'>> = ({
     onCancel: () => {},
   });
 
-  // Minimal Modal usage example
-  const [modalVisible, setModalVisible] = useState(false);
+  const toggleModal = () => setModalVisible((p) => !p);
 
   return (
     <View style={styles.container}>
@@ -49,43 +55,61 @@ export const BoardEditorScreen: FC<StackScreenProps<'BoardEditor'>> = ({
         </View>
         <Text variant="h2">Board Editor</Text>
       </View>
-      <Button
-        onPress={() => setModalVisible((prev) => !prev)}
-        variant="blue"
-        style={{ marginBottom: 16 }}
-      >
+      <Button onPress={toggleModal} variant="blue" style={{ marginBottom: 16 }}>
         Open Modal
       </Button>
       <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
-        <Text>This screen is under construction. Please check back later!</Text>
+        <Text>
+          This screen is under construction and currently used for testing
+          modals. Please check back later!
+        </Text>
+        <Text variant="subtitle">Test card showing modal values:</Text>
+        <YStack pd="lg">
+          <TouchableBounce sensory="light" onPress={toggleModal}>
+            <Card>
+              <Text variant="h2">{question}</Text>
+              <Text>{answer}</Text>
+            </Card>
+          </TouchableBounce>
+        </YStack>
       </ScrollView>
+
       <Modal
-        position="center"
+        variant="bottomsheet"
         visible={modalVisible}
-        onDismiss={() => setModalVisible((prev) => !prev)}
+        onDismiss={() => setModalVisible(false)}
+        opts={{
+          backdrop: {
+            canDismiss: true,
+            enabled: true,
+          },
+          showCancelBtn: false,
+        }}
       >
         <YStack gap="lg">
-          <Text variant="h2">Modal Content</Text>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-            dignissimos ad excepturi iste debitis laudantium repudiandae
-            blanditiis temporibus, esse fugit! Ipsa asperiores inventore eaque
-            amet autem praesentium dolores unde molestiae?
-          </Text>
+          <YStack>
+            <Text variant="h1">Edit question</Text>
+            <Text variant="subtitle">Customize it how you&apos;d like</Text>
+          </YStack>
+          {/* <GameCreateForm onSubmit={handleSubmit} /> */}
+          <YStack>
+            <Text variant="label">Question</Text>
+            <TextInput value={question} onChangeText={setQuestion} />
+          </YStack>
+          <YStack>
+            <Text variant="label">Answer</Text>
+            <TextInput value={answer} onChangeText={setAnswer} />
+          </YStack>
           <YStack gap="lg">
             <Button
               size="sm"
-              onPress={() => setModalVisible((prev) => !prev)}
+              sensory="success"
+              onPress={() => {
+                toggleModal();
+              }}
               variant="success"
             >
-              Accept
-            </Button>
-            <Button
-              size="sm"
-              onPress={() => setModalVisible((prev) => !prev)}
-              variant="danger"
-            >
-              Decline
+              Submit
             </Button>
           </YStack>
         </YStack>

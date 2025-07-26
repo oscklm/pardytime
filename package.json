@@ -63,7 +63,7 @@
     "react-native": "0.79.5",
     "react-native-edge-to-edge": "1.6.0",
     "react-native-gesture-handler": "~2.24.0",
-    "react-native-keyboard-controller": "^1.17.5",
+    "react-native-keyboard-controller": "^1.18.1",
     "react-native-mmkv": "^3.2.0",
     "react-native-nitro-modules": "0.26.4",
     "react-native-qrcode-svg": "^6.3.15",

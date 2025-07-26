@@ -31,7 +31,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: getAppName(),
   slug: 'pardytime',
-  version: '1.2.4',
+  version: '1.2.5',
   orientation: 'portrait',
   icon: './src/assets/images/icon.png',
   scheme: 'pardytime',
