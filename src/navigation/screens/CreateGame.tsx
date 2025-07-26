@@ -1,7 +1,6 @@
 import BoardCard from '@/components/BoardCard';
 import { GameCreateForm } from '@/components/forms/GameCreateForm';
 import { Icon } from '@/components/Icon';
-import { Modal } from '@/components/layout/Modal';
 import { Button } from '@/components/ui/Button';
 import Text from '@/components/ui/Text';
 import TextInput from '@/components/ui/TextInput';
@@ -13,7 +12,7 @@ import { useUser } from '@/providers/user-provider';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation, useQuery } from 'convex/react';
 import { useState } from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import { FlatList, Modal, TouchableOpacity, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 
 export function CreateGame() {

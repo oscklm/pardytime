@@ -7,7 +7,6 @@ import { useCallback } from 'react';
 import { Pressable, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
-  runOnJS,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
@@ -15,6 +14,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { StyleSheet, useUnistyles } from 'react-native-unistyles';
+import { runOnJS } from 'react-native-worklets';
 import { Image } from './ui/Image';
 import Text from './ui/Text';
 
@@ -52,16 +52,16 @@ export const ActionModal: React.FC<ActionModalProps> = ({
   const openModal = useCallback(() => {
     isOpen.value = true;
     translateY.value = withSpring(0, {
-      damping: 25,
-      stiffness: 300,
+      stiffness: 500,
+      duration: 300,
     });
     backgroundOpacity.value = withTiming(0.4, { duration: 200 });
   }, [backgroundOpacity, isOpen, translateY]);
 
   const closeModal = useCallback(() => {
     translateY.value = withSpring(400, {
-      damping: 20,
       stiffness: 300,
+      duration: 300,
     });
     backgroundOpacity.value = withTiming(0, { duration: 200 });
     isOpen.value = false;
@@ -233,7 +233,7 @@ const styles = StyleSheet.create((th, rt) => ({
     left: 0,
     right: 0,
     bottom: 0,
-    // backgroundColor: "rgba(0, 0, 0, 1)",
+    backgroundColor: 'rgba(0, 0, 0, 1)',
     zIndex: 1000,
   },
   bottomSheet: {

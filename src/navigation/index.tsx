@@ -284,6 +284,7 @@ export const linkingOptions: LinkingOptions<RootStackParamList> = {
       },
       Board: 'board/:boardId',
       CreateBoard: 'create-board',
+      BoardEditor: 'board-editor/:boardId?',
       CreateGame: 'create-game',
       CreateTeam: 'create-team',
       Game: 'game/:code',

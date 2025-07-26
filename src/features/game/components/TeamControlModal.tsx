@@ -1,4 +1,3 @@
-import { Modal } from '@/components/layout/Modal';
 import { Button } from '@/components/ui/Button';
 import { Image } from '@/components/ui/Image';
 import Text from '@/components/ui/Text';
@@ -6,7 +5,7 @@ import XStack from '@/components/ui/XStack';
 import YStack from '@/components/ui/YStack';
 import type { Doc, Id } from '@/convex/_generated/dataModel';
 import { useState } from 'react';
-import { type ModalProps, View } from 'react-native';
+import { Modal, type ModalProps, View } from 'react-native';
 import { StyleSheet } from 'react-native-unistyles';
 import { useGameContext } from '../hooks/useGame';
 
